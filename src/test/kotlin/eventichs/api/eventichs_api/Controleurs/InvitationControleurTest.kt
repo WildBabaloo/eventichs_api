@@ -18,8 +18,36 @@ class InvitationControleurTest {
     private lateinit var mockMvc: MockMvc
 
     //Julien
+    //Entrer un jeton d'invitation (Participant)
     @Test
-    fun `Étant donné lorsque alors` (){
+    fun `Étant donné un participant qui a un jeton associé à une organisation lorsqu'on effectue une requête POST pour rejoindre l'organisation alors on obtient un JSON qui contient l'organisation assigné au jeton et un code de retour 200` (){
+        TODO("Méthode non-implémentée")
+    }
+
+    @Test
+    fun `Étant donné un participant qui a un jeton associé à aucune organisation lorsqu'on effectue une requête POST pour rejoindre une organisation alors on obtient un code de retour 409` (){
+        TODO("Méthode non-implémentée")
+    }
+
+    //Générer son jeton d'invitation (Organisation)
+    @Test
+    fun `Étant donné une organisation qui cherche à inviter des participants lorsqu'on effectue une requête POST pour obtenir 5 jetons alors on obtient un JSON qui contient 5 jetons ainsi qu'un code de retour 201` (){
+        TODO("Méthode non-implémentée")
+    }
+
+    @Test
+    fun `Étant donné une organisation qui cherche à inviter des participant lorsqu'on effectue une requête POST avec une organisation qui n'existe pas pour obtenir 5 jetons alors on obtient un code de retour 409` (){
+        TODO("Méthode non-implémentée")
+    }
+
+    //Éffacer une invitation (Participant + Organisation)
+    @Test
+    fun `Étant donné un utilisateur qui a invité un participant lorsqu'on effectue une requête DELETE sur une invitation qui existe alors on obtient un JSON qui contient l'invitation supprimé et un code de retour 200` (){
+        TODO("Méthode non-implémentée")
+    }
+
+    @Test
+    fun `Étant donné un utilisateur lorsqu'on effectue une requête DELETE sur une invitation qui n'existe pas alors on obtient un code de retour 409` (){
         TODO("Méthode non-implémentée")
     }
 
