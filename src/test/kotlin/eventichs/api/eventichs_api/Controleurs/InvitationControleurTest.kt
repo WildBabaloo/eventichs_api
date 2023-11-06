@@ -17,9 +17,13 @@ class InvitationControleurTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    //Julien
+    //Éffacer une invitation (Participant + Organisation)
     @Test
-    fun `Étant donné lorsque alors` (){
+    fun `Étant donné un utilisateur qui a invité un participant lorsqu'on effectue une requête DELETE sur une invitation qui existe alors on obtient un JSON qui contient l'invitation supprimé et un code de retour 200` (){
+        TODO("Méthode non-implémentée")
+    }
+    @Test
+    fun `Étant donné un utilisateur lorsqu'on effectue une requête DELETE sur une invitation qui n'existe pas alors on obtient un code de retour 409` (){
         TODO("Méthode non-implémentée")
     }
 
