@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("\${api.base-path:}")
 class InvitationControleur(val service: InvitationService) {
 
-    @GetMapping("/invitation/{id}")
+    //si l'utilisateur est un participant, cela affiche des invitations. si il est une organisation, cela affiche des demandes d'invitations.
+    @GetMapping("/invitations/{id}")
     fun obtenirInvitationsParIdUtilisateur(@PathVariable id: String):
             ResponseEntity<Invitation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
@@ -18,4 +19,13 @@ class InvitationControleur(val service: InvitationService) {
     fun inviterOuDemanderInvitation(@RequestBody invitationOuDemande: Invitation):
             ResponseEntity<Invitation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
+    @PutMapping("/invitation/{id}")
+    fun majInvitationGroupe(@PathVariable id: String, @RequestBody reponse: String):
+            ResponseEntity<Invitation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+
+    //ne devrait pas avoir besoin d'être utilisé?
+    @DeleteMapping("/invitation/{id}")
+    fun supprimerInvitation(@PathVariable id: String):
+            ResponseEntity<Invitation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 }
+
