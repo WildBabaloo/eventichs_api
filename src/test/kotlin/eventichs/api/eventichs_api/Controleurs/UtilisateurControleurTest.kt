@@ -30,36 +30,36 @@ class UtilisateurControleurTest {
 
     //Se connecter (Participant & Organisation)
     @Test
-    // @GetMapping("/utilisateurs/{code}")
+    // @GetMapping("/utilisateurs/{id}")
     fun `Étant donné un utilisateur possedant un compte lorsqu'on effectue une requête GET pour se connecter à un compte avec un id existant dans le service on obtient un JSON d'un utilisateur et un code de retour 200` (){
         TODO("Méthode non-implémentée")
     }
     @Test
-    // @GetMapping("/utilisateurs/{code}")
+    // @GetMapping("/utilisateurs/{id}")
     fun `Étant donné un utilisateur ne possedant pas un compte lorsqu'on effectue une requête GET pour se connecter à un compte avec un id inexistant dans le service obtient un code de retour 409` (){
         TODO("Méthode non-implémentée")
     }
 
     //Modifier son compte (Participant & Organisation)
     @Test
-    // @PutMapping("/utilisateurs/{code}")
+    // @PutMapping("/utilisateurs/{id}")
     fun `Étant donné un utilisateur ayant un compte lorsqu'on effectue une requête POST pour modifier son compte avec un id existant dans le service on obtient un JSON de l'utilisateur modifié et un code de retour 200` (){
         TODO("Méthode non-implémentée")
     }
     @Test
-    // @PutMapping("/utilisateurs/{code}")
+    // @PutMapping("/utilisateurs/{id}")
     fun `Étant donné un utilisateur sans compte lorsqu'on effectue une requête POST pour modifier un compte avec un id inexistant dans le service on obtient un code de retour 409` (){
         TODO("Méthode non-implémentée")
     }
 
     //Supprimer son compte (Participant & Organisation)
     @Test
-    // @DeleteMapping("/utilisateurs/{code}")
+    // @DeleteMapping("/utilisateurs/{id}")
     fun `Étant donné un utilisateur ayant un compte lorsqu'on effectue une requête DELETE pour effacer son compte avec un id existant dans le service on obtient un JSON de l'utilisateur effacé et un code de retour 200` (){
         TODO("Méthode non-implémentée")
     }
     @Test
-    // @DeleteMapping("/utilisateurs/{code}")
+    // @DeleteMapping("/utilisateurs/{id}")
     fun `Étant donné un utilisateur sans compte lorsqu'on effectue une requête DELETE pour effacer un compte avec un id inexistant dans le service on obtient un code de retour 409` (){
         TODO("Méthode non-implémentée")
     }
