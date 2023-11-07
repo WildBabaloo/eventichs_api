@@ -20,7 +20,7 @@ class InvitationControleur(val service: InvitationService) {
             ResponseEntity<Invitation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
     @PutMapping("/invitation/{id}")
-    fun majInvitationGroupe(@PathVariable id: String, @RequestBody reponse: String):
+    fun majInvitation(@PathVariable id: String, @RequestBody reponse: String):
             ResponseEntity<Invitation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
     //ne devrait pas avoir besoin d'être utilisé?

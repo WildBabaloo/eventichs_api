@@ -140,6 +140,7 @@ paths:
       x-accepts: '*/*'
   /<unknown>/invitations/{id}:
     get:
+      description: Obtenir la liste des invitations par l'id de l'invité. dans le cas ou l'id représente une organisation, Obtenir la liste des demandes d'invitations.
       operationId: obtenirInvitationsParIdUtilisateur
       parameters:
       - explode: false
@@ -155,11 +156,24 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ResponseEntity'
-          description: OK
+          description: Retourne la liste des invitations.
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Utilisateur non trouvé.
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Syntaxe incorrecte.
       summary: GET ${..}/invitations/{id}
       x-accepts: '*/*'
   /<unknown>/invitations:
     post:
+      description: Ajouter une invitation ou une demande d'invitation, dépendamment du type de l'invitateur et de l'invité.
       operationId: inviterOuDemanderInvitation
       requestBody:
         content:
@@ -173,12 +187,31 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ResponseEntity'
-          description: OK
+          description: L'invitation est créée, et on obtient l'objet invitation créé.
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: l'invité ou l'inviteur n'existe pas.
+        "409":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: l'invité fait déja partie de l'évènement ou de l'organisation, ou l'évènement provient d'un groupe dont l'invité n'a pas accès.
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: syntaxe incorrecte.
       summary: POST ${..}/invitations
       x-contentType: application/json
       x-accepts: '*/*'
   /<unknown>/invitation/{id}:
     delete:
+      description: Supprimer une invitation.
       operationId: supprimerInvitation
       parameters:
       - explode: false
@@ -194,10 +227,17 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ResponseEntity'
-          description: OK
+          description: Invitation supprimée
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Invitation non-trouvée
       summary: DELETE ${..}/invitation/{id}
       x-accepts: '*/*'
     put:
+      description: Répondre à une invitation ou demande.
       operationId: majInvitationGroupe
       parameters:
       - explode: false
@@ -219,7 +259,25 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ResponseEntity'
-          description: OK
+          description: Réponse enregistrée
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: syntaxe invalide
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Invitation non trouvée
+        "409":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Invitation déja répondue
       summary: PUT ${..}/invitation/{id}
       x-contentType: application/json
       x-accepts: '*/*'
