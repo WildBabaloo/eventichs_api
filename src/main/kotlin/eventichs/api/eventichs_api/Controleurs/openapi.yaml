@@ -8,6 +8,7 @@ servers:
 paths:
   /<unknown>/utilisateurs:
     post:
+      description: "Inscription d'un utilisateur."
       summary: "POST ${..}/utilisateurs"
       operationId: "inscrire"
       requestBody:
@@ -22,9 +23,16 @@ paths:
           content:
             '*/*':
               schema:
+                $ref: "#/components/schemas/Utilisateur"
+        "409":
+          description: "Impossible de créer cet utilisateur"
+          content:
+            '*/*':
+              schema:
                 $ref: "#/components/schemas/ResponseEntity"
   /<unknown>/utilisateurs/{id}:
     get:
+      description: "Obtenir les informations d'un utilisateur."
       summary: "GET ${..}/utilisateurs/{id}"
       operationId: "connexion"
       parameters:
@@ -40,8 +48,15 @@ paths:
           content:
             '*/*':
               schema:
+                $ref: "#/components/schemas/Utilisateur"
+        "409":
+          description: "Cet utilisateur n'existe pas"
+          content:
+            '*/*':
+              schema:
                 $ref: "#/components/schemas/ResponseEntity"
     put:
+      description: "Modifier un utilisateur."
       summary: "PUT ${..}/utilisateurs/{id}"
       operationId: "modifier"
       parameters:
@@ -63,8 +78,15 @@ paths:
           content:
             '*/*':
               schema:
+                $ref: "#/components/schemas/Utilisateur"
+        "409":
+          description: "Cet utilisateur n'existe pas"
+          content:
+            '*/*':
+              schema:
                 $ref: "#/components/schemas/ResponseEntity"
     delete:
+      description: "Éffacer un utilisateur."
       summary: "DELETE ${..}/utilisateurs/{id}"
       operationId: "effacer"
       parameters:
@@ -80,9 +102,16 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/ResponseEntity"
+                $ref: "#/components/schemas/Utilisateur"
+      "409":
+        description: "Cet utilisateur n'existe pas"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/ResponseEntity"
   /<unknown>/jetons/{utilisateur_id}:
     post:
+      description: "Saisir un jeton pour rejoindre une organisation privée."
       operationId: saisirJeton
       parameters:
         - explode: false
@@ -104,8 +133,14 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/ResponseEntity'
+                $ref: '#/components/schemas/Organisation'
           description: OK
+        "409":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+          description: "Ce jeton n'existe pas"
       summary: POST ${..}/jetons/{utilisateur_id}
       x-contentType: application/json
       x-accepts: '*/*'
@@ -134,8 +169,16 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/ResponseEntity'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Jeton'
           description: OK
+        "409":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: "Impossible de créer des jetons puisque aucune rganisation existe ayant cet id"
       summary: GET ${..}/jetons/{id}/{quantité}
       x-accepts: '*/*'
   /<unknown>/invitations/{id}:
@@ -345,4 +388,12 @@ components:
           type: integer
         status:
           type: string
+      type: object
+    Organisation:
+      example:
+        id: 0
+      properties:
+        id:
+          format: int32
+          type: integer
       type: object

@@ -24,7 +24,7 @@ class JetonControleurTest {
     }
     @Test
     // @PostMapping("/jetons/{utilisateur_id}")
-    fun `Étant donné un participant qui a un jeton associé à aucune organisation lorsqu'on effectue une requête POST pour rejoindre une organisation alors on obtient un code de retour 409` (){
+    fun `Étant donné un participant qui a un jeton associé à aucune organisation lorsqu'on effectue une requête POST pour rejoindre une organisation alors on obtient un code de retour 409 et le message "Ce jeton n'existe pas"` (){
         TODO("Méthode non-implémentée")
     }
 
@@ -36,7 +36,7 @@ class JetonControleurTest {
     }
     @Test
     // @GetMapping("/jetons/{id}/{quantité}")
-    fun `Étant donné une organisation qui cherche à inviter des participant lorsqu'on effectue une requête GET avec une organisation qui n'existe pas pour obtenir 5 jetons alors on obtient un code de retour 409` (){
+    fun `Étant donné une organisation qui cherche à inviter des participant lorsqu'on effectue une requête GET avec une organisation qui n'existe pas pour obtenir 5 jetons alors on obtient un code de retour 409 et le message "Impossible de créer des jetons puisque aucune rganisation existe ayant cet id"` (){
         TODO("Méthode non-implémentée")
     }
 }

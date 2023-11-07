@@ -24,7 +24,7 @@ class UtilisateurControleurTest {
     }
     @Test
     // @PostMapping("/utilisateurs")
-    fun `Étant donné un utilisateur ayant un compte lorsqu'on effectue une requête POST pour se créer un compte avec un id existant dans le service on obtient un code de retour 409` (){
+    fun `Étant donné un utilisateur ayant un compte lorsqu'on effectue une requête POST pour se créer un compte avec un id existant dans le service on obtient un code de retour 409 et le message "Impossible de créer cet utilisateur"` (){
         TODO("Méthode non-implémentée")
     }
 
@@ -36,7 +36,7 @@ class UtilisateurControleurTest {
     }
     @Test
     // @GetMapping("/utilisateurs/{id}")
-    fun `Étant donné un utilisateur ne possedant pas un compte lorsqu'on effectue une requête GET pour se connecter à un compte avec un id inexistant dans le service obtient un code de retour 409` (){
+    fun `Étant donné un utilisateur ne possedant pas un compte lorsqu'on effectue une requête GET pour se connecter à un compte avec un id inexistant dans le service obtient un code de retour 409 et le message "Cet utilisateur n'existe pas"` (){
         TODO("Méthode non-implémentée")
     }
 
@@ -48,7 +48,7 @@ class UtilisateurControleurTest {
     }
     @Test
     // @PutMapping("/utilisateurs/{id}")
-    fun `Étant donné un utilisateur sans compte lorsqu'on effectue une requête POST pour modifier un compte avec un id inexistant dans le service on obtient un code de retour 409` (){
+    fun `Étant donné un utilisateur sans compte lorsqu'on effectue une requête POST pour modifier un compte avec un id inexistant dans le service on obtient un code de retour 409 et le message "Cet utilisateur n'existe pas"` (){
         TODO("Méthode non-implémentée")
     }
 
