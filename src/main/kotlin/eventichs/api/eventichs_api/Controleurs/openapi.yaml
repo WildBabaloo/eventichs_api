@@ -1,0 +1,399 @@
+openapi: 3.0.3
+info:
+  description: Eventichs_API API
+  title: Eventichs_API API
+  version: 1.0.0
+servers:
+- url: https://Eventichs_API
+paths:
+  /<unknown>/utilisateurs:
+    post:
+      description: "Inscription d'un utilisateur."
+      summary: "POST ${..}/utilisateurs"
+      operationId: "inscrire"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Utilisateur"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Utilisateur"
+        "409":
+          description: "Impossible de créer cet utilisateur"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  /<unknown>/utilisateurs/{id}:
+    get:
+      description: "Obtenir les informations d'un utilisateur."
+      summary: "GET ${..}/utilisateurs/{id}"
+      operationId: "connexion"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Utilisateur"
+        "409":
+          description: "Cet utilisateur n'existe pas"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+    put:
+      description: "Modifier un utilisateur."
+      summary: "PUT ${..}/utilisateurs/{id}"
+      operationId: "modifier"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Utilisateur"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Utilisateur"
+        "409":
+          description: "Cet utilisateur n'existe pas"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+    delete:
+      description: "Éffacer un utilisateur."
+      summary: "DELETE ${..}/utilisateurs/{id}"
+      operationId: "effacer"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Utilisateur"
+      "409":
+        description: "Cet utilisateur n'existe pas"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/ResponseEntity"
+  /<unknown>/jetons/{utilisateur_id}:
+    post:
+      description: "Saisir un jeton pour rejoindre une organisation privée."
+      operationId: saisirJeton
+      parameters:
+        - explode: false
+          in: path
+          name: utilisateur_id
+          required: true
+          schema:
+            format: int32
+            type: integer
+          style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Jeton'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Organisation'
+          description: OK
+        "409":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+          description: "Ce jeton n'existe pas"
+      summary: POST ${..}/jetons/{utilisateur_id}
+      x-contentType: application/json
+      x-accepts: '*/*'
+  /<unknown>/jetons/{id}/{quantité}:
+    get:
+      operationId: générerJeton
+      parameters:
+        - explode: false
+          in: path
+          name: id
+          required: true
+          schema:
+            format: int32
+            type: integer
+          style: simple
+        - explode: false
+          in: path
+          name: quantité
+          required: true
+          schema:
+            format: int32
+            type: integer
+          style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Jeton'
+          description: OK
+        "409":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: "Impossible de créer des jetons puisque aucune rganisation existe ayant cet id"
+      summary: GET ${..}/jetons/{id}/{quantité}
+      x-accepts: '*/*'
+  /<unknown>/invitations/{id}:
+    get:
+      description: Obtenir la liste des invitations par l'id de l'invité. dans le cas ou l'id représente une organisation, Obtenir la liste des demandes d'invitations.
+      operationId: obtenirInvitationsParIdUtilisateur
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Retourne la liste des invitations.
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Utilisateur non trouvé.
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Syntaxe incorrecte.
+      summary: GET ${..}/invitations/{id}
+      x-accepts: '*/*'
+  /<unknown>/invitations:
+    post:
+      description: Ajouter une invitation ou une demande d'invitation, dépendamment du type de l'invitateur et de l'invité.
+      operationId: inviterOuDemanderInvitation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: L'invitation est créée, et on obtient l'objet invitation créé.
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: l'invité ou l'inviteur n'existe pas.
+        "409":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: l'invité fait déja partie de l'évènement ou de l'organisation, ou l'évènement provient d'un groupe dont l'invité n'a pas accès.
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: syntaxe incorrecte.
+      summary: POST ${..}/invitations
+      x-contentType: application/json
+      x-accepts: '*/*'
+  /<unknown>/invitation/{id}:
+    delete:
+      description: Supprimer une invitation.
+      operationId: supprimerInvitation
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Invitation supprimée
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Invitation non-trouvée
+      summary: DELETE ${..}/invitation/{id}
+      x-accepts: '*/*'
+    put:
+      description: Répondre à une invitation ou demande.
+      operationId: majInvitationGroupe
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Réponse enregistrée
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: syntaxe invalide
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Invitation non trouvée
+        "409":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+          description: Invitation déja répondue
+      summary: PUT ${..}/invitation/{id}
+      x-contentType: application/json
+      x-accepts: '*/*'
+components:
+  schemas:
+    HttpHeaders:
+      properties: {}
+      type: object
+    ResponseEntity:
+      example:
+        headers: '{}'
+      properties:
+        headers:
+          properties: {}
+          type: object
+      type: object
+    Utilisateur:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+        nom:
+          type: "string"
+        prénom:
+          type: "string"
+        mot_de_passe:
+          type: "string"
+        email:
+          type: "string"
+    Jeton:
+      example:
+        utilisateur_id: 6
+        id: 0
+        jeton: jeton
+      properties:
+        id:
+          format: int32
+          type: integer
+        utilisateur_id:
+          format: int32
+          type: integer
+        jeton:
+          type: string
+      type: object
+    Invitation:
+      example:
+        codeExpediteur: 6
+        codeDestinataire: 1
+        id: 0
+        codeQuoiRejoindre: 5
+        status: status
+      properties:
+        id:
+          format: int32
+          type: integer
+        codeExpediteur:
+          format: int32
+          type: integer
+        codeDestinataire:
+          format: int32
+          type: integer
+        codeQuoiRejoindre:
+          format: int32
+          type: integer
+        status:
+          type: string
+      type: object
+    Organisation:
+      example:
+        id: 0
+      properties:
+        id:
+          format: int32
+          type: integer
+      type: object
