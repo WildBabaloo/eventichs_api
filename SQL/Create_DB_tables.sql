@@ -1,6 +1,6 @@
-create database eventichsBD;
-
-
+drop schema if exists `eventichsBD`;
+create schema if not exists `eventichsBD` default character set utf8;
+use `eventichsBD`;
 
 -- ----------------------------------------------------------------------------------------------
 -- TABLE UTILISATEUR
