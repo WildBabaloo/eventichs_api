@@ -59,7 +59,7 @@ CREATE TABLE Membres_événement (
    idUtilisateur VARCHAR(255) NOT NULL,
    idEvenement VARCHAR(255) NOT NULL,
    PRIMARY KEY (idUtilisateur, idEvenement),
---   FOREIGN KEY (idUtilisateur) REFERENCES
+   FOREIGN KEY (idUtilisateur) REFERENCES utilisateur(code)
    FOREIGN KEY (idEvenement) REFERENCES Événement(code)
 );
 
@@ -71,12 +71,18 @@ CREATE TABLE Organisation (
   code INT NOT NULL,
   codeUtilisateur INT NOT NULL,
   catégorie_id INT NOT NULL,
-  estPublic BOOL NOT NULL
+  estPublic BOOL NOT NULL,
+  PRIMARY KEY (code),
+  FOREIGN KEY (catégorie_id) REFERENCES Catégorie(id),
+  FOREIGN KEY (codeUtilisateur) REFERENCES utilisateur(code)
 );
 
 -- TABLE ORGANISATION_MEMBRE
 CREATE TABLE Organisations_membres (
     code VARCHAR(255) NOT NULL,
     code_organisation INT NOT NULL,
-    code_utilisateur INT NOT NULL
+    code_utilisateur INT NOT NULL,
+    PRIMARY KEY (code),
+    FOREIGN KEY (code_organisation) REFERENCES Organisation(code),
+    FOREIGN KEY (code_utilisateur) REFERENCES utilisateur(code)
 );
