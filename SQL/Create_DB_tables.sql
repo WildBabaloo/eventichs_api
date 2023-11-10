@@ -30,8 +30,6 @@ CREATE TABLE Jeton (
 
 
 
-
-
 -- -----------------------------------------------------------------------------------------------
 -- TABLE EVENEMENT
 CREATE TABLE Événement (
@@ -43,7 +41,9 @@ CREATE TABLE Événement (
    categorie_id VARCHAR(255) NOT NULL,
    description VARCHAR(255),
    photo VARCHAR(255),
-   organisation_id VARCHAR(255) NOT NULL
+   organisation_id VARCHAR(255) NOT NULL,
+   PRIMARY KEY (code),
+   FOREIGN KEY (categorie_id) REFERENCES Catégorie(id)
 );
 
 -- TABLE CATÉGORIE
@@ -57,11 +57,11 @@ CREATE TABLE Catégorie (
 -- TABLE MEMBRE_ÉVÉNEMENT
 CREATE TABLE Membres_événement (
    idUtilisateur VARCHAR(255) NOT NULL,
-   idEvenement VARCHAR(255) NOT NULL
+   idEvenement VARCHAR(255) NOT NULL,
+   PRIMARY KEY (idUtilisateur, idEvenement),
+--   FOREIGN KEY (idUtilisateur) REFERENCES
+   FOREIGN KEY (idEvenement) REFERENCES Événement(code)
 );
-
-
-
 
 
 
@@ -70,9 +70,6 @@ CREATE TABLE Membres_événement (
 CREATE TABLE Organisation (
   code INT NOT NULL,
   codeUtilisateur INT NOT NULL,
-  nom VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  motDePasse VARCHAR(255) NOT NULL,
   catégorie_id INT NOT NULL,
   estPublic BOOL NOT NULL
 );
