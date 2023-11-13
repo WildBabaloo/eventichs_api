@@ -18,7 +18,5 @@ INSERT INTO `eventichsbd`.`événement` (`nom`, `dateDebut`, `dateFin`, `type`, 
 -- Insertion Membres_événement
 
 -- Insertion Invitation
-INSERT INTO `eventichsbd`.`invitation` (`idExpediteur`, `idDestinataire`, `idQuoiRejoindre`, `model`, `status`) VALUES ('1', '2', '1', 'Organisation', 'envoyé');
-INSERT INTO `eventichsbd`.`invitation` (`idExpediteur`, `idDestinataire`, `idQuoiRejoindre`, `model`, `status`) VALUES ('1', '2', '3', 'Événement', 'envoyé');
-
--- Insertion Jeton
+INSERT INTO `eventichsbd`.`invitation_événement` (`idExpediteur`, `idDestinataire`, `idÉvénement`, `status`) VALUES ('1', '1', '1', 'généré');
+INSERT INTO `eventichsbd`.`invitation_organisation` (`idDestinataire`, `idOrganisation`, `status`) VALUES ('1', '1', 'généré');

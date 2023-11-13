@@ -74,29 +74,27 @@ CREATE TABLE Organisations_membres (
 
 
 -- -----------------------------------------------------------------------------------------------
--- TABLE INVITATION
-CREATE TABLE Invitation (
-    idExpediteur int NOT NULL, -- Qui veux deamander/Inviter à joindre?
-    idDestinataire int NOT NULL, -- Le réceptionnaire de la demande/invitation. Celui qui doit l'accepter ou la refuser.
-    idQuoiRejoindre int NOT NULL, -- Ce que l'expediteur cherche à joindre
-    model SET('Organisation', 'Événement'), -- L'expediteur cherche à joindre une organisation ou un événement?
-	status SET('envoyé', 'accepté', 'refusé'), -- L'état de la demande/invitation.
-	PRIMARY KEY (idExpediteur, idDestinataire, idQuoiRejoindre, model),
-	organisation_id INT AS (IF(model = 'Organisation', idQuoiRejoindre, NULL)) STORED,  -- Les 4 lignes suivantes pertmettent de guarantir l'intégrité des données.
-    événement_id INT AS (IF(model = 'Événement', idQuoiRejoindre, NULL)) STORED,        -- Les colonnes organisation_id et événement_id sont remplis automatiquement et ne doive pas être rempli dans un INSERT.
-    FOREIGN KEY (`organisation_id`) REFERENCES Organisation(id) ON DELETE CASCADE,
-    FOREIGN KEY (`événement_id`) REFERENCES Événement(id) ON DELETE CASCADE
+-- TABLE INVITATION_ORGANISATION
+CREATE TABLE Invitation_organisation (
+	id int primary key auto_increment,
+    idDestinataire int DEFAULT NULL, 
+    idOrganisation int NOT NULL,
+    jeton VARCHAR(255) DEFAULT NULL,
+	status SET('généré','envoyé', 'accepté', 'refusé'),
+	FOREIGN KEY (`idOrganisation`) REFERENCES Organisation(id) ON DELETE CASCADE,
+    FOREIGN KEY (`idDestinataire`) REFERENCES utilisateur(id) ON DELETE CASCADE
 );
 
--- TABLE JETON
-CREATE TABLE Jeton (
-   id INT AUTO_INCREMENT,
-   idQuoiRejoindre int NOT NULL, -- À quel organisation ou événement le jeton réfère.
-   model SET('Organisation', 'Événement'), -- Est-ce une organisation ou un événement.
-   jeton VARCHAR(255) NOT NULL,
-   PRIMARY KEY (id),
-   organisation_id INT AS (IF(model = 'Organisation', idQuoiRejoindre, NULL)) STORED,  -- Les 4 lignes suivantes pertmettent de guarantir l'intégrité des données.
-   événement_id INT AS (IF(model = 'Événement', idQuoiRejoindre, NULL)) STORED,        -- Les colonnes organisation_id et événement_id sont remplis automatiquement et ne doive pas être rempli dans un INSERT.
-   FOREIGN KEY (`organisation_id`) REFERENCES Organisation(id) ON DELETE CASCADE,
-   FOREIGN KEY (`événement_id`) REFERENCES Événement(id) ON DELETE CASCADE
+-- TABLE INVITATION_ÉVÉNEMENT
+CREATE TABLE Invitation_événement (
+	id int primary key auto_increment,
+    idExpediteur int NOT NULL,
+    idDestinataire int DEFAULT NULL, 
+    idÉvénement int NOT NULL,
+    jeton VARCHAR(255) DEFAULT NULL,
+	status SET('généré','envoyé', 'accepté', 'refusé'),
+	FOREIGN KEY (`idÉvénement`) REFERENCES Événement(id) ON DELETE CASCADE,
+    FOREIGN KEY (`idDestinataire`) REFERENCES utilisateur(id) ON DELETE CASCADE,
+	FOREIGN KEY (`idExpediteur`) REFERENCES utilisateur(id) ON DELETE CASCADE
 );
+
