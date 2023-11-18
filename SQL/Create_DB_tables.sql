@@ -8,6 +8,7 @@ use `eventichsBD`;
 CREATE TABLE utilisateur (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
+    prénom VARCHAR(255) NOT NULL,
     courriel VARCHAR(255) NOT NULL UNIQUE,
     motDePasse VARCHAR(255) NOT NULL
 );

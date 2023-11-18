@@ -1,6 +1,5 @@
 package eventichs.api.eventichs_api.Controleurs
 
-import eventichs.api.eventichs_api.Modèle.Invitation
 import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.Utilisateur
 import org.springframework.http.HttpStatus
