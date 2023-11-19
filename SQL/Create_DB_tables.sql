@@ -34,7 +34,7 @@ CREATE TABLE Événement (
    categorie_id int NOT NULL,
    description VARCHAR(255),
    photo VARCHAR(255),
-   organisation_id VARCHAR(255) NOT NULL,
+   organisation_id int NOT NULL,
    PRIMARY KEY (id),
    FOREIGN KEY (categorie_id) REFERENCES Catégorie(id)
 );
