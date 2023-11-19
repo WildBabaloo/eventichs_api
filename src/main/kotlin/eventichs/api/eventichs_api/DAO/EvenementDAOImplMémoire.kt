@@ -23,11 +23,9 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
         return element
     }
 
-
-
     override fun ajouter(element: Événement): Événement {
         db.update(
-                "insert into Événement values ( ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?)",
+                "insert into Événement values ( ?, ?, ? , ?, ?, ?, ?, ?, ?)",
                 element.id,
                 element.nom,
                 element.dateDebut,
