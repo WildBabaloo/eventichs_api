@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("\${api.base-path:}")
 class InvitationOrganisationControleur(val service: InvitationOrganisationService) {
 
+    @GetMapping("/organisations/invitations")
+    fun obtenirInvitationOrganisation() = service.chercherTous()
+
+    //si l'utilisateur est un participant, cela affiche des invitations. si il est une organisation, cela affiche des demandes d'invitations.
+    @GetMapping("/organisations/invitations/{id}")
+    fun obtenirInvitationsParIdUtilisateur(@PathVariable id: Int) = service.chercherParID(id)
+
     @PostMapping("/organisations/{idOrganisation}/invitations/{idParticipant}")
     //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
     fun demandeJoindreOrganisation(@PathVariable idOrganisation: Int, @PathVariable idParticipant: Int) = service.demandeJoindreOrganisation( idOrganisation, idParticipant)
@@ -20,52 +27,25 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     //Cas d'utilisation: 3.Consulter ses invitations(Organisation)
     fun obtenirInvitationOrganisation(@PathVariable idOrganisation: Int) = service.chercherParOrganisation(idOrganisation)
 
-    @GetMapping("/organisations/invitations/{idParticipant}")
+    @GetMapping("/utilisateurs/{idParticipant}/invitations")
     //Cas d'utilisation: 3.Consulter ses invitations(Participant)
     fun obtenirInvitationParticipant(@PathVariable idParticipant: Int) = service.chercherParParticipant(idParticipant)
 
+    @PutMapping("/organisations/invitations/{id}/status/{status}")
     //Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
+    fun changerStatus(@PathVariable id: Int, @PathVariable status : String) = service.changerStatus(id, status)
+
+    //@PutMapping("/organisations/jetons/{jeton}/{idUtilisateur}")
     //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
+    //fun saisirJeton(@PathVariable jeton : String, @PathVariable idUtilisateur : Int) = service.saisirJeton(jeton, idUtilisateur)
+
+    //@PostMapping("/organisations/{idOrganisation}/jeton")
     //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
+    //ééfun crééJeton(@PathVariable idOrganisation : Int) = service.crééJeton(idOrganisation)
+
+    //@DeleteMapping("/organisations/invitations/{idInvitationOrganisation}")
     //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
-
-
-
-
-    @GetMapping("/organisations/invitations")
-    fun obtenirInvitationOrganisation() = service.chercherTous()
-
-    //si l'utilisateur est un participant, cela affiche des invitations. si il est une organisation, cela affiche des demandes d'invitations.
-    @GetMapping("/organisations/invitations/{id}")
-    fun obtenirInvitationsParIdUtilisateur(@PathVariable id: Int) = service.chercherParID(id)
-
-
-    /*
-
-    @PostMapping("/invitations")
-    fun inviterOuDemanderInvitation(@RequestBody invitationOuDemande: InvitationOrganisation):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-
-    @PutMapping("/invitation/{id}")
-    fun majInvitation(@PathVariable id: String, @RequestBody reponse: String):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-
-    @DeleteMapping("/invitation/{id}")
-    fun supprimerInvitation(@PathVariable id: String):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-
-
-
-    @PostMapping("/jetons/{utilisateur_id}")
-    fun saisirJeton(@PathVariable utilisateur_id : Int, @RequestBody jeton : InvitationÉvénement):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-
-    @GetMapping("/jetons/{id}/{quantité}")
-    fun générerJeton(@PathVariable id : Int,  @PathVariable quantité : Int):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-
-     */
-
+    //fun effacerInvitation(@PathVariable idInvitationOrganisation: Int) = service.effacerInvitation(idInvitationOrganisation)
 
 }
 

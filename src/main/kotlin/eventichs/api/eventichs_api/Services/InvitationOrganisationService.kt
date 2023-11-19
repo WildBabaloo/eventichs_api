@@ -22,4 +22,7 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     //Cas d'utilisation: 3.Consulter ses invitations(Participant+Organisation)
     fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation> = dao.chercherParOrganisation(idOrganisation)
     fun chercherParParticipant(idParticipant: Int) : List<InvitationOrganisation> = dao.chercherParParticipant(idParticipant)
+
+    //Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
+    fun changerStatus(idInvitationOrganisation: Int, status : String) : InvitationOrganisation? = dao.changerStatus(idInvitationOrganisation, status)
 }

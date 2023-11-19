@@ -22,4 +22,8 @@ interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
     fun chercherParParticipant(idParticipant: Int) : List<InvitationOrganisation> {
         TODO("Not yet implemented")
     }
+
+    fun changerStatus(idInvitationOrganisation : Int, status : String) : InvitationOrganisation? {
+        TODO("Not yet implemented")
+    }
 }

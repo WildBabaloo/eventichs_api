@@ -2,7 +2,9 @@ package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.ResultSetExtractor
 import org.springframework.stereotype.Repository
+import java.sql.ResultSet
 
 @Repository
 class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrganisationDAO {
@@ -30,4 +32,9 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
 
     override fun chercherParParticipant(idParticipant: Int): List<InvitationOrganisation> =
         db.query("select * from invitation_organisation where idDestinataire = $idParticipant", InvitationOrganisationMapper())
+
+    override fun changerStatus(idInvitationOrganisation: Int, status: String): InvitationOrganisation? {
+        db.update("update invitation_organisation set `status` = ? where id = ?",status, idInvitationOrganisation)
+        return chercherParID(idInvitationOrganisation)
+    }
 }
