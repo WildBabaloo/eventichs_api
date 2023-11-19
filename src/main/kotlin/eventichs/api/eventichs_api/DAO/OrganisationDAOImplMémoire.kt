@@ -7,16 +7,22 @@ import org.springframework.jdbc.core.JdbcTemplate
 
 class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     // TODO
-    override fun chercherOrganisations(): List<Organisation> {
-        TODO("Not yet implemented")
-    }
 
-    override fun chercherOrganisationParCode(codeOrganisation: Organisation): Organisation? {
-        TODO("Not yet implemented")
-    }
+    override fun chercherOrganisations(): List<Organisation> =
+        db.query("select * from organisation", OrganisationMapper())
+
+    override fun chercherOrganisationParCode(codeOrganisation: Int): Organisation? =
+        db.queryForObject("select * from organisation where id = $codeOrganisation", OrganisationMapper())
 
     override fun ajouterOrganisation(uneOrganisation: Organisation): Organisation? {
-        TODO("Not yet implemented")
+        db.update(
+            "insert into organisation values (?, ?, ?, ?)",
+            uneOrganisation.id,
+            uneOrganisation.idUtilisateur,
+            uneOrganisation.catégorie_id,
+            uneOrganisation.estPublic
+        )
+        return uneOrganisation
     }
 
     override fun modifierOrganisation(codeOrganisation: Organisation, uneOrganisation: Organisation): Organisation? {

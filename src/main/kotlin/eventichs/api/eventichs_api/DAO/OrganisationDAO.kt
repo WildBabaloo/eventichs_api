@@ -6,7 +6,7 @@ import eventichs.api.eventichs_api.Modèle.Utilisateur
 
 interface OrganisationDAO: DAO<Organisation> {
     override fun chercherOrganisations(): List<Organisation>
-    override fun chercherOrganisationParCode(codeOrganisation: Organisation): Organisation?
+    override fun chercherOrganisationParCode(codeOrganisation: Int): Organisation?
     override fun ajouterOrganisation(uneOrganisation: Organisation): Organisation?
     override fun modifierOrganisation(codeOrganisation: Organisation, uneOrganisation: Organisation): Organisation?
     override fun deleteOrganisation(codeOrganisation: Organisation)
