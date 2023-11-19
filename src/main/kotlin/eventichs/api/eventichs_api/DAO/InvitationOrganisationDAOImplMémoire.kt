@@ -37,4 +37,12 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         db.update("update invitation_organisation set `status` = ? where id = ?",status, idInvitationOrganisation)
         return chercherParID(idInvitationOrganisation)
     }
+
+    override fun modifier(element: InvitationOrganisation): InvitationOrganisation? {
+        return super.modifier(element)
+    }
+
+    override fun supprimerParID(id: Int): InvitationOrganisation? {
+        return super.supprimerParID(id)
+    }
 }
