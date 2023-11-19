@@ -4,14 +4,11 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class InvitationControleurTest {
+class InvitationOrganisationControleurTest {
 
 //    @MockBean
 //    lateinit var service: InvitationService
@@ -30,9 +27,6 @@ class InvitationControleurTest {
     fun `Étant donné un utilisateur lorsqu'on effectue une requête DELETE sur une invitation qui n'existe pas alors on obtient un code de retour 409` (){
         TODO("Méthode non-implémentée")
     }
-
-    //Alex
-
 
     //Demander à joindre une organisation
     @Test

@@ -1,6 +1,6 @@
 -- Insertion Utilisateur
-INSERT INTO `eventichsbd`.`utilisateur` (`nom`, `courriel`, `motDePasse`) VALUES ('joe', 'joegmail', '123');
-INSERT INTO `eventichsbd`.`utilisateur` (`nom`, `courriel`, `motDePasse`) VALUES ('sam', 'samgmail', '123');
+INSERT INTO `eventichsbd`.`utilisateur` (`nom`, `prénom`, `courriel`, `motDePasse`) VALUES ('joe','tremblay', 'joegmail@gmail.com', 'joe123');
+INSERT INTO `eventichsbd`.`utilisateur` (`nom`, `prénom`, `courriel`, `motDePasse`) VALUES ('sam','drolet', 'samgmail@gmail.com', 'password123');
 
 -- Insertion Catégorie
 INSERT INTO `eventichsbd`.`catégorie` (`nom`, `description`) VALUES ('allo', 'allo');
