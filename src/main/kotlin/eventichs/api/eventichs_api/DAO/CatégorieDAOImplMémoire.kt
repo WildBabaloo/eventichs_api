@@ -14,7 +14,7 @@ class CatégorieDAOImplMémoire(val db: JdbcTemplate): CatégorieDAO {
         db.queryForObject("select * from Catégorie where id = $id", CatégorieMapper())
 
     override fun chercherParOrganisation(organisation_id: Int): List<Catégorie> =
-        db.query("select * Catégorie where organisation_id = $id", CatégorieMapper())
+        db.query("select * Catégorie where organisation_id = $organisation_id", CatégorieMapper())
 
     override fun supprimerParID(id: Int): Catégorie? {
         val element = db.queryForObject("select * from Catégorie where id = $id", CatégorieMapper())
