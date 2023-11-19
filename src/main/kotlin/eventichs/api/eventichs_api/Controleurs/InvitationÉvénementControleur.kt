@@ -10,6 +10,14 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("\${api.base-path:}")
 class InvitationÉvénementControleur() {
 
+    //Cas d'utilisation: 2.Inviter un autre participant à un événement publique (Participant)
+    //Cas d'utilisation: 3.Consulter ses invitations(Participant+Organisation)
+    //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
+    //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
+    //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
+
+
+
     //si l'utilisateur est un participant, cela affiche des invitations. si il est une organisation, cela affiche des demandes d'invitations.
     //@GetMapping("/invitations/{id}")
     fun obtenirInvitationsParIdUtilisateur(@PathVariable id: String):

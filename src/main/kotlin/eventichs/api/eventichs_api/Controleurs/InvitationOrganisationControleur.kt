@@ -1,6 +1,8 @@
 package eventichs.api.eventichs_api.Controleurs
 
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
+import eventichs.api.eventichs_api.Modèle.Organisation
+import eventichs.api.eventichs_api.Modèle.Utilisateur
 import eventichs.api.eventichs_api.Services.InvitationOrganisationService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -10,20 +12,22 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("\${api.base-path:}")
 class InvitationOrganisationControleur(val service: InvitationOrganisationService) {
 
+    @PostMapping("/organisations/{idOrganisation}/invitations/{idParticipant}")
+    //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
+    fun demandeJoindreOrganisation(@PathVariable idOrganisation: Int, @PathVariable idParticipant: Int) = service.demandeJoindreOrganisation( idOrganisation, idParticipant)
 
-    // Cas d'utilisation: Demander à joindre une organisation (Participant)
-    //@PostMapping("/organisations/{id}/invitations")
-    //fun demanderJoindreOrganisation(@PathVariable id: Int, @RequestBody idUtilisateur: Int) {}
+    @GetMapping("/organisations/{idOrganisation}/invitations")
+    //Cas d'utilisation: 3.Consulter ses invitations(Organisation)
+    fun obtenirInvitationOrganisation(@PathVariable idOrganisation: Int) = service.chercherParOrganisation(idOrganisation)
 
+    @GetMapping("/organisations/invitations/{idParticipant}")
+    //Cas d'utilisation: 3.Consulter ses invitations(Participant)
+    fun obtenirInvitationParticipant(@PathVariable idParticipant: Int) = service.chercherParParticipant(idParticipant)
 
-    // Cas d'utilisation: Inviter un autre participant à un événement publique (Participant)
-    // Cas d'utilisation: Consulter ses invitations et ses demandes (Participant+Organisation)
-    // Cas d'utilisation: Accepter la demande de joindre l'org.. par le participant (Organisation)
-    // Cas d'utilisation: Entrer un jeton d'invitation (Participant)
-    // Cas d'utilisation: Générer son jeton d'invitation (Organisation)
-    // Cas d'utilisation: Éffacer une invitation (Participant + Organisation)
-
-
+    //Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
+    //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
+    //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
+    //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
 
 
 
@@ -34,6 +38,9 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     //si l'utilisateur est un participant, cela affiche des invitations. si il est une organisation, cela affiche des demandes d'invitations.
     @GetMapping("/organisations/invitations/{id}")
     fun obtenirInvitationsParIdUtilisateur(@PathVariable id: Int) = service.chercherParID(id)
+
+
+    /*
 
     @PostMapping("/invitations")
     fun inviterOuDemanderInvitation(@RequestBody invitationOuDemande: InvitationOrganisation):
@@ -48,7 +55,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
 
-    /*
+
     @PostMapping("/jetons/{utilisateur_id}")
     fun saisirJeton(@PathVariable utilisateur_id : Int, @RequestBody jeton : InvitationÉvénement):
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
@@ -56,7 +63,9 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     @GetMapping("/jetons/{id}/{quantité}")
     fun générerJeton(@PathVariable id : Int,  @PathVariable quantité : Int):
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+
      */
+
 
 }
 
