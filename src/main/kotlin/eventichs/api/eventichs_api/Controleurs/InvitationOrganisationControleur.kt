@@ -35,17 +35,17 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     //Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
     fun changerStatus(@PathVariable id: Int, @PathVariable status : String) = service.changerStatus(id, status)
 
-    //@PutMapping("/organisations/jetons/{jeton}/{idUtilisateur}")
+    @PutMapping("/organisations/jetons/{jeton}/{idUtilisateur}")
     //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
-    //fun saisirJeton(@PathVariable jeton : String, @PathVariable idUtilisateur : Int) = service.saisirJeton(jeton, idUtilisateur)
+    fun saisirJeton(@PathVariable jeton : String, @PathVariable idUtilisateur : Int) = service.saisirJeton(jeton, idUtilisateur)
 
-    //@PostMapping("/organisations/{idOrganisation}/jeton")
+    @PostMapping("/organisations/{idOrganisation}/jetons")
     //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
-    //ééfun crééJeton(@PathVariable idOrganisation : Int) = service.crééJeton(idOrganisation)
+    fun crééJeton(@PathVariable idOrganisation : Int) = service.crééJeton(idOrganisation)
 
-    //@DeleteMapping("/organisations/invitations/{idInvitationOrganisation}")
+    @DeleteMapping("/organisations/invitations/{idInvitationOrganisation}")
     //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
-    //fun effacerInvitation(@PathVariable idInvitationOrganisation: Int) = service.effacerInvitation(idInvitationOrganisation)
+    fun effacerInvitation(@PathVariable idInvitationOrganisation: Int) = service.effacerInvitation(idInvitationOrganisation)
 
 }
 

@@ -34,4 +34,12 @@ interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
     fun changerStatus(idInvitationOrganisation : Int, status : String) : InvitationOrganisation? {
         TODO("Not yet implemented")
     }
+
+    fun crééJeton(idOrganisation : Int) : InvitationOrganisation? {
+        TODO("Not yet implemented")
+    }
+
+    fun saisirJeton(jeton : String, idUtilisateur : Int) : InvitationOrganisation?  {
+        TODO("Not yet implemented")
+    }
 }
