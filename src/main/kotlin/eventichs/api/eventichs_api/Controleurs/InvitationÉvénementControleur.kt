@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.*
 class InvitationÉvénementControleur() {
 
     //si l'utilisateur est un participant, cela affiche des invitations. si il est une organisation, cela affiche des demandes d'invitations.
-    @GetMapping("/invitations/{id}")
+    //@GetMapping("/invitations/{id}")
     fun obtenirInvitationsParIdUtilisateur(@PathVariable id: String):
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
-    @PostMapping("/invitations")
+    //@PostMapping("/invitations")
     fun inviterOuDemanderInvitation(@RequestBody invitationOuDemande: InvitationOrganisation):
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
-    @PutMapping("/invitation/{id}")
+    //@PutMapping("/invitation/{id}")
     fun majInvitation(@PathVariable id: String, @RequestBody reponse: String):
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
-    @DeleteMapping("/invitation/{id}")
+    //@DeleteMapping("/invitation/{id}")
     fun supprimerInvitation(@PathVariable id: String):
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
