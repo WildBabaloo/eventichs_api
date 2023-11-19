@@ -1,11 +1,10 @@
-package eventichs.api.eventichs_api.Services;
+package eventichs.api.eventichs_api.Services
 
-import eventichs.api.eventichs_api.DAO.CatégorieDAO;
-import eventichs.api.eventichs_api.Modèle.Catégorie;
-import eventichs.api.eventichs_api.Modèle.Événement;
-import org.springframework.stereotype.Service;
+import eventichs.api.eventichs_api.DAO.CatégorieDAO
+import eventichs.api.eventichs_api.Modèle.Catégorie
+import org.springframework.stereotype.Service
 
-import java.util.List;
+import java.util.List
 
 @Service
 class CatégorieService(val dao : CatégorieDAO) {
