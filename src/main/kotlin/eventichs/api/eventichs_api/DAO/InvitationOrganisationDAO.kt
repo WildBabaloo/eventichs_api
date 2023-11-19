@@ -14,4 +14,12 @@ interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
     override fun ajouter(element: InvitationOrganisation): InvitationOrganisation? {
         TODO("Not yet implemented")
     }
+
+    fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation> {
+        TODO("Not yet implemented")
+    }
+
+    fun chercherParParticipant(idParticipant: Int) : List<InvitationOrganisation> {
+        TODO("Not yet implemented")
+    }
 }
