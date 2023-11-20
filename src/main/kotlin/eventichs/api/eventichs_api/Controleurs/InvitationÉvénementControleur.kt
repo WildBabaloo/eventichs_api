@@ -2,13 +2,14 @@ package eventichs.api.eventichs_api.Controleurs
 
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import eventichs.api.eventichs_api.Modèle.InvitationÉvénement
+import eventichs.api.eventichs_api.Services.InvitationÉvénementService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("\${api.base-path:}")
-class InvitationÉvénementControleur() {
+class InvitationÉvénementControleur(val service: InvitationÉvénementService) {
 
     //Cas d'utilisation: 2.Inviter un autre participant à un événement publique (Participant)
     //Cas d'utilisation: 3.Consulter ses invitations(Participant+Organisation)
@@ -16,12 +17,9 @@ class InvitationÉvénementControleur() {
     //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
     //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
 
-
-
-    //si l'utilisateur est un participant, cela affiche des invitations. si il est une organisation, cela affiche des demandes d'invitations.
-    //@GetMapping("/invitations/{id}")
-    fun obtenirInvitationsParIdUtilisateur(@PathVariable id: String):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    @GetMapping("/utilisateur/invitations/{id}")
+    fun obtenirInvitationsParIdDestinataire(@PathVariable id: Int) =
+            service.chercherInvitationsParIdUtilisateur(id)
 
     //@PostMapping("/invitations")
     fun inviterOuDemanderInvitation(@RequestBody invitationOuDemande: InvitationOrganisation):

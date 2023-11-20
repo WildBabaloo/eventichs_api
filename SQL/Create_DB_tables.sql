@@ -90,7 +90,7 @@ CREATE TABLE Invitation_organisation (
 CREATE TABLE Invitation_événement (
 	id int primary key auto_increment,
     idExpediteur int NOT NULL,
-    idDestinataire int DEFAULT NULL, 
+    idDestinataire int DEFAULT NULL,
     idÉvénement int NOT NULL,
     jeton VARCHAR(255) DEFAULT NULL,
 	status SET('généré','envoyé', 'accepté', 'refusé'),
