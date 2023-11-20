@@ -18,15 +18,23 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
     }
 
     override fun ajouter(element: InvitationÉvénement): InvitationÉvénement? {
-        return super.ajouter(element)
+        db.update("INSERT INTO Invitation_événement values (?,?,?,?,?,?)",
+            element.id,
+            element.idExpéditeur,
+            element.idDestinataire,
+            element.idOrganisation,
+            element.jeton,
+            element.status)
+
+        return element
     }
 
     override fun chercherTous(): List<InvitationÉvénement> {
-        return super.chercherTous()
+        return db.query("SELECT * FROM Invitation_événement", InvitationÉvénementMapper())
     }
 
     override fun chercherParID(id: Int): InvitationÉvénement? {
-        return super.chercherParID(id)
+        return db.queryForObject("SELECT * FROM Invitation_événement WHERE id = $id", InvitationÉvénementMapper())
     }
 
     override fun chercherParIdDestinataire(id: Int): List<InvitationÉvénement> {

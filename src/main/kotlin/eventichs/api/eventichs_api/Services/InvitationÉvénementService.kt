@@ -9,6 +9,9 @@ class InvitationÉvénementService(val dao: InvitationÉvénementDAO) {
 
     fun chercherTous(): List<InvitationÉvénement> = dao.chercherTous()
 
-    fun chercherInvitationsParIdUtilisateur(id: Int): List<InvitationÉvénement> = dao.chercherParIdDestinataire(id)
+    fun chercherInvitationsÉvénementsParIdDestinataire(id: Int): List<InvitationÉvénement> = dao.chercherParIdDestinataire(id)
+    fun chercherInvitationÉvénementParId(id: Int): InvitationÉvénement? = dao.chercherParID(id)
+
+    fun créerInvitationÉvénement(invitation: InvitationÉvénement) = dao.ajouter(invitation)
 
 }

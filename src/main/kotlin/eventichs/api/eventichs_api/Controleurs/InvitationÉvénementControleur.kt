@@ -17,13 +17,17 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
     //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
     //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
 
-    @GetMapping("/utilisateur/invitations/{id}")
-    fun obtenirInvitationsParIdDestinataire(@PathVariable id: Int) =
-            service.chercherInvitationsParIdUtilisateur(id)
+    @GetMapping("/utilisateur/invitations/destinataire/{id}")
+    fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable id: Int) =
+            service.chercherInvitationsÉvénementsParIdDestinataire(id)
 
-    //@PostMapping("/invitations")
-    fun inviterOuDemanderInvitation(@RequestBody invitationOuDemande: InvitationOrganisation):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    @GetMapping("/utilisateur/invitations/{id}")
+    fun obtenirInvitationÉvénementParId(@PathVariable id: Int) =
+        service.chercherInvitationÉvénementParId(id)
+
+    @PostMapping("/invitation")
+    fun créerInvitationÉvénement(@RequestBody Invitation: InvitationÉvénement) =
+        service.créerInvitationÉvénement(Invitation)
 
     //@PutMapping("/invitation/{id}")
     fun majInvitation(@PathVariable id: String, @RequestBody reponse: String):
