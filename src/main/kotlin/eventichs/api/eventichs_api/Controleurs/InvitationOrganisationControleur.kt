@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.Controleurs
 
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.Utilisateur
@@ -7,6 +8,7 @@ import eventichs.api.eventichs_api.Services.InvitationOrganisationService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 @RestController
 @RequestMapping("\${api.base-path:}")
@@ -17,11 +19,23 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
 
     //si l'utilisateur est un participant, cela affiche des invitations. si il est une organisation, cela affiche des demandes d'invitations.
     @GetMapping("/organisations/invitations/{id}")
-    fun obtenirInvitationsParIdUtilisateur(@PathVariable id: Int) = service.chercherParID(id)
+    fun obtenirInvitationsParIdUtilisateur(@PathVariable id: Int) = service.chercherParID(id) ?: throw RessourceInexistanteException(" L'invitation à une organisation $id n'est pas inscrit au service ")
 
     @PostMapping("/organisations/{idOrganisation}/invitations/{idParticipant}")
     //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
-    fun demandeJoindreOrganisation(@PathVariable idOrganisation: Int, @PathVariable idParticipant: Int) = service.demandeJoindreOrganisation( idOrganisation, idParticipant)
+    fun demandeJoindreOrganisation(@PathVariable idOrganisation: Int, @PathVariable idParticipant: Int) : ResponseEntity<InvitationOrganisation>{
+        val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation( idOrganisation, idParticipant)
+        if (nouvelleInvitation != null) {
+            val uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/organisations/invitations/{id}")
+                .buildAndExpand(nouvelleInvitation.id)
+                .toUri()
+
+            return ResponseEntity.created(uri).body(nouvelleInvitation)
+        }
+        return ResponseEntity.internalServerError().build()
+    }
 
     @GetMapping("/organisations/{idOrganisation}/invitations")
     //Cas d'utilisation: 3.Consulter ses invitations(Organisation)

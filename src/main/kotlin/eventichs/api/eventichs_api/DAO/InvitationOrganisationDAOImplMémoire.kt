@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.ResultSetExtractor
@@ -16,10 +17,16 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         db.queryForObject("select * from invitation_organisation where id = $id", InvitationOrganisationMapper())
 
     override fun ajouter(element: InvitationOrganisation): InvitationOrganisation? {
-
+        val listeInvitations = chercherParOrganisation(element.idOrganisation)
         //Comment vérifié qu'une invitation n'existe pas qui a le même idDestinataire et le même idOrganisation.
         // if idDestinataire /= null && /= element.idDestinataire && idOrganisation /= element.idOrganisation
-        // ...
+        for (invitation : InvitationOrganisation in listeInvitations) {
+            if (invitation.idDestinataire != null) {
+                if (invitation.idDestinataire == element.idDestinataire) {
+                        throw ConflitAvecUneRessourceExistanteException(" Il y existe déjà une invitation à l'organisation ${element.idOrganisation} assigné au particiapnt ${element.idDestinataire} inscrit au service ")
+                }
+            }
+        }
 
         db.update(
             "insert into invitation_organisation values ( ?, ?, ? , ?, ?)",
