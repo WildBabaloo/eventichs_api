@@ -20,3 +20,5 @@ INSERT INTO `eventichsbd`.`événement` (`nom`, `adresse`, `dateDebut`, `dateFin
 -- Insertion Invitation
 INSERT INTO `eventichsbd`.`invitation_événement` (`idExpediteur`, `idDestinataire`, `idÉvénement`, `status`) VALUES ('1', '1', '1', 'envoyé');
 INSERT INTO `eventichsbd`.`invitation_organisation` (`idDestinataire`, `idOrganisation`, `status`) VALUES ('1', '1', 'envoyé');
+INSERT INTO `eventichsbd`.`invitation_organisation` (`idOrganisation`, `jeton`, `status`) VALUES ('1', '9EIUYTBB', 'généré');
+
