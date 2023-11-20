@@ -13,6 +13,6 @@ class OrganisationService(val dao: OrganisationDAO) {
     fun supprimerParID(id: Int): Organisation? = dao.supprimerParID(id)
     fun modifier(element: Organisation): Organisation? = dao.modifier(element)
     fun consulterOrganisationPubliques(): List<Organisation> = dao.consulterOrganisationPubliques()
-    fun filtrerOrganisationParGouts(uneCategorie: Categorie) = dao.filtrerOrganisationParGouts(uneCategorie)
+    fun filtrerOrganisationParGouts(uneCategorie: Categorie): List<Organisation> = dao.filtrerOrganisationParGouts(uneCategorie)
     fun changerVisibilitéOrganisation(uneOrganisation: Organisation, estPublic: Boolean) = dao.changerVisiblitéOrganisation(uneOrganisation, estPublic)
 }
