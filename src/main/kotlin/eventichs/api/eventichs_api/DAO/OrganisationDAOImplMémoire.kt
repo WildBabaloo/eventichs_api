@@ -42,15 +42,13 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         return uneOrganisation
     }
 
-    override fun consulterOrganisationPubliques(): List<Organisation> {
-        TODO("Not yet implemented")
-    }
-
-    override fun filtrerOrganisationParGouts(uneCategorie: Categorie): List<Organisation> {
-        TODO("Not yet implemented")
-    }
-
-    override fun changerVisiblitéOrganisation(codeOrganisation: Organisation, estPublic: Boolean): Organisation? {
-        TODO("Not yet implemented")
+    override fun consulterOrganisationPubliques(): List<Organisation> =
+        db.query("select * from organisation where estPublic=true", OrganisationMapper())
+    override fun filtrerOrganisationParGouts(uneCategorie: Categorie): List<Organisation> =
+        db.query("select o.nom from organisation o inner join categorie c on o.categorie_id = c.id where c.nom= $uneCategorie.nom ",OrganisationMapper())
+    override fun changerVisiblitéOrganisation(codeOrganisation: Organisation, estPublic: Boolean) {
+        db.update("update organisation " +
+                "set estPublique=$estPublic where organisation.id=$codeOrganisation"
+        )
     }
 }
