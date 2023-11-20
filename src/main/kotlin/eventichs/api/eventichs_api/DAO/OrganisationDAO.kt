@@ -11,7 +11,7 @@ interface OrganisationDAO: DAO<Organisation> {
     override fun modifier(element: Organisation): Organisation?
     fun consulterOrganisationPubliques(): List<Organisation>
     fun filtrerOrganisationParGouts(uneCategorie: Categorie): List<Organisation>
-    fun changerVisiblitéOrganisation(codeOrganisation: Organisation, estPublic: Boolean)
+    fun changerVisiblitéOrganisation(uneOrganisation: Organisation, estPublic: Boolean)
 
 
 }
