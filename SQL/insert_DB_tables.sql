@@ -11,9 +11,9 @@ INSERT INTO `eventichsbd`.`organisation` (`idUtilisateur`, `catégorie_id`) VALU
 -- Insertion Organisations_membres
 
 -- Insertion Événement
-INSERT INTO `eventichsbd`.`événement` (`nom`, `dateDebut`, `dateFin`, `type`, `categorie_id`, `description`, `photo`, `organisation_id`) VALUES ('Soiré', '2020-10-10', '2020-10-10', 'soiré', '1', 'aaa', 'aaa', '1');
-INSERT INTO `eventichsbd`.`événement` (`nom`, `dateDebut`, `dateFin`, `type`, `categorie_id`, `description`, `photo`, `organisation_id`) VALUES ('Soiré2', '2020-10-10', '2020-10-10', 'soiré', '1', 'aaa', 'aaa', '1');
-INSERT INTO `eventichsbd`.`événement` (`nom`, `dateDebut`, `dateFin`, `type`, `categorie_id`, `description`, `photo`, `organisation_id`) VALUES ('Soiré3', '2020-10-10', '2020-10-10', 'soiré', '1', 'aaa', 'aaa', '1');
+INSERT INTO `eventichsbd`.`événement` (`nom`, `adresse`,`dateDebut`, `dateFin`, `type`, `categorie_id`, `description`, `photo`, `organisation_id`) VALUES ('Soiré','134 avenue Parc', '2020-10-10', '2020-10-10', 'soiré', '1', 'aaa', 'aaa', '1');
+INSERT INTO `eventichsbd`.`événement` (`nom`, `adresse`,`dateDebut`, `dateFin`, `type`, `categorie_id`, `description`, `photo`, `organisation_id`) VALUES ('Soiré2', '23 rue Waverly','2020-10-10', '2020-10-10', 'soiré', '1', 'aaa', 'aaa', '1');
+INSERT INTO `eventichsbd`.`événement` (`nom`, `adresse`, `dateDebut`, `dateFin`, `type`, `categorie_id`, `description`, `photo`, `organisation_id`) VALUES ('Soiré3', '45 13e Avenue','2020-10-10', '2020-10-10', 'soiré', '1', 'aaa', 'aaa', '1');
 
 -- Insertion Membres_événement
 
