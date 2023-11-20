@@ -2,49 +2,50 @@ package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Modèle.Categorie
 import eventichs.api.eventichs_api.Modèle.Organisation
-import eventichs.api.eventichs_api.Modèle.Utilisateur
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.stereotype.Repository
 
+@Repository
 class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
-    // TODO
-
-    override fun chercherOrganisations(): List<Organisation> =
+    override fun chercherTous(): List<Organisation> =
         db.query("select * from organisation", OrganisationMapper())
 
-    override fun chercherOrganisationParCode(codeOrganisation: Int): Organisation? =
-        db.queryForObject("select * from organisation where id = $codeOrganisation", OrganisationMapper())
+    override fun chercherParID(id: Int): Organisation? =
+        db.queryForObject("select * from organisation where id = $id", OrganisationMapper())
 
-    override fun ajouterOrganisation(uneOrganisation: Organisation): Organisation? {
+    override fun ajouter(element: Organisation): Organisation? {
         db.update(
             "insert into organisation values (?, ?, ?, ?)",
-            uneOrganisation.id,
-            uneOrganisation.idUtilisateur,
-            uneOrganisation.catégorie_id,
-            uneOrganisation.estPublic
+            element.id,
+            element.idUtilisateur,
+            element.nomOrganisation,
+            element.catégorie_id,
+            element.estPublic
+        )
+        return element
+    }
+
+    override fun modifier(element: Organisation): Organisation? {
+        db.update(
+            "update organisation set nomOrganisation = ?, catégorie_id = ? where id = $element.id",
+            element.nomOrganisation,
+            element.catégorie_id
+        )
+        return element
+    }
+
+    override fun supprimerParID(id: Int): Organisation? {
+        val uneOrganisation = db.queryForObject("select * from organisation where id = $id", OrganisationMapper())
+         db.update(
+            "delete from organisation where id = $id"
         )
         return uneOrganisation
-    }
-
-    override fun modifierOrganisation(codeOrganisation: Organisation, uneOrganisation: Organisation): Organisation? {
-        TODO("Not yet implemented")
-    }
-
-    override fun deleteOrganisation(codeOrganisation: Organisation) {
-        TODO("Not yet implemented")
     }
 
     override fun consulterOrganisationPubliques(): List<Organisation> {
         TODO("Not yet implemented")
     }
     override fun filtrerOrganisationParGouts(uneCategorie: Categorie): List<Organisation> {
-        TODO("Not yet implemented")
-    }
-
-    override fun ajouterParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation? {
-        TODO("Not yet implemented")
-    }
-
-    override fun enleverParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation? {
         TODO("Not yet implemented")
     }
 
