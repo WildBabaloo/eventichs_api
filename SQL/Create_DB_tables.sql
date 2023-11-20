@@ -42,8 +42,8 @@ CREATE TABLE Événement (
 
 
 
--- TABLE MEMBRE_ÉVÉNEMENT
-CREATE TABLE Membres_événement (
+-- TABLE UTILISATEUR_ÉVÉNEMENT
+CREATE TABLE Utilisateur_événement (
    idUtilisateur int NOT NULL,
    idEvenement int NOT NULL,
    PRIMARY KEY (idUtilisateur, idEvenement),

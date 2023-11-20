@@ -1,6 +1,5 @@
 package eventichs.api.eventichs_api.DAO
 
-import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import eventichs.api.eventichs_api.Modèle.Événement
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
@@ -10,6 +9,7 @@ class EvenementMapper : RowMapper<Événement>{
         val event = Événement(
                 résultat.getInt("id"),
                 résultat.getString("nom"),
+                résultat.getString("adresse"),
                 résultat.getDate("dateDebut"),
                 résultat.getDate("dateFin"),
                 résultat.getString("type"),
