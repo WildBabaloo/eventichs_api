@@ -36,7 +36,6 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     override fun consulterOrganisationPubliques(): List<Organisation> {
         TODO("Not yet implemented")
     }
-
     override fun filtrerOrganisationParGouts(uneCategorie: Categorie): List<Organisation> {
         TODO("Not yet implemented")
     }
