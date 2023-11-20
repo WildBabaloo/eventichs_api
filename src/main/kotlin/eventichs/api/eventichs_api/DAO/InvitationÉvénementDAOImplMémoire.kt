@@ -1,7 +1,9 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import eventichs.api.eventichs_api.Modèle.InvitationÉvénement
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
 
 
@@ -62,5 +64,32 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
 
     override fun chercherParIdExpediteur(id: Int): List<InvitationÉvénement> {
         return db.query("SELECT * FROM Invitation_événement WHERE idExpediteur = $id", InvitationÉvénementMapper())
+    }
+
+    override fun entrerJetonEvenement(idInvité: Int, jeton: String): InvitationÉvénement? {
+        val invitationAvecJetonExiste = db.queryForObject("SELECT * FROM Invitation_événement WHERE jeton = $jeton", InvitationÉvénementMapper())
+        val idInvitation : Int? = invitationAvecJetonExiste?.id
+        db.update("UPDATE Invitation_événement SET idDestinataire = $idInvité, status = 'accepté' WHERE idInvitation = $idInvitation", InvitationÉvénementMapper())
+
+        return chercherParID(invitationAvecJetonExiste!!.id)
+    }
+
+    //gentiment copié du creerJeton de Julien
+    override fun creerJeton(idEvenement: Int): InvitationÉvénement? {
+        db.update(
+            "INSERT INTO Invitation_événement (idDestinataire, idÉvénement, status) VALUES (null, $idEvenement,'généré'); ")
+        val id = db.queryForObject<Int>("SELECT @lid:=LAST_INSERT_ID(); ")
+        db.update("update invitation_organisation set jeton=concat( " +
+                "substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed:=round(rand($id)*4294967296))*36+1, 1)," +
+                "  substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed:=round(rand(@seed)*4294967296))*36+1, 1)," +
+                "  substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed:=round(rand(@seed)*4294967296))*36+1, 1)," +
+                "  substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed:=round(rand(@seed)*4294967296))*36+1, 1)," +
+                "  substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed:=round(rand(@seed)*4294967296))*36+1, 1)," +
+                "  substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed:=round(rand(@seed)*4294967296))*36+1, 1)," +
+                "  substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed:=round(rand(@seed)*4294967296))*36+1, 1)," +
+                "  substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed)*36+1, 1)" +
+                ")" +
+                "where id=$id;")
+        return chercherParID(id)
     }
 }

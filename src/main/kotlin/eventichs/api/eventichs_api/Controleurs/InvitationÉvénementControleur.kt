@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("\${api.base-path:}")
 class InvitationÉvénementControleur(val service: InvitationÉvénementService) {
 
-    //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
-    //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
-    //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
-
     //Consulter ses invitations(Participant+Organisation)
     @GetMapping("/utilisateur/invitations/destinataire/{id}")
     fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable id: Int) =
@@ -38,18 +34,19 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
     fun majInvitation(@PathVariable id: Int, @RequestBody invitation: InvitationÉvénement, reponse: String) =
         service.modifierInvitationÉvénement(invitation)
 
+    //Éffacer une invitation (Participant + Organisation)
     @DeleteMapping("/invitation/{id}")
     fun supprimerInvitation(@PathVariable id: Int) =
         service.supprimerInvitationsÉvénementsParId(id)
 
 
-    /*
+    //Entrer un jeton d'invitation (Participant)
     @PostMapping("/jetons/{utilisateur_id}")
-    fun saisirJeton(@PathVariable utilisateur_id : Int, @RequestBody jeton : InvitationÉvénement):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun saisirJeton(@PathVariable utilisateur_id : Int, @RequestBody jeton : String) =
+        service.entrerJetonEvenement(utilisateur_id, jeton)
 
+    //Générer son jeton d'invitation (Organisation)
     @GetMapping("/jetons/{id}/{quantité}")
-    fun générerJeton(@PathVariable id : Int,  @PathVariable quantité : Int):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-     */
+    fun générerJeton(@PathVariable id : Int,  @PathVariable quantité : Int) =
+        service.genererJetonsEvenement(id)
 }

@@ -19,4 +19,9 @@ class InvitationÉvénementService(val dao: InvitationÉvénementDAO) {
 
     fun supprimerInvitationsÉvénementsParId(id: Int) = dao.supprimerParID(id)
 
+
+    fun entrerJetonEvenement(id: Int, jeton: String) = dao.entrerJetonEvenement(id, jeton)
+
+    fun genererJetonsEvenement(id: Int) = dao.creerJeton(id)
+
 }

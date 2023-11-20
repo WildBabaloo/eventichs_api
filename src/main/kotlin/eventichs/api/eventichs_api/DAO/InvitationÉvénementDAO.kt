@@ -33,4 +33,12 @@ interface InvitationÉvénementDAO: DAO<InvitationÉvénement> {
         TODO("Not yet implemented")
     }
 
+    fun entrerJetonEvenement(id: Int, jeton: String): InvitationÉvénement? {
+        TODO()
+    }
+
+    fun creerJeton(idEvenement: Int): InvitationÉvénement?{
+        TODO()
+    }
+
 }
