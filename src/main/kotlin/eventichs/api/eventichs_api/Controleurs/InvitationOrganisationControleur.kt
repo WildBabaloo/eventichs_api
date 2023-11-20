@@ -30,7 +30,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     fun obtenirInvitationOrganisation() = service.chercherTous()
 
     @Operation(
-        summary = "Obtenir une invitations à une organisation selon son id.",
+        summary = "Obtenir une invitation à une organisation selon son id.",
         description = "Retourne une invitation à une organisation selon son id inscrites dans le service.",
         operationId = "obtenirInvitationsParId",
         responses = [
