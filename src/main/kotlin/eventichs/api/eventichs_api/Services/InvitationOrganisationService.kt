@@ -25,4 +25,14 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
 
     //Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
     fun changerStatus(idInvitationOrganisation: Int, status : String) : InvitationOrganisation? = dao.changerStatus(idInvitationOrganisation, status)
+
+    //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
+    //fun saisirJeton(jeton : String, idUtilisateur )
+
+    //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
+    fun crééJeton(idOrganisation : Int) : InvitationOrganisation? = dao.crééJeton(idOrganisation)
+
+    fun saisirJeton(jeton : String, idUtilisateur : Int) : InvitationOrganisation? = dao.saisirJeton(jeton, idUtilisateur)
+
+    fun effacerInvitation(idInvitationOrganisation : Int) : InvitationOrganisation? = dao.supprimerParID(idInvitationOrganisation)
 }

@@ -1,21 +1,157 @@
 package eventichs.api.eventichs_api.Controleurs
 
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
+import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
+import eventichs.api.eventichs_api.Services.InvitationOrganisationService
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.web.bind.annotation.*
+
+
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.apache.commons.lang3.mutable.Mutable
+import org.hamcrest.CoreMatchers.containsString
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class InvitationOrganisationControleurTest {
 
-//    @MockBean
-//    lateinit var service: InvitationService
+    @Autowired
+    private lateinit var mapper: ObjectMapper
+
+
+    @MockBean
+    lateinit var service: InvitationOrganisationService
 
     @Autowired
     private lateinit var mockMvc: MockMvc
 
+    // -----------------------------------------------------------------------------------------------------------------
+    //@GetMapping("/organisations/invitations/{id}")
+    @Test
+    fun `Étant donné une invitation avec l'id 1 lorsqu'on effectue une requête GET de recherche par id alors on obtient un JSON qui contient une invitation dont l'id est 1 et un code de retour 200` (){
+        val invitation = InvitationOrganisation(1, 1, 1, null, "envoyé")
+
+        Mockito.`when`(service.chercherParID(1)).thenReturn(invitation)
+
+        mockMvc.perform(get("/organisations/invitations/1"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.id").value(1))
+    }
+
+
+    @Test
+    fun `Étant donné l'invitation dont l'id est 8 et qui n'est pas inscrit au service lorsqu'on effectue une requête GET de recherche par id  alors on obtient un code de retour 404 et le message d'erreur « L'invitation à une organisation 8 n'est pas inscrit au service »`() {
+        Mockito.`when`(service.chercherParID(8)).thenReturn(null)
+
+        mockMvc.perform(get("/organisations/invitations/8")
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound)
+            .andExpect { résultat ->
+                assertTrue(résultat.resolvedException is RessourceInexistanteException)
+                assertEquals(" L'invitation à une organisation 8 n'est pas inscrit au service ", résultat.resolvedException?.message)
+            }
+    }
+
+
+    // -----------------------------------------------------------------------------------------------------------------
+    //@PostMapping("/organisations/{idOrganisation}/invitations/{idParticipant}")
+    //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
+    @Test
+    fun `Étant donnée une invitation à une organisation dont l'id de l'organisation est 1 et celui du participant est 2 et qui n'est pas inscrite au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un JSON qui contient une invitation dont l'idOrganisation est 8 et l'idParticipant est 2 et un code de retour 201 et l'uri de la ressource ajoutée` (){
+        val invitation = InvitationOrganisation(0, 1, 2, null, "envoyé")
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation.idOrganisation,invitation.idDestinataire!!)).thenReturn(invitation)
+
+        mockMvc.perform(post("/organisations/1/invitations/2")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(invitation)))
+            .andExpect(status().isCreated)
+            .andExpect(header().string("Location",containsString("/organisations/invitations/0" )))
+            .andExpect(jsonPath("$.idOrganisation").value(2))
+            .andExpect(jsonPath("$.idDestinataire").value(1))
+    }
+
+    @Test
+    fun `Étant donnée une invitation à une organisation dont l'id de l'organisation est 1 et celui du participant est invalide lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un un code de retour 400`(){
+        val invitation = InvitationOrganisation(0, 1, 229391, null, "envoyé")
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation.idOrganisation,invitation.idDestinataire!!)).thenReturn(invitation)
+
+        mockMvc.perform(post("/organisations/1/invitations/229391")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(invitation)))
+            .andExpect(status().isBadRequest)
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    //@GetMapping("/organisations/{idOrganisation}/invitations")
+    //Cas d'utilisation: 3.Consulter ses invitations(Organisation)
+    @Test
+    fun `Étant donné une organisation qui a une invitation lorsqu'on effectue une requête GET de recherche par de ces invitations selon l'id 1 alors on obtient un JSON qui contient une liste d'une InvitationOrganisation ayant l'id 1 et un code de retour 200` (){
+        val listeInvitations : List<InvitationOrganisation> = listOf( InvitationOrganisation(1, 1, 1, null, "envoyé"))
+
+        Mockito.`when`(service.chercherParOrganisation(1)).thenReturn(listeInvitations)
+
+        mockMvc.perform(get("/organisations/1/invitations"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.id").value(1))
+    }
+
+    /*
+    @Test
+    fun `Étant donné l'invitation dont l'id est 8 et qui n'est pas inscrit au service lorsqu'on effectue une requête GET de recherche par id  alors on obtient un code de retour 404 et le message d'erreur « L'invitation à une organisation 8 n'est pas inscrit au service »`() {
+        Mockito.`when`(service.chercherParID(8)).thenReturn(null)
+
+        mockMvc.perform(get("/organisations/invitations/8")
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound)
+            .andExpect { résultat ->
+                assertTrue(résultat.resolvedException is RessourceInexistanteException)
+                assertEquals(" L'invitation à une organisation 8 n'est pas inscrit au service ", résultat.resolvedException?.message)
+            }
+    }*/
+
+    // -----------------------------------------------------------------------------------------------------------------
+    //@GetMapping("/utilisateurs/{idParticipant}/invitations")
+    //Cas d'utilisation: 3.Consulter ses invitations(Participant)
+
+    // -----------------------------------------------------------------------------------------------------------------
+    //@PutMapping("/organisations/invitations/{id}/status/{status}")
+    //Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
+
+    // -----------------------------------------------------------------------------------------------------------------
+    //@PutMapping("/organisations/jetons/{jeton}/{idUtilisateur}")
+    //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
+
+    // -----------------------------------------------------------------------------------------------------------------
+    //@PostMapping("/organisations/{idOrganisation}/jetons")
+    //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
+
+    // -----------------------------------------------------------------------------------------------------------------
+    //@DeleteMapping("/organisations/invitations/{idInvitationOrganisation}")
+    //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
+
+
+    /*@Test
+fun `Étant donné lorsque alors` (){
+    TODO("Méthode non-implémentée")
+}*/
+
+
+
+    /*    Ancienne classe test pour l'ancien controleur InvitationControleur
     //Éffacer une invitation (Participant + Organisation)
     @Test
     // @DeleteMapping("/invitations/{code}")
@@ -87,5 +223,5 @@ class InvitationOrganisationControleurTest {
     @Test
     fun `Étant donné l'organisation dont l'id est 1, lorsqu'on effectue une requête POST pour accepter une demande non éxistante de l'utilisateur dont l'id est 2, on obtient un code de retour 409 `(){
         TODO("Methode non-implementee")
-    }
+    }*/
 }
