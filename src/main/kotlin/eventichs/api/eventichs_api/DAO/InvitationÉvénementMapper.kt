@@ -12,7 +12,7 @@ class InvitationÉvénementMapper: RowMapper<InvitationÉvénement> {
             résultat.getInt("id"),
             résultat.getInt("idÉxpéditeur"),
             résultat.getInt("idDestinataire"),
-            résultat.getInt("idOrganisation"),
+            résultat.getInt("idÉvénement"),
             résultat.getString("jeton"),
             résultat.getString("status")
         )

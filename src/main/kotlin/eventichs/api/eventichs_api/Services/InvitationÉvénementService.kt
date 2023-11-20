@@ -14,4 +14,6 @@ class InvitationÉvénementService(val dao: InvitationÉvénementDAO) {
 
     fun créerInvitationÉvénement(invitation: InvitationÉvénement) = dao.ajouter(invitation)
 
+    fun modifierInvitationÉvénement(invitation: InvitationÉvénement) = dao.modifier(invitation)
+
 }

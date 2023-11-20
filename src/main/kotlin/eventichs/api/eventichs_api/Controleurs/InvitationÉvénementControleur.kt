@@ -26,12 +26,12 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
         service.chercherInvitationÉvénementParId(id)
 
     @PostMapping("/invitation")
-    fun créerInvitationÉvénement(@RequestBody Invitation: InvitationÉvénement) =
-        service.créerInvitationÉvénement(Invitation)
+    fun créerInvitationÉvénement(@RequestBody invitation: InvitationÉvénement) =
+        service.créerInvitationÉvénement(invitation)
 
-    //@PutMapping("/invitation/{id}")
-    fun majInvitation(@PathVariable id: String, @RequestBody reponse: String):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    @PutMapping("/invitation/{id}")
+    fun majInvitation(@PathVariable id: Int, @RequestBody invitation: InvitationÉvénement, reponse: String) =
+        service.modifierInvitationÉvénement(invitation)
 
     //@DeleteMapping("/invitation/{id}")
     fun supprimerInvitation(@PathVariable id: String):

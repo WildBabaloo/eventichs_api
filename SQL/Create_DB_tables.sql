@@ -93,7 +93,7 @@ CREATE TABLE Invitation_événement (
     idDestinataire int DEFAULT NULL,
     idÉvénement int NOT NULL,
     jeton VARCHAR(255) DEFAULT NULL,
-	status SET('généré','envoyé', 'accepté', 'refusé'),
+	status SET('généré','envoyé', 'accepté', 'refusé') DEFAULT 'généré',
 	FOREIGN KEY (`idÉvénement`) REFERENCES Événement(id) ON DELETE CASCADE,
     FOREIGN KEY (`idDestinataire`) REFERENCES utilisateur(id) ON DELETE CASCADE,
 	FOREIGN KEY (`idExpediteur`) REFERENCES utilisateur(id) ON DELETE CASCADE

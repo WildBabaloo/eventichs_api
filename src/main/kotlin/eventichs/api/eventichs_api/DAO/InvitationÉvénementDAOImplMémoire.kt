@@ -14,7 +14,21 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
     }
 
     override fun modifier(element: InvitationÉvénement): InvitationÉvénement? {
-        TODO("Not yet implemented")
+        db.update("UPDATE Invitation_événement SET " +
+                "idExpediteur = ?," +
+                "idDestinataire = ?," +
+                "idÉvénement = ?," +
+                "jeton = ?," +
+                "status = ?" +
+                "WHERE id = ?",
+            element.idExpéditeur,
+            element.idDestinataire,
+            element.idÉvénement,
+            element.jeton,
+            element.status,
+            element.id)
+
+        return element
     }
 
     override fun ajouter(element: InvitationÉvénement): InvitationÉvénement? {
@@ -22,7 +36,7 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
             element.id,
             element.idExpéditeur,
             element.idDestinataire,
-            element.idOrganisation,
+            element.idÉvénement,
             element.jeton,
             element.status)
 
