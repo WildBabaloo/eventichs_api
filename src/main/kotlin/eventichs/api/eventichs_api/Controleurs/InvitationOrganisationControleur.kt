@@ -48,8 +48,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "demandeJoindreOrganisation",
         responses = [
             ApiResponse(responseCode = "200", description = "L'invitation a été créé"),
-            ApiResponse(responseCode = "409", description = "Une invitation pour cette organisation et ce participant existe déjà dans le service"),
-            ApiResponse(responseCode = "500", description = "L'invitation n'a pas été créé, erreur du serveur")]
+            ApiResponse(responseCode = "409", description = "Une invitation pour cette organisation et ce participant existe déjà dans le service")]
     )
     @PostMapping(
         value = ["/organisations/{idOrganisation}/invitations/{idParticipant}"])
@@ -65,7 +64,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
 
             return ResponseEntity.created(uri).body(nouvelleInvitation)
         }
-        return ResponseEntity.internalServerError().build()
+        return ResponseEntity.status(HttpStatus.CONFLICT).build()
     }
 
     @Operation(
@@ -80,7 +79,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         value = ["/organisations/{idOrganisation}/invitations"],
         produces = ["application/json"])
     //Cas d'utilisation: 3.Consulter ses invitations(Organisation)
-    fun obtenirInvitationOrganisation(@PathVariable idOrganisation: Int) = service.chercherParOrganisation(idOrganisation)
+    fun obtenirInvitationOrganisation(@PathVariable idOrganisation: Int) : List<InvitationOrganisation> = service.chercherParOrganisation(idOrganisation)
 
     @Operation(
         summary = "Consulter ses invitations en tant que participant.",

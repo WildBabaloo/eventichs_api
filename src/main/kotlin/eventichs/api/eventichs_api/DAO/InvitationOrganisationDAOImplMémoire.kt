@@ -2,6 +2,7 @@ package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
+import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.ResultSetExtractor
 import org.springframework.jdbc.core.queryForObject
@@ -51,8 +52,10 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         return invitation
     }
 
-    override fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation> =
-        db.query("select * from invitation_organisation where idOrganisation = $idOrganisation", InvitationOrganisationMapper())
+    override fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation> {
+        //val organisation : Organisation = db.queryForObject("select * from Organisation where idOrganisation = $idOrganisation") ?: throw ConflitAvecUneRessourceExistanteException("Cette organisation n'existe pas dans le service")
+        return db.query("select * from invitation_organisation where idOrganisation = $idOrganisation", InvitationOrganisationMapper())
+    }
 
     override fun chercherParParticipant(idParticipant: Int): List<InvitationOrganisation> =
         db.query("select * from invitation_organisation where idDestinataire = $idParticipant", InvitationOrganisationMapper())
