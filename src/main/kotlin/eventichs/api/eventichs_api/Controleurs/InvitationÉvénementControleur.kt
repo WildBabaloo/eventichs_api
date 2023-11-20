@@ -11,20 +11,25 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("\${api.base-path:}")
 class InvitationÉvénementControleur(val service: InvitationÉvénementService) {
 
-    //Cas d'utilisation: 2.Inviter un autre participant à un événement publique (Participant)
-    //Cas d'utilisation: 3.Consulter ses invitations(Participant+Organisation)
     //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
     //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
     //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
 
+    //Consulter ses invitations(Participant+Organisation)
     @GetMapping("/utilisateur/invitations/destinataire/{id}")
     fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable id: Int) =
-            service.chercherInvitationsÉvénementsParIdDestinataire(id)
+        service.chercherInvitationsÉvénementsParIdDestinataire(id)
+
+    @GetMapping("/utilisateur/invitations/expediteur/{id}")
+    fun obtenirInvitationsÉvénementsParIdExpediteur(@PathVariable id: Int) =
+        service.chercherInvitationsÉvénementsParIdExpediteur(id)
 
     @GetMapping("/utilisateur/invitations/{id}")
     fun obtenirInvitationÉvénementParId(@PathVariable id: Int) =
         service.chercherInvitationÉvénementParId(id)
 
+
+    //Inviter un autre participant à un événement publique (Participant)
     @PostMapping("/invitation")
     fun créerInvitationÉvénement(@RequestBody invitation: InvitationÉvénement) =
         service.créerInvitationÉvénement(invitation)
@@ -33,9 +38,9 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
     fun majInvitation(@PathVariable id: Int, @RequestBody invitation: InvitationÉvénement, reponse: String) =
         service.modifierInvitationÉvénement(invitation)
 
-    //@DeleteMapping("/invitation/{id}")
-    fun supprimerInvitation(@PathVariable id: String):
-            ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    @DeleteMapping("/invitation/{id}")
+    fun supprimerInvitation(@PathVariable id: Int) =
+        service.supprimerInvitationsÉvénementsParId(id)
 
 
     /*

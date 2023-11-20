@@ -29,4 +29,8 @@ interface InvitationÉvénementDAO: DAO<InvitationÉvénement> {
         TODO("Not yet implemented")
     }
 
+    fun chercherParIdExpediteur(id: Int): List<InvitationÉvénement> {
+        TODO("Not yet implemented")
+    }
+
 }

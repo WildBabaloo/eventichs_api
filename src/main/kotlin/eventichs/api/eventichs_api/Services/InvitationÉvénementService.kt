@@ -15,5 +15,8 @@ class InvitationÉvénementService(val dao: InvitationÉvénementDAO) {
     fun créerInvitationÉvénement(invitation: InvitationÉvénement) = dao.ajouter(invitation)
 
     fun modifierInvitationÉvénement(invitation: InvitationÉvénement) = dao.modifier(invitation)
+    fun chercherInvitationsÉvénementsParIdExpediteur(id: Int): List<InvitationÉvénement> = dao.chercherParIdExpediteur(id)
+
+    fun supprimerInvitationsÉvénementsParId(id: Int) = dao.supprimerParID(id)
 
 }

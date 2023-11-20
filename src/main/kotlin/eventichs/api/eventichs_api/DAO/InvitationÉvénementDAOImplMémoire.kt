@@ -10,7 +10,12 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
 
 
     override fun supprimerParID(id: Int): InvitationÉvénement? {
-        TODO("Not yet implemented")
+        val invitationÀSupprimer = chercherParID(id)
+        if (invitationÀSupprimer != null) {
+            db.update("DELETE FROM Invitation_événement WHERE id = $id")
+            }
+
+        return invitationÀSupprimer
     }
 
     override fun modifier(element: InvitationÉvénement): InvitationÉvénement? {
@@ -53,5 +58,9 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
 
     override fun chercherParIdDestinataire(id: Int): List<InvitationÉvénement> {
         return db.query("SELECT * FROM Invitation_événement WHERE idDestinataire = $id", InvitationÉvénementMapper())
+    }
+
+    override fun chercherParIdExpediteur(id: Int): List<InvitationÉvénement> {
+        return db.query("SELECT * FROM Invitation_événement WHERE idExpediteur = $id", InvitationÉvénementMapper())
     }
 }
