@@ -28,6 +28,7 @@ CREATE TABLE Catégorie (
 CREATE TABLE Événement (
    id int NOT NULL AUTO_INCREMENT,
    nom VARCHAR(255) NOT NULL,
+   adresse VARCHAR(255) NOT NULL,
    dateDebut DATE NOT NULL,
    dateFin DATE NOT NULL,
    type VARCHAR(255) NOT NULL,
