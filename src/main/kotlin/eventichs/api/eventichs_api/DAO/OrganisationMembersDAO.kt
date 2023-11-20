@@ -5,7 +5,7 @@ import eventichs.api.eventichs_api.Modèle.OrganisationMembres
 import eventichs.api.eventichs_api.Modèle.Utilisateur
 
 interface OrganisationMembersDAO: DAO<OrganisationMembres> {
-    fun ajouterParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation?
+    fun ajouterParticipant(codeOrganisation: Int, IdParticipant: Int)
 
-    fun enleverParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation?
+    fun enleverParticipant(codeOrganisation: Int)
 }

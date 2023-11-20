@@ -27,11 +27,17 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
     override fun modifier(element: OrganisationMembres): OrganisationMembres? {
         TODO("Not yet implemented")
     }
-    override fun ajouterParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation? {
-        TODO("Not yet implemented")
+    override fun ajouterParticipant(codeOrganisation: Int, IdParticipant: Int){
+        db.update(
+            "Update Organisations_membres set id_utilisateur=$IdParticipant where id_organisation=$codeOrganisation"
+
+        )
     }
 
-    override fun enleverParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation? {
-        TODO("Not yet implemented")
+    override fun enleverParticipant(codeOrganisation: Int) {
+        db.update(
+            "Update Organisations_membres set id_utilisateur= null where id_organisation= $codeOrganisation"
+
+        )
     }
 }
