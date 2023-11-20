@@ -5,7 +5,7 @@ import eventichs.api.eventichs_api.Modèle.OrganisationMembres
 import eventichs.api.eventichs_api.Modèle.Utilisateur
 
 interface OrganisationMembersDAO: DAO<OrganisationMembres> {
-    override fun ajouterParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation?
+    fun ajouterParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation?
 
-    override fun enleverParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation?
+    fun enleverParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation?
 }
