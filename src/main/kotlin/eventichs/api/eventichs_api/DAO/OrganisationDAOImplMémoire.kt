@@ -19,18 +19,23 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
             "insert into organisation values (?, ?, ?, ?)",
             uneOrganisation.id,
             uneOrganisation.idUtilisateur,
+            uneOrganisation.nomOrganisation,
             uneOrganisation.catégorie_id,
             uneOrganisation.estPublic
         )
         return uneOrganisation
     }
 
-    override fun modifierOrganisation(codeOrganisation: Organisation, uneOrganisation: Organisation): Organisation? {
-        TODO("Not yet implemented")
+    override fun modifierOrganisation(codeOrganisation: Organisation, nomOrganisation: String, categorieId: Int) {
+        db.update(
+            "update organisation set nomOrganisation = $nomOrganisation, catégorie_id = $categorieId where id = $codeOrganisation"
+        )
     }
 
-    override fun deleteOrganisation(codeOrganisation: Organisation) {
-        TODO("Not yet implemented")
+    override fun deleteOrganisation(codeOrganisation: Int) {
+        db.update(
+            "delete from organisation where id = $codeOrganisation"
+        )
     }
 
     override fun consulterOrganisationPubliques(): List<Organisation> {
