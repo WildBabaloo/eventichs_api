@@ -8,14 +8,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMembersDAO {
-    override fun ajouterParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation? {
-        TODO("Not yet implemented")
-    }
-
-    override fun enleverParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation? {
-        TODO("Not yet implemented")
-    }
-
     override fun chercherTous(): List<OrganisationMembres> {
         TODO("Not yet implemented")
     }
@@ -33,6 +25,13 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
     }
 
     override fun modifier(element: OrganisationMembres): OrganisationMembres? {
+        TODO("Not yet implemented")
+    }
+    override fun ajouterParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation? {
+        TODO("Not yet implemented")
+    }
+
+    override fun enleverParticipant(codeOrganisation: Organisation, unParticipant: Utilisateur): Organisation? {
         TODO("Not yet implemented")
     }
 }
