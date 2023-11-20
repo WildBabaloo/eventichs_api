@@ -4,10 +4,10 @@ import eventichs.api.eventichs_api.Modèle.Categorie
 import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.Utilisateur
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.stereotype.Repository
 
+@Repository
 class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
-    // TODO
-
     override fun chercherOrganisations(): List<Organisation> =
         db.query("select * from organisation", OrganisationMapper())
 
@@ -26,10 +26,13 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         return uneOrganisation
     }
 
-    override fun modifierOrganisation(codeOrganisation: Organisation, nomOrganisation: String, categorieId: Int) {
+    override fun modifierOrganisation(codeOrganisation: Int, uneOrganisation: Organisation): Organisation? {
         db.update(
-            "update organisation set nomOrganisation = $nomOrganisation, catégorie_id = $categorieId where id = $codeOrganisation"
+            "update organisation set nomOrganisation = ?, catégorie_id = ? where id = $codeOrganisation",
+            uneOrganisation.nomOrganisation,
+            uneOrganisation.catégorie_id
         )
+        return uneOrganisation
     }
 
     override fun deleteOrganisation(codeOrganisation: Int) {

@@ -8,7 +8,7 @@ interface OrganisationDAO: DAO<Organisation> {
     override fun chercherOrganisations(): List<Organisation>
     override fun chercherOrganisationParCode(codeOrganisation: Int): Organisation?
     override fun ajouterOrganisation(uneOrganisation: Organisation): Organisation?
-    override fun modifierOrganisation(codeOrganisation: Organisation, nomOrganisation: String, categorieId: Int)
+    override fun modifierOrganisation(codeOrganisation: Int, uneOrganisation: Organisation): Organisation?
     override fun deleteOrganisation(codeOrganisation: Int)
     override fun consulterOrganisationPubliques(): List<Organisation>
     override fun filtrerOrganisationParGouts(uneCategorie: Categorie): List<Organisation>
