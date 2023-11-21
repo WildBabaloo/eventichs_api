@@ -59,6 +59,7 @@ CREATE TABLE Organisation (
   id int NOT NULL AUTO_INCREMENT,
   idUtilisateur INT NOT NULL,
   catégorie_id INT NOT NULL,
+  nomOrganisation VARCHAR(255) NOT NULL,
   estPublic BOOL NOT NULL DEFAULT FALSE,
   PRIMARY KEY (id),
   FOREIGN KEY (catégorie_id) REFERENCES Catégorie(id),
