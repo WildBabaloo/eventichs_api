@@ -47,7 +47,7 @@ CREATE TABLE Utilisateur_événement (
    idUtilisateur int NOT NULL,
    idEvenement int NOT NULL,
    PRIMARY KEY (idUtilisateur, idEvenement),
-   FOREIGN KEY (idUtilisateur) REFERENCES utilisateur(id),
+   FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id),
    FOREIGN KEY (idEvenement) REFERENCES Événement(id)
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE Organisation (
   estPublic BOOL NOT NULL DEFAULT FALSE,
   PRIMARY KEY (id),
   FOREIGN KEY (catégorie_id) REFERENCES Catégorie(id),
-  FOREIGN KEY (idUtilisateur) REFERENCES utilisateur(id)
+  FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id)
 );
 
 -- TABLE ORGANISATION_MEMBRE
@@ -97,7 +97,7 @@ CREATE TABLE Invitation_événement (
     jeton VARCHAR(255) DEFAULT NULL,
 	status SET('généré','envoyé', 'accepté', 'refusé') DEFAULT 'généré',
 	FOREIGN KEY (`idÉvénement`) REFERENCES Événement(id) ON DELETE CASCADE,
-    FOREIGN KEY (`idDestinataire`) REFERENCES utilisateur(id) ON DELETE CASCADE,
-	FOREIGN KEY (`idExpediteur`) REFERENCES utilisateur(id) ON DELETE CASCADE
+    FOREIGN KEY (`idDestinataire`) REFERENCES Utilisateur(id) ON DELETE CASCADE,
+	FOREIGN KEY (`idExpediteur`) REFERENCES Utilisateur(id) ON DELETE CASCADE
 );
 
