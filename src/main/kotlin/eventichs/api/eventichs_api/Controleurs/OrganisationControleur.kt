@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.Controleurs
 
+import eventichs.api.eventichs_api.Modèle.Categorie
 import eventichs.api.eventichs_api.Modèle.Invitation
 import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.Utilisateur
@@ -24,5 +25,11 @@ class OrganisationControleur(val service: OrganisationService) {
 
     @DeleteMapping("/organisations/{id}")
     fun supprimerOrganisation(@PathVariable id: Int) = service.supprimerParID(id)
+
+    @GetMapping("/organisations/publiques")
+    fun obtenirOrganisationsPubliques() = service.consulterOrganisationPubliques()
+
+    @GetMapping("/gouts/{idCategorie}/organisations")
+    fun obtenirOrganisationsParGout(@PathVariable idCategorie: Int) = service.filtrerOrganisationParGouts(idCategorie)
 
 }

@@ -17,15 +17,15 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
     @GetMapping("/organisationsMembres")
     fun obtenirOrganisationsMembres() = service.chercherTous()
 
-    @GetMapping("/utilisateur/{codeParticipant}/organisations")
+    @GetMapping("/utilisateurs/{codeParticipant}/organisations")
     fun obtenirOrganisationsParticipantParID(@PathVariable codeParticipant: Int) = service.chercherParParticipantID(codeParticipant)
 
-    @GetMapping("/organisation/{codeOrganisation}/participants")
+    @GetMapping("/organisations/{codeOrganisation}/participants")
     fun obtenirParticipantDansOrganisationParID(@PathVariable codeOrganisation: Int) = service.chercherParOrganisationID(codeOrganisation)
 
-    @PostMapping("/organisation/{codeOrganisation}/participants")
+    @PostMapping("/organisations/{codeOrganisation}/participants")
     fun ajouterParticipant(@PathVariable codeOrganisation: Int, @RequestBody idParticpant: Int) = service.ajouterParticipant(codeOrganisation, idParticpant)
 
-    @DeleteMapping("organisation/{codeOrganisation}/participants/{codeParticipant}")
+    @DeleteMapping("organisations/{codeOrganisation}/participants/{codeParticipant}")
     fun enleverParticipant(@PathVariable codeOrganisation: Int, @PathVariable codeParticipant: Int) = service.enleverParticipant(codeOrganisation, codeParticipant)
 }

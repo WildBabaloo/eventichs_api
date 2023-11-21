@@ -10,8 +10,8 @@ interface OrganisationDAO: DAO<Organisation> {
     override fun supprimerParID(id: Int): Organisation?
     override fun modifier(element: Organisation): Organisation?
     fun consulterOrganisationPubliques(): List<Organisation>
-    fun filtrerOrganisationParGouts(uneCategorie: Categorie): List<Organisation>
-    fun changerVisiblitéOrganisation(uneOrganisation: Organisation, estPublic: Boolean)
+    fun filtrerOrganisationParGouts(idCategorie: Int): List<Organisation>
+    //fun changerVisiblitéOrganisation(uneOrganisation: Organisation, estPublic: Boolean)
 
 
 }
