@@ -10,7 +10,7 @@ interface OrganisationMembersDAO: DAO<OrganisationMembres> {
 
     fun ajouterParticipant(codeOrganisation: Int, IdParticipant: Int)
 
-    fun enleverParticipant(codeOrganisation: Int)
+    fun enleverParticipant(codeOrganisation: Int, idParticipant: Int)
 
     fun chercherParUtilisateurID(id: Int): List<OrganisationMembres>
 

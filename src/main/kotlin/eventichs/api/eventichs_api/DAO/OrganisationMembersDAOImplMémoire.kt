@@ -3,6 +3,7 @@ package eventichs.api.eventichs_api.DAO
 import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.OrganisationMembres
 import eventichs.api.eventichs_api.Modèle.Utilisateur
+import org.springframework.data.relational.core.sql.In
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
@@ -24,9 +25,9 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
 
     }
 
-    override fun enleverParticipant(codeOrganisation: Int) {
+    override fun enleverParticipant(codeOrganisation: Int, idParticipant: Int) {
         db.update(
-            "Update Organisations_membres set id_utilisateur= null where id_organisation= $codeOrganisation"
+            "Update Organisations_membres set id_utilisateur= null where id_organisation= $codeOrganisation and id_utilisateur = $idParticipant"
             , OrganisationMembresMapper()
         )
     }
