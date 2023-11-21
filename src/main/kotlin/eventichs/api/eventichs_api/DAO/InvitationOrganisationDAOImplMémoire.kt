@@ -2,12 +2,9 @@ package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
-import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.core.ResultSetExtractor
 import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
-import java.sql.ResultSet
 
 @Repository
 class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrganisationDAO {

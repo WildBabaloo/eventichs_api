@@ -1,9 +1,7 @@
 package eventichs.api.eventichs_api.DAO
 
-import eventichs.api.eventichs_api.Modèle.Organisation
+
 import eventichs.api.eventichs_api.Modèle.OrganisationMembres
-import eventichs.api.eventichs_api.Modèle.Utilisateur
-import org.springframework.data.relational.core.sql.In
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
