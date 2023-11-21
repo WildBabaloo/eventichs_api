@@ -8,6 +8,7 @@ use `eventichsBD`;
 CREATE TABLE utilisateur (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
+    prénom VARCHAR(255) NOT NULL,
     courriel VARCHAR(255) NOT NULL UNIQUE,
     motDePasse VARCHAR(255) NOT NULL
 );
@@ -27,21 +28,22 @@ CREATE TABLE Catégorie (
 CREATE TABLE Événement (
    id int NOT NULL AUTO_INCREMENT,
    nom VARCHAR(255) NOT NULL,
+   adresse VARCHAR(255) NOT NULL,
    dateDebut DATE NOT NULL,
    dateFin DATE NOT NULL,
    type VARCHAR(255) NOT NULL,
    categorie_id int NOT NULL,
    description VARCHAR(255),
    photo VARCHAR(255),
-   organisation_id VARCHAR(255) NOT NULL,
+   organisation_id int NOT NULL,
    PRIMARY KEY (id),
    FOREIGN KEY (categorie_id) REFERENCES Catégorie(id)
 );
 
 
 
--- TABLE MEMBRE_ÉVÉNEMENT
-CREATE TABLE Membres_événement (
+-- TABLE UTILISATEUR_ÉVÉNEMENT
+CREATE TABLE Utilisateur_événement (
    idUtilisateur int NOT NULL,
    idEvenement int NOT NULL,
    PRIMARY KEY (idUtilisateur, idEvenement),
@@ -90,10 +92,10 @@ CREATE TABLE Invitation_organisation (
 CREATE TABLE Invitation_événement (
 	id int primary key auto_increment,
     idExpediteur int NOT NULL,
-    idDestinataire int DEFAULT NULL, 
+    idDestinataire int DEFAULT NULL,
     idÉvénement int NOT NULL,
     jeton VARCHAR(255) DEFAULT NULL,
-	status SET('généré','envoyé', 'accepté', 'refusé'),
+	status SET('généré','envoyé', 'accepté', 'refusé') DEFAULT 'généré',
 	FOREIGN KEY (`idÉvénement`) REFERENCES Événement(id) ON DELETE CASCADE,
     FOREIGN KEY (`idDestinataire`) REFERENCES utilisateur(id) ON DELETE CASCADE,
 	FOREIGN KEY (`idExpediteur`) REFERENCES utilisateur(id) ON DELETE CASCADE

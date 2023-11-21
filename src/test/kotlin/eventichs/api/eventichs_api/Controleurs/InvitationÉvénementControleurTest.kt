@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.MockMvc
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class JetonControleurTest {
+class InvitationÉvénementControleurTest {
 
 //    @MockBean
 //    lateinit var service: InvitationService
