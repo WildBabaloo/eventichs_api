@@ -1,6 +1,5 @@
 package eventichs.api.eventichs_api.DAO
 
-import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import eventichs.api.eventichs_api.Modèle.InvitationÉvénement
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
