@@ -12,10 +12,10 @@ import java.sql.ResultSet
 @Repository
 class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrganisationDAO {
     override fun chercherTous(): List<InvitationOrganisation> =
-        db.query("select * from invitation_organisation", InvitationOrganisationMapper())
+        db.query("select * from Invitation_organisation", InvitationOrganisationMapper())
 
     override fun chercherParID(id: Int): InvitationOrganisation? =
-        db.queryForObject("select * from invitation_organisation where id = $id", InvitationOrganisationMapper())
+        db.queryForObject("select * from Invitation_organisation where id = $id", InvitationOrganisationMapper())
 
     override fun ajouter(element: InvitationOrganisation): InvitationOrganisation? {
         val listeInvitations = chercherParOrganisation(element.idOrganisation)
@@ -30,7 +30,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         }
 
         db.update(
-            "insert into invitation_organisation values ( ?, ?, ? , ?, ?)",
+            "insert into Invitation_organisation values ( ?, ?, ? , ?, ?)",
             element.id,
             element.idDestinataire,
             element.idOrganisation,
@@ -48,20 +48,20 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
 
     override fun supprimerParID(id: Int): InvitationOrganisation? {
         val invitation = chercherParID(id)
-        db.update("delete from invitation_organisation where id = $id")
+        db.update("delete from Invitation_organisation where id = $id")
         return invitation
     }
 
     override fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation> {
         //val organisation : Organisation = db.queryForObject("select * from Organisation where idOrganisation = $idOrganisation") ?: throw ConflitAvecUneRessourceExistanteException("Cette organisation n'existe pas dans le service")
-        return db.query("select * from invitation_organisation where idOrganisation = $idOrganisation", InvitationOrganisationMapper())
+        return db.query("select * from Invitation_organisation where idOrganisation = $idOrganisation", InvitationOrganisationMapper())
     }
 
     override fun chercherParParticipant(idParticipant: Int): List<InvitationOrganisation> =
-        db.query("select * from invitation_organisation where idDestinataire = $idParticipant", InvitationOrganisationMapper())
+        db.query("select * from Invitation_organisation where idDestinataire = $idParticipant", InvitationOrganisationMapper())
 
     override fun changerStatus(idInvitationOrganisation: Int, status: String): InvitationOrganisation? {
-        db.update("update invitation_organisation set `status` = ? where id = ?",status, idInvitationOrganisation)
+        db.update("update Invitation_organisation set `status` = ? where id = ?",status, idInvitationOrganisation)
         return chercherParID(idInvitationOrganisation)
     }
 
@@ -71,7 +71,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
     //Un update sur l'invitation dernièrement créé grace à l'id pour y ajouter un jeton de 8 charactères alléatoire.
     override fun crééJeton(idOrganisation: Int): InvitationOrganisation? {
         db.update(
-            "INSERT INTO invitation_organisation (idDestinataire, idOrganisation, status) VALUES (null, $idOrganisation,'généré'); ")
+            "INSERT INTO Invitation_organisation (idDestinataire, idOrganisation, status) VALUES (null, $idOrganisation,'généré'); ")
         val id = db.queryForObject<Int>("SELECT @lid:=LAST_INSERT_ID(); ")
         db.update("update invitation_organisation set jeton=concat( " +
                     "substring('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', rand(@seed:=round(rand($id)*4294967296))*36+1, 1)," +
@@ -90,7 +90,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
     override fun saisirJeton(jeton: String, idUtilisateur: Int): InvitationOrganisation? {
         val invitation : InvitationOrganisation? = db.queryForObject("select * from invitation_organisation where jeton = ?", InvitationOrganisationMapper(),jeton)
         val id : Int? = invitation?.id
-        db.update("update invitation_organisation set idDestinataire = $idUtilisateur, status = 'accepté' where id = $id")
+        db.update("update Invitation_organisation set idDestinataire = $idUtilisateur, status = 'accepté' where id = $id")
 
         //appeller fonction d'ajouter organisation membre ici.
 

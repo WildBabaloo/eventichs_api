@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository
 @Repository
 class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMembersDAO {
     override fun chercherTous(): List<OrganisationMembres> =
-        db.query("select * from organisations_membres", OrganisationMembresMapper())
+        db.query("select * from Organisations_membres", OrganisationMembresMapper())
     override fun chercherParUtilisateurID(id: Int): List<OrganisationMembres> =
-        db.query("select * from organisations_membres where id_utilisateur = $id", OrganisationMembresMapper())
+        db.query("select * from Organisations_membres where id_utilisateur = $id", OrganisationMembresMapper())
 
     override fun chercherParOrganisationID(id: Int): List<OrganisationMembres> =
-         db.query("select * from organisations_membres where id_organisation = $id", OrganisationMembresMapper())
+         db.query("select * from Organisations_membres where id_organisation = $id", OrganisationMembresMapper())
 
     override fun ajouterParticipant(codeOrganisation: Int, IdParticipant: Int){
         db.update(
