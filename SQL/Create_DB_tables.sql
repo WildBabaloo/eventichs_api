@@ -72,7 +72,7 @@ CREATE TABLE Organisations_membres (
     id_utilisateur INT NOT NULL,
     PRIMARY KEY (id_organisation,id_utilisateur),
     FOREIGN KEY (id_organisation) REFERENCES Organisation(id),
-    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id)
+    FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id)
 );
 
 
@@ -85,7 +85,7 @@ CREATE TABLE Invitation_organisation (
     jeton VARCHAR(255) DEFAULT NULL,
 	status SET('généré','envoyé', 'accepté', 'refusé'),
 	FOREIGN KEY (`idOrganisation`) REFERENCES Organisation(id) ON DELETE CASCADE,
-    FOREIGN KEY (`idDestinataire`) REFERENCES utilisateur(id) ON DELETE CASCADE
+    FOREIGN KEY (`idDestinataire`) REFERENCES Utilisateur(id) ON DELETE CASCADE
 );
 
 -- TABLE INVITATION_ÉVÉNEMENT
