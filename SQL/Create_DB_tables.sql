@@ -5,7 +5,7 @@ use `eventichsBD`;
 -- ----------------------------------------------------------------------------------------------
 -- TABLE UTILISATEUR
 
-CREATE TABLE utilisateur (
+CREATE TABLE Utilisateur (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     prénom VARCHAR(255) NOT NULL,
