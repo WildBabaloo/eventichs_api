@@ -49,9 +49,4 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     override fun filtrerOrganisationParGouts(idCategorie: Int): List<Organisation> =
         db.query("select * from organisation where catégorie_id = $idCategorie",OrganisationMapper())
 
-    //override fun changerVisiblitéOrganisation(uneOrganisation: Organisation, estPublic: Boolean) {
-        //db.update("update Organisation set estPublic=$estPublic where organisation.id=$uneOrganisation.id"
-
-        //)
-    //}
 }
