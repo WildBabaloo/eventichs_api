@@ -6,7 +6,7 @@ INSERT INTO `eventichsBD`.`Utilisateur` (`nom`, `prénom`, `courriel`, `motDePas
 INSERT INTO `eventichsBD`.`Catégorie` (`nom`, `description`) VALUES ('allo', 'allo');
 
 -- Insertion Organisation
-INSERT INTO `eventichsBD`.`Organisation` (`idUtilisateur`, `catégorie_id`) VALUES ('1', '1');
+INSERT INTO `eventichsBD`.`Organisation` (`idUtilisateur`, `catégorie_id`,`nomOrganisation`) VALUES ('1', '1','Illuminati');
 
 -- Insertion Organisations_membres
 
