@@ -1,11 +1,7 @@
 package eventichs.api.eventichs_api.Controleurs
 
-import eventichs.api.eventichs_api.Modèle.Categorie
 import eventichs.api.eventichs_api.Modèle.Organisation
-import eventichs.api.eventichs_api.Modèle.Utilisateur
 import eventichs.api.eventichs_api.Services.OrganisationService
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("\${api.base-path:}")

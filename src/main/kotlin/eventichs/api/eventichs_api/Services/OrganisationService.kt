@@ -1,7 +1,6 @@
 package eventichs.api.eventichs_api.Services
 
 import eventichs.api.eventichs_api.DAO.OrganisationDAO
-import eventichs.api.eventichs_api.Modèle.Categorie
 import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.stereotype.Service
 
