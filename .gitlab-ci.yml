@@ -20,7 +20,7 @@ build:
 deploy_to_server:
   stage: deploy
   script:
-    - scp -r ./build/libs/Eventichs_API-0.0.1.jar serv@v34l.com:/Dev/Eventichs/eventichs_api
+    - scp -r ./build/libs/Eventichs_API-0.0.1.jar gitlab@v34l.com:/Dev/Eventichs/eventichs_api
     - ssh serv@123.123.123.5 'bash -s' <<EOF
         cd /Dev/Eventichs/eventichs_api
         ./gradlew bootRun > /dev/null 2>&1 &
