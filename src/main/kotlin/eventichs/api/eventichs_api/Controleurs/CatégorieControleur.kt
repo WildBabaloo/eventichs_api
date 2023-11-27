@@ -1,13 +1,15 @@
 package eventichs.api.eventichs_api.Controleurs
 
 import eventichs.api.eventichs_api.Modèle.Catégorie
+import eventichs.api.eventichs_api.Services.CatégorieService
+import eventichs.api.eventichs_api.Services.EvenementService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("\${api.base-path:}")
-class CatégorieControleur {
+class CatégorieControleur(val service : CatégorieService) {
     @PostMapping("/catégories")
     fun inscrire(@RequestBody catégorie: Catégorie):
             ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
