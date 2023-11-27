@@ -1,0 +1,33 @@
+name: Build and Run on Server
+
+on:
+  push:
+    branches:
+      - server-deploy
+
+jobs:
+  build_and_run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Deploy to Server
+        run: |
+          scp -r ./build/libs/Eventichs_API-0.0.1.jar serv@v34l.com:/Dev/Eventichs/eventichs_api
+          ssh serv@123.123.123.5 'bash -s' <<EOF
+            cd /Dev/Eventichs/eventichs_api
+            ./gradlew bootRun > /dev/null 2>&1 &
+          EOF
+        env:
+          SERVER_SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
