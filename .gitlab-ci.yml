@@ -10,7 +10,7 @@ stages:
   - deploy
 
 variables:
-  SERVER_SSH_PRIVATE_KEY: "gitlabpass22"
+  SERVER_SSH_PRIVATE_KEY: gitlabpass22
 
 build:
   stage: build
