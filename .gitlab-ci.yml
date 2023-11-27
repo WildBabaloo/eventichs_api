@@ -24,5 +24,7 @@ deploy_to_server:
     - chmod 600 deploy_key  # Set correct permissions
     - eval "$(ssh-agent -s)"  # Start the SSH agent
     - ssh-add deploy_key  # Add the SSH key to the agent
-    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/eventichs_api; git checkout server-deploy; git pull; ./gradlew build -x test; fuser -k 8080/tcp; nohup ./gradlew bootRun & exit'
+    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/eventichs_api; git checkout server-deploy; git pull; ./gradlew build -x test; fuser -k 8080/tcp; nohup ./gradlew bootRun &'
+  only:
+    - deploy-server
       
