@@ -4,7 +4,6 @@ before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
   - export GRADLE_USER_HOME
 
-
 stages:
   - build
   - deploy
@@ -20,10 +19,13 @@ build:
 deploy_to_server:
   stage: deploy
   script:
-    - apk update && apk add openssh-client 
-    - scp -o StrictHostKeyChecking=no -r ./build/libs/Eventichs_API-0.0.1.jar gitlab@v34l.com:/Dev/Eventichs/eventichs_api
-    - $SERVER_SSH_PRIVATE_KEY
-    - ssh serv@123.123.123.5 'bash -s' <<EOF
+    - apk update && apk add openssh-client
+    - echo "$SERVER_SSH_PRIVATE_KEY" > deploy_key  # Save the SSH key to a file
+    - chmod 600 deploy_key  # Set correct permissions
+    - eval "$(ssh-agent -s)"  # Start the SSH agent
+    - ssh-add deploy_key  # Add the SSH key to the agent
+    - scp -o StrictHostKeyChecking=no -i deploy_key -r ./build/libs/Eventichs_API-0.0.1.jar gitlab@v34l.com:/Dev/Eventichs/eventichs_api
+    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@123.123.123.5 'bash -s' <<EOF
         cd /Dev/Eventichs/eventichs_api
         ./gradlew bootRun > /dev/null 2>&1 &
       EOF
