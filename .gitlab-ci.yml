@@ -1,33 +1,28 @@
-name: Build and Run on Server
+image: gradle:alpine
 
-on:
-  push:
-    branches:
-      - server-deploy
+before_script:
+  - GRADLE_USER_HOME="$(pwd)/.gradle"
+  - export GRADLE_USER_HOME
 
-jobs:
-  build_and_run:
-    runs-on: ubuntu-latest
+stages:
+  ##- build
+  - deploy
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+variables:
+  SERVER_SSH_PRIVATE_KEY: "$SERVER_SSH_PRIVATE_KEY"
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '17'
+##build:
+  ##stage: build
+  ###script:
+  ###  - ./gradlew build -x test
 
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Deploy to Server
-        run: |
-          scp -r ./build/libs/Eventichs_API-0.0.1.jar serv@v34l.com:/Dev/Eventichs/eventichs_api
-          ssh serv@123.123.123.5 'bash -s' <<EOF
-            cd /Dev/Eventichs/eventichs_api
-            ./gradlew bootRun > /dev/null 2>&1 &
-          EOF
-        env:
-          SERVER_SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+deploy_to_server:
+  stage: deploy
+  script:
+    - apk update && apk add openssh-client
+    - echo "$SERVER_SSH_PRIVATE_KEY" > deploy_key  # Save the SSH key to a file
+    - chmod 600 deploy_key  # Set correct permissions
+    - eval "$(ssh-agent -s)"  # Start the SSH agent
+    - ssh-add deploy_key  # Add the SSH key to the agent
+    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/Eventichs/eventichs_api; ./gradlew build -x test; fuser -k 8080/tcp; nohup ./gradlew bootRun &; exit'
+      
