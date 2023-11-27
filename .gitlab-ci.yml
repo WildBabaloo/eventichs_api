@@ -5,14 +5,14 @@ before_script:
   - export GRADLE_USER_HOME
 
 stages:
-  - build
+  ##- build
   - deploy
 
 variables:
   SERVER_SSH_PRIVATE_KEY: "$SERVER_SSH_PRIVATE_KEY"
 
-build:
-  stage: build
+##build:
+  ##stage: build
   ###script:
   ###  - ./gradlew build -x test
 
