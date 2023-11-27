@@ -10,7 +10,7 @@ stages:
   - deploy
 
 variables:
-  SERVER_SSH_PRIVATE_KEY: gitlabpass22
+  SERVER_SSH_PRIVATE_KEY: "$SERVER_SSH_PRIVATE_KEY"
 
 build:
   stage: build
@@ -22,6 +22,7 @@ deploy_to_server:
   script:
     - apk update && apk add openssh-client 
     - scp -o StrictHostKeyChecking=no -r ./build/libs/Eventichs_API-0.0.1.jar gitlab@v34l.com:/Dev/Eventichs/eventichs_api
+    - $SERVER_SSH_PRIVATE_KEY
     - ssh serv@123.123.123.5 'bash -s' <<EOF
         cd /Dev/Eventichs/eventichs_api
         ./gradlew bootRun > /dev/null 2>&1 &
