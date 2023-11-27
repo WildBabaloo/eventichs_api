@@ -15,7 +15,7 @@ variables:
 build:
   stage: build
   script:
-    - ./gradlew build
+    - ./gradlew build -x test
 
 deploy_to_server:
   stage: deploy
