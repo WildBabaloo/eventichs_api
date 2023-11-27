@@ -13,10 +13,10 @@ class EvenementMapper : RowMapper<Événement>{
                 résultat.getDate("dateDebut"),
                 résultat.getDate("dateFin"),
                 résultat.getString("type"),
-                résultat.getInt("categorie_Id"),
+                résultat.getInt("categorie_id"),
                 résultat.getString("description"),
                 résultat.getString("photo"),
-                résultat.getInt("organisation_Id"))
+                résultat.getInt("organisation_id"))
 
         return event
     }
