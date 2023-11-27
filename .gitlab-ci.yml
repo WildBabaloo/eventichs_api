@@ -20,6 +20,7 @@ build:
 deploy_to_server:
   stage: deploy
   script:
+    - apk update && apk add openssh-client 
     - scp -r ./build/libs/Eventichs_API-0.0.1.jar gitlab@v34l.com:/Dev/Eventichs/eventichs_api
     - ssh serv@123.123.123.5 'bash -s' <<EOF
         cd /Dev/Eventichs/eventichs_api
