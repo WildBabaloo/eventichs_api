@@ -13,8 +13,8 @@ variables:
 
 build:
   stage: build
-  script:
-    - ./gradlew build -x test
+  ###script:
+  ###  - ./gradlew build -x test
 
 deploy_to_server:
   stage: deploy
@@ -25,7 +25,7 @@ deploy_to_server:
     - eval "$(ssh-agent -s)"  # Start the SSH agent
     - ssh-add deploy_key  # Add the SSH key to the agent
     - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 
-    - cd Dev/Eventichs/eventichs_api
+    - cd ~/Dev/Eventichs/eventichs_api
     - ./gradlew build
     - fuser -k 8080/tcp
     - nohup ./gradlew bootRun
