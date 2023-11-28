@@ -4,7 +4,6 @@ use `eventichsBD`;
 
 -- ----------------------------------------------------------------------------------------------
 -- TABLE UTILISATEUR
-
 CREATE TABLE Utilisateur (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
@@ -20,7 +19,6 @@ CREATE TABLE Catégorie (
    description VARCHAR(255),
    PRIMARY KEY (id)
 );
-
 -- -----------------------------------------------------------------------------------------------
 -- TABLE ORGANISATION
 CREATE TABLE Organisation (
@@ -28,12 +26,20 @@ CREATE TABLE Organisation (
   nomOrganisation VARCHAR(255) NOT NULL,
   idUtilisateur INT NOT NULL,
   catégorie_id INT NOT NULL,
-  estPublic BOOL NOT NULL DEFAULT FALSE,
+  estPublic BIT NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   FOREIGN KEY (catégorie_id) REFERENCES Catégorie(id),
   FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id)
 );
-
+-- -----------------------------------------------------------------------------------------------
+-- TABLE IMAGE_BINARY
+CREATE TABLE Image_Binary (
+    id int NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    image BLOB(),
+    PRIMARY KEY (id)
+);
+-- -----------------------------------------------------------------------------------------------
 -- TABLE EVENEMENT
 CREATE TABLE Événement (
    id int NOT NULL AUTO_INCREMENT,
@@ -44,14 +50,14 @@ CREATE TABLE Événement (
    type VARCHAR(255) NOT NULL,
    categorie_id int NOT NULL,
    description VARCHAR(255),
-   photo VARCHAR(255),
+   image_id int DEFAULT 0,
    organisation_id int NOT NULL,
    PRIMARY KEY (id),
    FOREIGN KEY (categorie_id) REFERENCES Catégorie(id),
+   FOREIGN KEY (image_id) REFERENCES Image_Binary(id),
    FOREIGN KEY (organisation_id) REFERENCES Organisation(id) ON DELETE CASCADE
 );
-
-
+-- -----------------------------------------------------------------------------------------------
 -- TABLE ORGANISATION_MEMBRE
 CREATE TABLE Organisations_membres (
     id_organisation int NOT NULL,
@@ -60,8 +66,6 @@ CREATE TABLE Organisations_membres (
     FOREIGN KEY (id_organisation) REFERENCES Organisation(id),
     FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id)
 );
-
-
 -- -----------------------------------------------------------------------------------------------
 -- TABLE INVITATION_ORGANISATION
 CREATE TABLE Invitation_organisation (
@@ -73,7 +77,7 @@ CREATE TABLE Invitation_organisation (
 	FOREIGN KEY (`idOrganisation`) REFERENCES Organisation(id) ON DELETE CASCADE,
     FOREIGN KEY (`idDestinataire`) REFERENCES Utilisateur(id) ON DELETE CASCADE
 );
-
+-- -----------------------------------------------------------------------------------------------
 -- TABLE INVITATION_ÉVÉNEMENT
 CREATE TABLE Invitation_événement (
 	id int primary key auto_increment,
@@ -86,6 +90,7 @@ CREATE TABLE Invitation_événement (
     FOREIGN KEY (`idDestinataire`) REFERENCES Utilisateur(id) ON DELETE CASCADE,
 	FOREIGN KEY (`idExpediteur`) REFERENCES Utilisateur(id) ON DELETE CASCADE
 );
+-- -----------------------------------------------------------------------------------------------
 -- TABLE UTILISATEUR_ÉVÉNEMENT
 CREATE TABLE Utilisateur_événement (
    idUtilisateur int NOT NULL,

@@ -35,8 +35,8 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
                 element.type,
                 element.categorie_Id,
                 element.description,
-                element.organisation_Id,
-                element.photo)
+                element.photo,
+                element.organisation_Id)
         return element
     }
 

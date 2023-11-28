@@ -21,7 +21,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         for (invitation : InvitationOrganisation in listeInvitations) {
             if (invitation.idDestinataire != null) {
                 if (invitation.idDestinataire == element.idDestinataire) {
-                        throw ConflitAvecUneRessourceExistanteException(" Il y existe déjà une invitation à l'organisation ${element.idOrganisation} assigné au particiapnt ${element.idDestinataire} inscrit au service ")
+                        throw ConflitAvecUneRessourceExistanteException(" Il y existe déjà une invitation à l'organisation ${element.idOrganisation} assigné au participant ${element.idDestinataire} inscrit au service ")
                 }
             }
         }
