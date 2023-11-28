@@ -6,16 +6,32 @@ before_script:
 
 stages:
   - build
+  - test
   - deploy
 
 variables:
   SERVER_SSH_PRIVATE_KEY: "$SERVER_SSH_PRIVATE_KEY"
 
+# Make Project
 build:
+  interruptible: true
   stage: build
   script:
-    - ./gradlew build 
-
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/
+  only:
+    - api
+# Run all tests, if any fails, interrupt the pipeline(fail it)
+test:
+  needs: [build]
+  interruptible: true
+  stage: test
+  script:
+    - ./gradlew test
+  only:
+    - api
 deploy_to_server:
   stage: deploy
   script:
