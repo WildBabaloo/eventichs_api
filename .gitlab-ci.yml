@@ -17,10 +17,7 @@ build:
   interruptible: true
   stage: build
   script:
-    - ./gradlew assembleDebug
-  artifacts:
-    paths:
-      - app/build/outputs/
+    - ./gradlew build -x test
   only:
     - api
 # Run all tests, if any fails, interrupt the pipeline(fail it)
