@@ -1,6 +1,7 @@
 package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteException
+import eventichs.api.eventichs_api.Mapper.InvitationOrganisationMapper
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
