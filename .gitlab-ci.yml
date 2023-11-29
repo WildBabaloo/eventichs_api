@@ -26,7 +26,7 @@ test:
   script:
     - apt update &&
         DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server mysql-client &&
-        service mysql start &&
+        service mysql start
 
     # Wait for MySQL to start
     - sleep 5
