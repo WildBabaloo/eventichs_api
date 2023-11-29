@@ -18,11 +18,9 @@ build:
   stage: build
   script:
     - ./gradlew build -x test
-  only:
-    - api
+  
 # Run all tests, if any fails, interrupt the pipeline(fail it)
 test:
-  needs: 
   interruptible: true
   stage: test
   script:
@@ -39,10 +37,10 @@ test:
     - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'eventichs';"
     - mysql -e "FLUSH PRIVILEGES;"
     - ./gradlew test
-  only:
-    - api
+  
 
 deploy_to_server:
+  needs: [test]
   stage: deploy
   script:
     - apk update && apk add openssh-client
