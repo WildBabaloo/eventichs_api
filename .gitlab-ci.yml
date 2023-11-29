@@ -23,7 +23,7 @@ test:
   interruptible: true
   stage: test
   script:
-    - aapk update && apk add openssh-client
+    - apk update && apk add openssh-client
     - echo "$SERVER_SSH_PRIVATE_KEY" > deploy_key  # Save the SSH key to a file
     - chmod 600 deploy_key  # Set correct permissions
     - eval "$(ssh-agent -s)"  # Start the SSH agent
