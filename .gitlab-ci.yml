@@ -1,5 +1,4 @@
-image: ubuntu:22.04
-
+image: gradle:latest
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
   - export GRADLE_USER_HOME
