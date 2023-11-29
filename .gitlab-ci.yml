@@ -30,7 +30,7 @@ test:
     # Wait for MySQL to start
     - sleep 5
     # Run MySQL commands to create user 'eventichs' identified by 'scrum_master'
-    - mysql -u root-p < SQL/Create_DB_tables.sql
+    - mysql -u root -p < SQL/Create_DB_tables.sql
     - mysql -e "FLUSH PRIVILEGES;"
     
     - ./gradlew build
