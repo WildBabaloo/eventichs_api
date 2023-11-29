@@ -24,13 +24,11 @@ test:
   interruptible: true
   stage: test
   script:
-    - apt update && apt get mysql mysql-client
+    - apt update && apt install mysql mysql-client
     
     # Initialize MySQL data directory
-    - mysql_install_db --user=mysql --datadir=/var/lib/mysql
-
-  # Start MySQL Server in the background
-    - mysqld_safe --user=mysql --datadir=/var/lib/mysql &
+    - /etc/init.d/mysqld setup
+    - /etc/init.d/mysqld start
 
     # Wait for MySQL to start
     - sleep 5
