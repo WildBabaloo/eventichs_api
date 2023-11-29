@@ -34,7 +34,7 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
     }
 
     override fun supprimerParID(id: Int): Événement? {
-        val element = db.queryForObject("$selectQuery where id = $id", EvenementMapper())
+        val element = db.queryForObject("$selectQuery where Événement.id = $id", EvenementMapper())
         db.update("DELETE from Événement where id = $id")
         return element
     }
