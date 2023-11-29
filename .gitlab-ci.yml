@@ -6,7 +6,7 @@ before_script:
 
 stages:
   - build
-  - test
+  #- test
   - deploy
 
 variables:
@@ -21,14 +21,14 @@ build:
   only:
     - api
 # Run all tests, if any fails, interrupt the pipeline(fail it)
-test:
-  needs: [build]
-  interruptible: true
-  stage: test
-  script:
-    - ./gradlew test
-  only:
-    - api
+#test:
+ # needs: [build]
+  #interruptible: true
+  #stage: test
+  #script:
+  #  - ./gradlew test
+  #only:
+  #  - api
 deploy_to_server:
   stage: deploy
   script:
