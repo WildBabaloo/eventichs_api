@@ -39,36 +39,46 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
         return element
     }
 
-    override fun ajouter(element: Événement): Événement {
-        db.update(
-                "insert into Événement values ( ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)",
-                element.id,
-                element.nom,
-                element.adresse,
-                element.dateDebut,
-                element.dateFin,
-                element.type,
-                element.categorie,
-                element.description,
-                element.image,
-                element.organisation)
+    override fun ajouter(element: Événement): Événement? {
+        val categorie = element.categorie
+        val categorieID = db.queryForObject("select * from Catégorie where Catégorie.nom = '$categorie'", CatégorieMapper())
+        val organisation = element.organisation
+        val org = db.queryForObject("select * from Organisation where Organisation.nomOrganisation = '$organisation'", OrganisationMapper())
+            db.update(
+                    "insert into Événement values ( ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)",
+                    element.id,
+                    element.nom,
+                    element.adresse,
+                    element.dateDebut,
+                    element.dateFin,
+                    element.type,
+                    categorieID?.id,
+                    element.description,
+                    element.image,
+                    org?.id)
+            return element
+    }
+
+    override fun modifier(id : Int, element: Événement): Événement{
+        val categorie = element.categorie
+        val categorieID = db.queryForObject("select * from Catégorie where Catégorie.nom = '$categorie'", CatégorieMapper())
+        val organisation = element.organisation
+        val org = db.queryForObject("select * from Organisation where Organisation.nomOrganisation = '$organisation'", OrganisationMapper())
+        db.update("UPDATE Événement SET nom = ? WHERE id =$id", element.nom)
+        db.update("UPDATE Événement SET adresse = ? WHERE id =$id", element.adresse)
+        db.update("UPDATE Événement SET dateDebut = ? WHERE id =$id", element.dateDebut)
+        db.update("UPDATE Événement SET dateFin = ? WHERE id =$id",element.dateFin)
+        db.update("UPDATE Événement SET type = ? WHERE id =$id",element.type)
+        db.update("UPDATE Événement SET categorie_id = ? WHERE id =$id",categorieID?.id)
+        db.update("UPDATE Événement SET description = ? WHERE id =$id",element.description)
+        db.update("UPDATE Événement SET image = ? WHERE id =$id", element.image)
+        db.update("UPDATE Événement SET organisation_id = ? WHERE id =$id", org?.id)
+
         return element
     }
 
-
-    override fun modifier(element: Événement): Événement{
-        db.update(
-            "UPDATE Événement SET nom = ?, dateDebut = ?, dateFin = ?, type = ?, categorie_id = ?, description = ?, image = ?, organisation_id = ? WHERE id =$element.id",
-
-                element.nom,
-                element.dateDebut,
-                element.dateFin,
-                element.type,
-                element.categorie,
-                element.description,
-                element.organisation,
-                element.image)
-            return element
+    override fun modifier(element: Événement): Événement? {
+        TODO("Not yet implemented")
     }
 }
 

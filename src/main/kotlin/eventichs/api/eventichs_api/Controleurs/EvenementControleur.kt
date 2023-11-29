@@ -41,7 +41,7 @@ class EvenementControleur(val service : EvenementService) {
         operationId = "modifierEvenement"
     )
     @PutMapping("/evenements/{id}")
-    fun modifierEvenement(@RequestBody evenement : Événement) = service.modifierEvenement(evenement)
+    fun modifierEvenement(@PathVariable id: Int, @RequestBody evenement : Événement) = service.modifierEvenement(id,evenement)
     @Operation(
         summary = "Ajouter un nouvel évènement.",
         description = "Créée et ajoute un nouvel évènement dans la base de données",

@@ -10,7 +10,7 @@ interface EvenementDAO : DAO<Événement> {
     fun chercherEvenementPublic() : List<Événement>
     override fun supprimerParID(id : Int) : Événement?
 
-    override fun modifier(element: Événement): Événement?
+    fun modifier(id : Int, element: Événement): Événement?
 
     override fun ajouter(element: Événement): Événement?
 

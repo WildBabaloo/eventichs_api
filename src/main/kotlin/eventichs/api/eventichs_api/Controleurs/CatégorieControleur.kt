@@ -16,19 +16,17 @@ import org.springframework.web.bind.annotation.*
 )
 class CatégorieControleur(val service : CatégorieService) {
 
-    @PostMapping("/categories")
-    fun inscrire(@RequestBody catégorie: Catégorie):
-            ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    @GetMapping("/categories")
+    fun obtenirCategories() = service.chercherTous()
 
     @GetMapping("/categories/{id}")
-    fun connexion(@PathVariable id: Int):
-            ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun obtenirCategorieParID(@PathVariable id: Int) = service.chercherParID(id)
 
     @PutMapping("/categories/{id}")
-    fun modifier(@PathVariable id: Int, @RequestBody catégorie: Catégorie):
-            ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun modifierCategorie(@PathVariable id: Int, @RequestBody catégorie: Catégorie) = service.modifierCatégorie(catégorie)
 
+    @PostMapping("/categories")
+    fun ajouterCategorie(@RequestBody catégorie: Catégorie) = service.ajouterCatégorie(catégorie)
     @DeleteMapping("/categories/{id}")
-    fun effacer(@PathVariable id: Int):
-            ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun effacerCategorie(@PathVariable id: Int) = service.supprimerParID(id)
 }

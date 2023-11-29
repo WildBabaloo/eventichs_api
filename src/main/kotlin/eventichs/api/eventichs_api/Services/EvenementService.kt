@@ -10,6 +10,6 @@ class EvenementService(val dao : EvenementDAO) {
     fun chercherParID(id: Int): Événement? = dao.chercherParID(id)
     fun chercherEvenementPublic() : List<Événement> = dao.chercherEvenementPublic()
     fun supprimerParID(id:Int) : Événement? = dao.supprimerParID(id)
-    fun modifierEvenement(evenement : Événement ) : Événement? = dao.modifier(evenement)
+    fun modifierEvenement(id:Int, evenement : Événement ) : Événement? = dao.modifier(id,evenement)
     fun ajouterEvenement(evenement : Événement ) : Événement? = dao.ajouter(evenement)
 }
