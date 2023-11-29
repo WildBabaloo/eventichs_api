@@ -23,17 +23,12 @@ test:
   interruptible: true
   stage: test
   script:
-    - apt update &&
-        DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server mysql-client &&
-        mysqld --port=3306 &&
-        service mysql start
-
-    # Wait for MySQL to start
-    - sleep 5
-    # Run MySQL commands to create user 'eventichs' identified by 'scrum_master'
-    - mysql -u root -proot < SQL/Create_DB_tables.sql
-    - mysql -e "FLUSH PRIVILEGES;"
-    
+    - aapk update && apk add openssh-client
+    - echo "$SERVER_SSH_PRIVATE_KEY" > deploy_key  # Save the SSH key to a file
+    - chmod 600 deploy_key  # Set correct permissions
+    - eval "$(ssh-agent -s)"  # Start the SSH agent
+    - ssh-add deploy_key  # Add the SSH key to the agent
+    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/eventichs_api; git checkout server-deploy; git pull; ./gradlew test
     - ./gradlew build
   
 
