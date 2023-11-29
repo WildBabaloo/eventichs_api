@@ -15,7 +15,7 @@ class EvenementMapper : RowMapper<Événement>{
                 résultat.getString("type"),
                 résultat.getInt("categorie_id"),
                 résultat.getString("description"),
-                résultat.getInt("photo"),
+                résultat.getString("image"),
                 résultat.getInt("organisation_id"))
 
         return event

@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("\${api.base-path:}")
 @Tag(
-    name = "Catégorie",
-    description = "Points d'accès aux ressources liées aux catégories d'evenements existantes sur le service."
+    name = "CatégorieOrganisation",
+    description = "Points d'accès aux ressources liées aux catégories d'organisations existantes sur le service."
 )
-class CatégorieControleur {
-    @PostMapping("/categories")
+class CatégorieOrganisationControleur {
+    @PostMapping("/organisations/categories_")
     fun inscrire(@RequestBody catégorie: Catégorie):
             ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
-    @GetMapping("/categories/{id}")
+    @GetMapping("/organisations/categories/{id}")
     fun connexion(@PathVariable id: Int):
             ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
-    @PutMapping("/categories/{id}")
+    @PutMapping("/organisations/categories/{id}")
     fun modifier(@PathVariable id: Int, @RequestBody catégorie: Catégorie):
             ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
-    @DeleteMapping("/categories/{id}")
+    @DeleteMapping("/organisations/categories/{id}")
     fun effacer(@PathVariable id: Int):
             ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 }

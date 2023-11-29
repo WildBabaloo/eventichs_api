@@ -20,6 +20,14 @@ CREATE TABLE Catégorie (
    PRIMARY KEY (id)
 );
 -- -----------------------------------------------------------------------------------------------
+-- TABLE CATÉGORIE_ORGANISATION
+CREATE TABLE Catégorie_Organisation (
+   id INT AUTO_INCREMENT,
+   nom VARCHAR(255) NOT NULL,
+   description VARCHAR(255),
+   PRIMARY KEY (id)
+);
+-- -----------------------------------------------------------------------------------------------
 -- TABLE ORGANISATION
 CREATE TABLE Organisation (
   id int NOT NULL AUTO_INCREMENT,
@@ -28,16 +36,8 @@ CREATE TABLE Organisation (
   catégorie_id INT NOT NULL,
   estPublic BIT NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
-  FOREIGN KEY (catégorie_id) REFERENCES Catégorie(id),
-  FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id)
-);
--- -----------------------------------------------------------------------------------------------
--- TABLE IMAGE_BINARY
-CREATE TABLE Image_Binary (
-    id int NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    image BLOB(),
-    PRIMARY KEY (id)
+  FOREIGN KEY (catégorie_id) REFERENCES Catégorie_Organisation(id),
+  FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id) ON DELETE CASCADE
 );
 -- -----------------------------------------------------------------------------------------------
 -- TABLE EVENEMENT
@@ -50,11 +50,10 @@ CREATE TABLE Événement (
    type VARCHAR(255) NOT NULL,
    categorie_id int NOT NULL,
    description VARCHAR(255),
-   image_id int DEFAULT 0,
+   image VARCHAR(255) DEFAULT 'https://irp-cdn.multiscreensite.com/md/unsplash/dms3rep/multi/photo-1511578314322-379afb476865.jpg',
    organisation_id int NOT NULL,
    PRIMARY KEY (id),
    FOREIGN KEY (categorie_id) REFERENCES Catégorie(id),
-   FOREIGN KEY (image_id) REFERENCES Image_Binary(id),
    FOREIGN KEY (organisation_id) REFERENCES Organisation(id) ON DELETE CASCADE
 );
 -- -----------------------------------------------------------------------------------------------

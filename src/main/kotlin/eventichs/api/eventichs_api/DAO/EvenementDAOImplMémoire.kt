@@ -36,7 +36,7 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
                 element.type,
                 element.categorie_Id,
                 element.description,
-                element.photo,
+                element.image,
                 element.organisation_Id)
         return element
     }
@@ -44,7 +44,7 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
 
     override fun modifier(element: Événement): Événement{
         db.update(
-            "UPDATE Événement SET nom = ?, dateDebut = ?, dateFin = ?, type = ?, categorie_id = ?, description = ?, photo = ?, organisation_id = ? WHERE id =$element.id",
+            "UPDATE Événement SET nom = ?, dateDebut = ?, dateFin = ?, type = ?, categorie_id = ?, description = ?, image = ?, organisation_id = ? WHERE id =$element.id",
 
                 element.nom,
                 element.dateDebut,
@@ -53,7 +53,7 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
                 element.categorie_Id,
                 element.description,
                 element.organisation_Id,
-                element.photo)
+                element.image)
             return element
     }
 }
