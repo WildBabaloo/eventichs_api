@@ -27,8 +27,7 @@ test:
     - apk update && apk add mysql mysql-client
     
     # Start MySQL Server
-    - mysqld --user=mysql
-    - mysqld --user=mysql &
+    - mysqld &
 
     # Wait for MySQL to start
     - sleep 5
