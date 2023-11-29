@@ -2,6 +2,8 @@ package eventichs.api.eventichs_api.Controleurs
 
 import eventichs.api.eventichs_api.Modèle.Catégorie
 import io.swagger.v3.oas.annotations.tags.Tag
+import eventichs.api.eventichs_api.Services.CatégorieService
+import eventichs.api.eventichs_api.Services.EvenementService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,7 +14,8 @@ import org.springframework.web.bind.annotation.*
     name = "Catégorie",
     description = "Points d'accès aux ressources liées aux catégories d'evenements existantes sur le service."
 )
-class CatégorieControleur {
+class CatégorieControleur(val service : CatégorieService) {
+
     @PostMapping("/categories")
     fun inscrire(@RequestBody catégorie: Catégorie):
             ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
