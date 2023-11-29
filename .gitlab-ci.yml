@@ -27,9 +27,11 @@ test:
   stage: test
   script:
     - apk update && apk add mysql mysql-client
+    
     # Start MySQL Server
-    - service mysql setup
-    - service mysql start
+    - mysqld --initialize-insecure --user=mysql
+    - mysqld --user=mysql &
+
     # Wait for MySQL to start
     - sleep 5
     # Run MySQL commands to create user 'eventichs' identified by 'scrum_master'
