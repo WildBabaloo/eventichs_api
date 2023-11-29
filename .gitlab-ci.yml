@@ -25,6 +25,7 @@ test:
   script:
     - apt update &&
         DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server mysql-client &&
+        mysqld --port=3306 &&
         service mysql start
 
     # Wait for MySQL to start
