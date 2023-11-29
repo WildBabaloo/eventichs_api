@@ -1,7 +1,9 @@
 package eventichs.api.eventichs_api.DAO
 
 
+import eventichs.api.eventichs_api.Mapper.CatégorieMapper
 import eventichs.api.eventichs_api.Mapper.EvenementMapper
+import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Modèle.Événement
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
@@ -9,15 +11,29 @@ import org.springframework.stereotype.Repository
 @Repository
 class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
     override fun chercherTous(): List<Événement> =
-            db.query("select * from Événement", EvenementMapper())
+            db.query("select *, Catégorie.nom as categorie, Organisation.nomOrganisation as organisation " +
+                    "from Événement " +
+                    "join Catégorie on Événement.categorie_id = Catégorie.id" +
+                    "join Organisation on Événement.organisation_id = Organisation.id", EvenementMapper())
 
     override fun chercherParID(id: Int): Événement? =
             db.queryForObject("select * from Événement where id = $id", EvenementMapper())
     override fun chercherParType(type: String): List<Événement> =
         db.query("select * from Événement where type = $type", EvenementMapper())
 
-    override fun chercherParOrganisation(id: Int): List<Événement> =
-            db.query("select * from Événement where organisation_id = $id", EvenementMapper())
+    override fun chercherParOrganisation(organisation: String): List<Événement> {
+
+        val org = db.queryForObject("select * from Organisation where nomOrganisation = $organisation", OrganisationMapper())
+        val id = org?.nomOrganisation
+        return db.query("select * from Événement where organisation_id = $id", EvenementMapper())
+    }
+
+    override fun chercherParCategorie(categorie: String): List<Événement> {
+        val org =
+            db.queryForObject("select * from Catégorie where nomOrganisation = $categorie", OrganisationMapper())
+        val id = org?.nomOrganisation
+        return db.query("select * from Événement where organisation_id = $id", EvenementMapper())
+    }
 
     override fun supprimerParID(id: Int): Événement? {
         val element = db.queryForObject("select * from Événement where id = $id", EvenementMapper())
@@ -34,10 +50,10 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
                 element.dateDebut,
                 element.dateFin,
                 element.type,
-                element.categorie_Id,
+                element.categorie,
                 element.description,
                 element.image,
-                element.organisation_Id)
+                element.organisation)
         return element
     }
 
@@ -50,9 +66,9 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
                 element.dateDebut,
                 element.dateFin,
                 element.type,
-                element.categorie_Id,
+                element.categorie,
                 element.description,
-                element.organisation_Id,
+                element.organisation,
                 element.image)
             return element
     }
