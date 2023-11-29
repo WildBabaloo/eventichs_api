@@ -24,11 +24,9 @@ test:
   interruptible: true
   stage: test
   script:
-    - apt update && apt install mysql mysql-client
-    
-    # Initialize MySQL data directory
-    - /etc/init.d/mysqld setup
-    - /etc/init.d/mysqld start
+    - apt update &&
+        DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server mysql-client &&
+        service mysql start &&
 
     # Wait for MySQL to start
     - sleep 5
