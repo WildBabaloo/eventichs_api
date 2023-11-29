@@ -10,29 +10,27 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
+    val selectQuery = "select Événement.id, Événement.nom, Événement.adresse, Événement.dateDebut, Événement.dateFin, Événement.type, Catégorie.nom as categorie, Événement.description, Événement.image, Organisation.nomOrganisation as organisation from Événement join Catégorie on Événement.categorie_id = Catégorie.id join Organisation on Événement.organisation_id = Organisation.id"
     override fun chercherTous(): List<Événement> =
-            db.query("select *, Catégorie.nom as categorie, Organisation.nomOrganisation as organisation " +
-                    "from Événement " +
-                    "join Catégorie on Événement.categorie_id = Catégorie.id" +
-                    "join Organisation on Événement.organisation_id = Organisation.id", EvenementMapper())
+            db.query("$selectQuery", EvenementMapper())
 
     override fun chercherParID(id: Int): Événement? =
-            db.queryForObject("select * from Événement where id = $id", EvenementMapper())
-    override fun chercherParType(type: String): List<Événement> =
-        db.query("select * from Événement where type = $type", EvenementMapper())
+            db.queryForObject("$selectQuery where Événement.id = $id", EvenementMapper())
+    override fun chercherEvenementPublic(): List<Événement> =
+        db.query("$selectQuery where Événement.type = 'public'", EvenementMapper())
 
     override fun chercherParOrganisation(organisation: String): List<Événement> {
 
         val org = db.queryForObject("select * from Organisation where nomOrganisation = $organisation", OrganisationMapper())
         val id = org?.nomOrganisation
-        return db.query("select * from Événement where organisation_id = $id", EvenementMapper())
+        return db.query("$selectQuery where Événement.organisation_id = $id", EvenementMapper())
     }
 
     override fun chercherParCategorie(categorie: String): List<Événement> {
         val org =
             db.queryForObject("select * from Catégorie where nomOrganisation = $categorie", OrganisationMapper())
         val id = org?.nomOrganisation
-        return db.query("select * from Événement where organisation_id = $id", EvenementMapper())
+        return db.query("$selectQuery where Événement.organisation_id = $id", EvenementMapper())
     }
 
     override fun supprimerParID(id: Int): Événement? {

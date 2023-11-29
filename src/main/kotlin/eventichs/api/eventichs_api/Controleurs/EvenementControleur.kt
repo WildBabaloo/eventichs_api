@@ -54,6 +54,6 @@ class EvenementControleur(val service : EvenementService) {
         description = "Retourne une liste d'évènements selon le type fournis.",
         operationId = "obtenirEvenementParType"
     )
-    @GetMapping("/evenements/type/{id}")
-    fun obtenirEvenementParType(@PathVariable type: String) = service.chercherParType(type)
+    @GetMapping("/evenements/public")
+    fun obtenirEvenementPublic() = service.chercherEvenementPublic()
 }
