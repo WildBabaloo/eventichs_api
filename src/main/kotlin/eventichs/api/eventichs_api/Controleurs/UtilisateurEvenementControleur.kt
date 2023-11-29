@@ -25,6 +25,6 @@ UtilisateurEvenementControleur(val service : UtilisateurEvenementService) {
     @DeleteMapping("/utilisateurevenements/evenements/{id}")
     fun supprimerUtilisateurEvenementParEvenementId(@PathVariable id: Int) = service.supprimerParEvenement(id)
 
-    @PostMapping("/utilisateursevenements")
+    @PostMapping("/rejoindre")
     fun rejoindreEvenement(@RequestBody utilisateurÉvénement : UtilisateurÉvénement) = service.ajouter(utilisateurÉvénement)
 }
