@@ -1,4 +1,4 @@
-image: ubuntu-22.04.3
+image: gradle:ubuntu:22.04
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
