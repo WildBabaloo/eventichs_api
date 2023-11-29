@@ -28,8 +28,8 @@ test:
   script:
     - apk update && apk add mysql mysql-client
     # Start MySQL Server
-    - /etc/init.d/mysqld setup
-    - /etc/init.d/mysqld start
+    - rc-service mysql setup
+    - rc-service mysql start
     # Wait for MySQL to start
     - sleep 5
     # Run MySQL commands to create user 'eventichs' identified by 'scrum_master'
