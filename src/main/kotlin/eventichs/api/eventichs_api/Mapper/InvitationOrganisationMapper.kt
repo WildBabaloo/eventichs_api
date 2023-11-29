@@ -1,4 +1,4 @@
-package eventichs.api.eventichs_api.DAO
+package eventichs.api.eventichs_api.Mapper
 
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import org.springframework.jdbc.core.RowMapper

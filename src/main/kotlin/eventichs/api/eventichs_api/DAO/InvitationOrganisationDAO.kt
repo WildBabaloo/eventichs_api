@@ -19,27 +19,15 @@ interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
         TODO("Not yet implemented")
     }
 
-    override fun supprimerParID(id: Int): InvitationOrganisation? {
-        TODO("Not yet implemented")
-    }
+    override fun supprimerParID(id: Int): InvitationOrganisation?
 
-    fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation> {
-        TODO("Not yet implemented")
-    }
+    fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation>
 
-    fun chercherParParticipant(idParticipant: Int) : List<InvitationOrganisation> {
-        TODO("Not yet implemented")
-    }
+    fun chercherParParticipant(idParticipant: Int) : List<InvitationOrganisation>
 
-    fun changerStatus(idInvitationOrganisation : Int, status : String) : InvitationOrganisation? {
-        TODO("Not yet implemented")
-    }
+    fun changerStatus(idInvitationOrganisation : Int, status : String) : InvitationOrganisation?
 
-    fun crééJeton(idOrganisation : Int) : InvitationOrganisation? {
-        TODO("Not yet implemented")
-    }
+    fun crééJeton(idOrganisation : Int) : InvitationOrganisation?
 
-    fun saisirJeton(jeton : String, idUtilisateur : Int) : InvitationOrganisation?  {
-        TODO("Not yet implemented")
-    }
+    fun saisirJeton(jeton : String, idUtilisateur : Int) : InvitationOrganisation?
 }

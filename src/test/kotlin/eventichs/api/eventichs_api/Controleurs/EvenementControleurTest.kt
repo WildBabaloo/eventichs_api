@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.Controleurs
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -17,7 +18,19 @@ class EvenementControleurTest {
 //    lateinit var service: EvenementService
 
     @Autowired
+    private lateinit var mapper: ObjectMapper
+    @Autowired
     private lateinit var mockMvc: MockMvc
+
+    // Consulter événements (général)
+    @Test
+    fun `Étant donné une requête GET de tous les événements disponibles, on reçoit un JSON qui contient la liste d'événements disponibles et un code retour 200`() {
+        TODO("Méthode non-implémentée")
+    }
+    @Test
+    fun `Étant donné une requête GET d'un événement disponible selon son ID, on reçoit un JSON qui contient l'événement demandé et un code retour 200`() {
+        TODO("Méthode non-implémentée")
+    }
 
     // Consulter événements (participant)
     @Test

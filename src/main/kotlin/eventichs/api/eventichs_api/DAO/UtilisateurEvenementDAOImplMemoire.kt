@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Mapper.UtilisateurEvenementMapper
 import eventichs.api.eventichs_api.Modèle.UtilisateurÉvénement
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository

@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
@@ -46,6 +47,6 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         db.query("select * from Organisation where estPublic=true", OrganisationMapper())
 
     override fun filtrerOrganisationParGouts(idCategorie: Int): List<Organisation> =
-        db.query("select * from Organisation where catégorie_id = $idCategorie",OrganisationMapper())
+        db.query("select * from Organisation where catégorie_id = $idCategorie", OrganisationMapper())
 
 }

@@ -30,7 +30,6 @@ class InvitationOrganisationControleurTest {
     @Autowired
     private lateinit var mapper: ObjectMapper
 
-
     @MockBean
     lateinit var service: InvitationOrganisationService
 

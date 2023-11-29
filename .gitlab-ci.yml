@@ -5,17 +5,30 @@ before_script:
   - export GRADLE_USER_HOME
 
 stages:
-  ##- build
+  - build
+  - test
   - deploy
 
 variables:
   SERVER_SSH_PRIVATE_KEY: "$SERVER_SSH_PRIVATE_KEY"
 
-##build:
-  ##stage: build
-  ###script:
-  ###  - ./gradlew build 
-
+# Make Project
+build:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew build -x test
+  only:
+    - api
+# Run all tests, if any fails, interrupt the pipeline(fail it)
+test:
+  needs: [build]
+  interruptible: true
+  stage: test
+  script:
+    - ./gradlew test
+  only:
+    - api
 deploy_to_server:
   stage: deploy
   script:
@@ -27,4 +40,3 @@ deploy_to_server:
     - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/eventichs_api; git checkout server-deploy; git pull; ./gradlew build -x test; fuser -k 8080/tcp; nohup ./gradlew bootRun &'
   only:
     - server-deploy
-      

@@ -1,6 +1,7 @@
 package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteException
+import eventichs.api.eventichs_api.Mapper.InvitationOrganisationMapper
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
@@ -21,7 +22,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         for (invitation : InvitationOrganisation in listeInvitations) {
             if (invitation.idDestinataire != null) {
                 if (invitation.idDestinataire == element.idDestinataire) {
-                        throw ConflitAvecUneRessourceExistanteException(" Il y existe déjà une invitation à l'organisation ${element.idOrganisation} assigné au particiapnt ${element.idDestinataire} inscrit au service ")
+                        throw ConflitAvecUneRessourceExistanteException(" Il y existe déjà une invitation à l'organisation ${element.idOrganisation} assigné au participant ${element.idDestinataire} inscrit au service ")
                 }
             }
         }
