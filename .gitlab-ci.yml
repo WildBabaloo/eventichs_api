@@ -22,7 +22,7 @@ build:
     - api
 # Run all tests, if any fails, interrupt the pipeline(fail it)
 test:
-  needs: [build]
+  needs: 
   interruptible: true
   stage: test
   script:
