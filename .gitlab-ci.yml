@@ -29,6 +29,7 @@ test:
     - ./gradlew test
   only:
     - api
+
 deploy_to_server:
   stage: deploy
   script:
