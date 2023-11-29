@@ -5,8 +5,8 @@ before_script:
   - export GRADLE_USER_HOME
 
 stages:
-  - build
   - test
+  - build
   - deploy
 
 variables:
@@ -27,7 +27,7 @@ test:
     - apk update && apk add mysql mysql-client
     
     # Start MySQL Server
-    - mysqld --initialize-insecure --user=mysql
+    - mysqld --user=mysql
     - mysqld --user=mysql &
 
     # Wait for MySQL to start
