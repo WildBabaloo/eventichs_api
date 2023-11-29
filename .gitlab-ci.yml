@@ -28,8 +28,9 @@ test:
     - chmod 600 deploy_key  # Set correct permissions
     - eval "$(ssh-agent -s)"  # Start the SSH agent
     - ssh-add deploy_key  # Add the SSH key to the agent
-    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/eventichs_api; git checkout server-deploy; git pull; ./gradlew test'
-  
+    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/eventichs_api; git checkout api; git pull; ./gradlew test'
+  only:
+    - api
 
 deploy_to_server:
   needs: [test]
