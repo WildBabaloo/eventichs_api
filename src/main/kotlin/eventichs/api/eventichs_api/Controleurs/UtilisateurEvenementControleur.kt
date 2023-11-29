@@ -1,24 +1,30 @@
 package eventichs.api.eventichs_api.Controleurs
 
 import eventichs.api.eventichs_api.Modèle.UtilisateurÉvénement
+import eventichs.api.eventichs_api.Modèle.nombre
 import eventichs.api.eventichs_api.Modèle.Événement
 import eventichs.api.eventichs_api.Services.UtilisateurEvenementService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class UtilisateurEvenementControleur(val service : UtilisateurEvenementService) {
+class
+UtilisateurEvenementControleur(val service : UtilisateurEvenementService) {
+
     @GetMapping("/utilisateursevenements")
     fun obtenirUtilisateursEvenements() = service.chercherTous()
-    @GetMapping("/utilisateurs/evenements/{id}")
-    fun obtenirUtilisateurEvenementParUtilisateurId(@PathVariable id: Int) = service.chercherParUtilisateur(id)
-    @GetMapping("/evenements/participants/{id}")
-    fun obtenirUtilisateurEvenementParEvenementId(@PathVariable id: Int) = service.chercherParEvenement(id)
-    @DeleteMapping("/evenements/participants{id}")
-    fun supprimerUtilisateurEvenementParUtilisateurId(@PathVariable id: Int) = service.supprimerParUtilisateur(id)
+    @GetMapping("/utilisateurs/{id}/evenements")
+    fun obtenirListeEvenementsParUtilisateurId(@PathVariable id: Int) = service.chercherEvenementsParUtilisateur(id)
+    @GetMapping("/evenements/{id}/utilisateurs")
+    fun obtenirUtilisateurEvenementParEvenementId(@PathVariable id: Int) = service.chercherUtilisateursParEvenement(id)
+    @GetMapping("/evenements/{id}/participants")
+    fun obtenirNombreParticipantsParEvenementId(@PathVariable id: Int) = nombre(service.chercherUtilisateursParEvenement(id).size)
 
-    @DeleteMapping("/utilisateurs/evenements/{id}")
+    @DeleteMapping("/utilisateurevenements/utilisateur/{id}")
+    fun supprimerUtilisateurEvenementParUtilisateurId(@PathVariable id: Int) =  service.supprimerParUtilisateur(id)
+
+    @DeleteMapping("/utilisateurevenements/evenements/{id}")
     fun supprimerUtilisateurEvenementParEvenementId(@PathVariable id: Int) = service.supprimerParEvenement(id)
 
-    @PostMapping("/utilisateursevenements")
+    @PostMapping("/rejoindre")
     fun rejoindreEvenement(@RequestBody utilisateurÉvénement : UtilisateurÉvénement) = service.ajouter(utilisateurÉvénement)
 }
