@@ -26,8 +26,11 @@ test:
   script:
     - apk update && apk add mysql mysql-client
     
-    # Start MySQL Server
-    - mysqld &
+    # Initialize MySQL data directory
+    - mysql_install_db --user=mysql --datadir=/var/lib/mysql
+
+  # Start MySQL Server in the background
+    - mysqld_safe --user=mysql --datadir=/var/lib/mysql &
 
     # Wait for MySQL to start
     - sleep 5
