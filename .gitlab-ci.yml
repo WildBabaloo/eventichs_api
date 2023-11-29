@@ -1,4 +1,4 @@
-image: gradle:alpine
+image: gradle:Ubuntu 22.04.3
 
 before_script:
   - GRADLE_USER_HOME="$(pwd)/.gradle"
@@ -24,7 +24,7 @@ test:
   interruptible: true
   stage: test
   script:
-    - apk update && apk add mysql mysql-client
+    - apt update && apt get mysql mysql-client
     
     # Initialize MySQL data directory
     - mysql_install_db --user=mysql --datadir=/var/lib/mysql
@@ -38,7 +38,7 @@ test:
     - mysql -e "CREATE USER 'eventichs' IDENTIFIED BY 'scrum_master';"
     - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'eventichs';"
     - mysql -e "FLUSH PRIVILEGES;"
-    - systemctl status mysql
+    
     - ./gradlew build
   
 
