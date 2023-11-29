@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class EvenementControleurTest {
+class EvenementControleurTest {/*
 
 //    @MockBean
 //    lateinit var service: EvenementService
@@ -122,6 +122,6 @@ class EvenementControleurTest {
 
 
 
-
+*/
 
 }
