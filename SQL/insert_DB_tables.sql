@@ -1,7 +1,7 @@
 -- Insertion Utilisateur
 INSERT INTO `eventichsBD`.`Utilisateur` (`nom`, `prénom`, `courriel`, `motDePasse`) VALUES ('joe','tremblay', 'joegmail@gmail.com', 'joe123');
 INSERT INTO `eventichsBD`.`Utilisateur` (`nom`, `prénom`, `courriel`, `motDePasse`) VALUES ('sam','drolet', 'samgmail@gmail.com', 'password123');
-
+INSERT INTO `eventichsBD`.`Utilisateur` (`nom`, `prénom`, `courriel`, `motDePasse`) VALUES ('joe2','drolet', 'joe2gmail@gmail.com', 'password12356789');
 -- Insertion Catégorie
 INSERT INTO `eventichsBD`.`Catégorie` (`nom`, `description`) VALUES ('Party', 'Party!! Woohoo');
 INSERT INTO `eventichsBD`.`Catégorie` (`nom`, `description`) VALUES ('Funérailles', 'Party!! Woohoo');
