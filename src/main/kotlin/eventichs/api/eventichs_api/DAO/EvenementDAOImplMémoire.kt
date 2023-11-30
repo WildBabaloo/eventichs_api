@@ -45,8 +45,7 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
         val organisation = element.organisation
         val org = db.queryForObject("select * from Organisation where Organisation.nomOrganisation = '$organisation'", OrganisationMapper())
             db.update(
-                    "insert into Événement values ( ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)",
-                    element.id,
+                    "insert into Événement values ( ?, ?, ? , ?, ?, ?, ?, ?, ?)",
                     element.nom,
                     element.adresse,
                     element.dateDebut,

@@ -50,7 +50,7 @@ CREATE TABLE Événement (
    type VARCHAR(255) NOT NULL,
    categorie_id int NOT NULL,
    description VARCHAR(255),
-   image VARCHAR(255) DEFAULT 'https://irp-cdn.multiscreensite.com/md/unsplash/dms3rep/multi/photo-1511578314322-379afb476865.jpg',
+   image VARCHAR(255) NOT NULL DEFAULT 'https://irp-cdn.multiscreensite.com/md/unsplash/dms3rep/multi/photo-1511578314322-379afb476865.jpg',
    organisation_id int NOT NULL,
    PRIMARY KEY (id),
    FOREIGN KEY (categorie_id) REFERENCES Catégorie(id),
