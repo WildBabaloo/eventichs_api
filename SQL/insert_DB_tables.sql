@@ -9,6 +9,7 @@ INSERT INTO `eventichsBD`.`Catégorie` (`nom`, `description`) VALUES ('allo', 'a
 INSERT INTO `eventichsBD`.`Organisation` (`idUtilisateur`, `catégorie_id`,`nomOrganisation`) VALUES ('1', '1','Illuminati');
 
 -- Insertion Organisations_membres
+INSERT INTO `eventichsBD`.`organisations_membres` (`id_organisation`, `id_utilisateur`) VALUES ('1', '1');
 
 -- Insertion Événement
 INSERT INTO `eventichsBD`.`Événement` (`nom`, `adresse`,`dateDebut`, `dateFin`, `type`, `categorie_id`, `description`, `photo`, `organisation_id`) VALUES ('Soiré','134 avenue Parc', '2020-10-10', '2020-10-10', 'public', '1', 'aaa', 'aaa', '1');
