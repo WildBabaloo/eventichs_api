@@ -2,8 +2,6 @@ package eventichs.api.eventichs_api.Controleurs
 
 import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
-import eventichs.api.eventichs_api.Modèle.Organisation
-import eventichs.api.eventichs_api.Modèle.Utilisateur
 import eventichs.api.eventichs_api.Services.InvitationOrganisationService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -53,8 +51,8 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     @PostMapping(
         value = ["/organisations/{idOrganisation}/invitations/{idParticipant}"])
     //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
-    fun demandeJoindreOrganisation(@PathVariable idOrganisation: Int, @PathVariable idParticipant: Int) : ResponseEntity<InvitationOrganisation>{
-        val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation( idOrganisation, idParticipant)
+    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation) : ResponseEntity<InvitationOrganisation>{
+        val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation(invitation)
         if (nouvelleInvitation != null) {
             val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
