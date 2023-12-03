@@ -2,6 +2,7 @@ package eventichs.api.eventichs_api.Services
 
 import eventichs.api.eventichs_api.DAO.InvitationOrganisationDAO
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
+import eventichs.api.eventichs_api.Modèle.Utilisateur
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,12 +21,11 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     fun changerStatus(idInvitationOrganisation: Int, status : String) : InvitationOrganisation? = dao.changerStatus(idInvitationOrganisation, status)
 
     //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
-    //fun saisirJeton(jeton : String, idUtilisateur )
+    fun saisirJeton(jeton : String, utilisateur: Utilisateur) : InvitationOrganisation? = dao.saisirJeton(jeton, utilisateur)
 
     //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
     fun crééJeton(idOrganisation : Int) : InvitationOrganisation? = dao.crééJeton(idOrganisation)
 
-    fun saisirJeton(jeton : String, idUtilisateur : Int) : InvitationOrganisation? = dao.saisirJeton(jeton, idUtilisateur)
-
-    fun effacerInvitation(idInvitationOrganisation : Int) : InvitationOrganisation? = dao.supprimerParID(idInvitationOrganisation)
+    //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
+    fun effacerInvitation(id : Int) : InvitationOrganisation? = dao.supprimerParID(id)
 }

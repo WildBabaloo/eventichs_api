@@ -1,6 +1,7 @@
 package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
+import eventichs.api.eventichs_api.Modèle.Utilisateur
 
 interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
     override fun chercherTous(): List<InvitationOrganisation> {
@@ -29,5 +30,5 @@ interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
 
     fun crééJeton(idOrganisation : Int) : InvitationOrganisation?
 
-    fun saisirJeton(jeton : String, idUtilisateur : Int) : InvitationOrganisation?
+    fun saisirJeton(jeton : String, utilisateur: Utilisateur) : InvitationOrganisation?
 }

@@ -8,14 +8,18 @@ import java.sql.ResultSet
 
 class InvitationOrganisationMapper : RowMapper<InvitationOrganisation>{
     override fun mapRow(résultat: ResultSet, rowNum: Int): InvitationOrganisation? {
-        val invitation = InvitationOrganisation(
-            résultat.getInt("id"),
-            Utilisateur(
+        var utilisateur : Utilisateur? = null
+        if (résultat.getString("nom") != null) {
+            utilisateur = Utilisateur(
                 résultat.getInt(6),
                 résultat.getString("nom"),
                 résultat.getString("prénom"),
                 résultat.getString("courriel"),
-                résultat.getString("motDePasse")),
+                résultat.getString("motDePasse"))
+        }
+        val invitation = InvitationOrganisation(
+            résultat.getInt("id"),
+            utilisateur,
             Organisation(
                 résultat.getInt(11),
                 résultat.getInt("idUtilisateur"),
