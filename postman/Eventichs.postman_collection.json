@@ -1,0 +1,530 @@
+{
+	"info": {
+		"_postman_id": "35ccc8f8-2879-4518-be44-eb3ddca65e5e",
+		"name": "Eventichs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30691372",
+		"_collection_link": "https://grey-comet-547937.postman.co/workspace/Eventichs~a0ab6362-b950-47cf-8071-cfae093f57a6/collection/30691372-35ccc8f8-2879-4518-be44-eb3ddca65e5e?action=share&source=collection_link&creator=30691372"
+	},
+	"item": [
+		{
+			"name": "InvitationOrganisation",
+			"item": [
+				{
+					"name": "InvitationOrganisation chercherTous()",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/organisations/invitations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"organisations",
+								"invitations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvitationOrganisation chercherParID()",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/organisations/invitations/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"organisations",
+								"invitations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvitationOrganisation demandeJoindreOrganisation()",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"jeton\": null,\r\n    \"status\": \"envoyé\",\r\n    \"organisation\": {\r\n        \"id\": 1,\r\n        \"idUtilisateur\": 1,\r\n        \"nomOrganisation\": \"Illuminati\",\r\n        \"catégorie_id\": 1,\r\n        \"estPublic\": false\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\": 3,\r\n        \"nom\": \"sam\",\r\n        \"prénom\": \"drolet\",\r\n        \"mot_de_passe\": \"samgmail@gmail.com\",\r\n        \"email\": \"password123\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/organisations/invitations/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"organisations",
+								"invitations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvitationOrganisation chercherParOrganisation()",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/organisations/1/invitations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"organisations",
+								"1",
+								"invitations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvitationOrganisation obtenirInvitationParticipant()",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/utilisateurs/3/invitations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"utilisateurs",
+								"3",
+								"invitations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvitationOrganisation changerStatus",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/organisations/invitations/3/status/accepté",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"organisations",
+								"invitations",
+								"3",
+								"status",
+								"accepté"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvitationOrganisation crééJeton()",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/organisations/2/jetons",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"organisations",
+								"2",
+								"jetons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvitationOrganisation saisirJeton()",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"nom\": \"sam\",\r\n    \"prénom\": \"drolet\",\r\n    \"mot_de_passe\": \"password123\",\r\n    \"email\": \"samgmail@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/organisations/jetons/9EIUYTBB",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"organisations",
+								"jetons",
+								"9EIUYTBB"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvitationOrganisation effacerInvitation()",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/organisations/invitations/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"organisations",
+								"invitations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evenements",
+			"item": [
+				{
+					"name": "localhost:8080/evenements/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/evenements/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/evenements",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie_id\": 1,\r\n    \"description\": \"Trop cool!\",\r\n    \"photo\": \"explosion.jpg\",\r\n    \"organisation_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/evenements",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/evenements/3",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/evenements/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/evenements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/evenements",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "InvitationÉvénement",
+			"item": [
+				{
+					"name": "chercherInvitationsÉvénementsParIdDestinataire(id)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/evenements/invitations/destinataire/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"invitations",
+								"destinataire",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenirInvitationÉvénementParId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/evenements/invitations/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"invitations",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenirInvitationsÉvénementsParIdExpediteur",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/evenements/invitations/expediteur/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"invitations",
+								"expediteur",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "genererJetonsEvenement",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idExpéditeur\": 1,\r\n    \"idDestinataire\": 1,\r\n    \"idÉvénement\": 1,\r\n    \"jeton\": \"JETON123124124\",\r\n    \"status\": \"envoyé\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/invitation/jetons/10/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"invitation",
+								"jetons",
+								"10",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "creerInvitation()",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idExpéditeur\": 1,\r\n    \"idDestinataire\": 1,\r\n    \"idÉvénement\": 1,\r\n    \"jeton\": \"JETON123124124\",\r\n    \"status\": \"envoyé\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/evenements/invitation",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"invitation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "majInvitation()",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idExpéditeur\": 1,\r\n    \"idDestinataire\": 1,\r\n    \"idÉvénement\": 1,\r\n    \"jeton\": \"JETON123124124\",\r\n    \"status\": \"envoyé\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/evenements/invitation",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"invitation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "supprimerInvitation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idExpéditeur\": 1,\r\n    \"idDestinataire\": 1,\r\n    \"idÉvénement\": 1,\r\n    \"jeton\": \"JETON123124124\",\r\n    \"status\": \"envoyé\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/evenements/invitation/20",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"invitation",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Utilisateur",
+			"item": [
+				{
+					"name": "chercherUtilisateurParId()",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/utilisateurs/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"utilisateurs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "localhost",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
