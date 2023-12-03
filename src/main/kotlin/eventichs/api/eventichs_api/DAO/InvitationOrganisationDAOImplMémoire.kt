@@ -37,22 +37,32 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
     }
 
     override fun ajouter(element: InvitationOrganisation): InvitationOrganisation? {
+
+        //Lance une exception si l'organisation n'existe pas
+        try {
+            db.queryForObject("select * from Organisation where id = ${element.Organisation.id}", OrganisationMapper())
+        } catch (e : EmptyResultDataAccessException) {throw RessourceInexistanteException("L'organisation ${element.Organisation.id} n'existe pas")}
+
+        //Lance une exception si le participant n'existe pas
+        try {
+            if (element.Utilisateur?.id != null) {
+                db.queryForObject("select * from Utilisateur where id = ${element.Utilisateur?.id}", UtilisateurMapper())
+            }
+        } catch (e : EmptyResultDataAccessException) {throw RessourceInexistanteException("Le participant ${element.Utilisateur?.id} n'existe pas")}
+
         //Insertion d'une invitation ayant un jeton null et un status envoyé seuleument si aucune inviation existe allant de cette organisation à ce destinateire.
-        val nbrDeLigneInséré: Int =
-            db.update("insert into invitation_organisation (idDestinataire, idOrganisation, jeton, status) select ${element.Utilisateur?.id}, ${element.Organisation.id}, null, 'envoyé' from dual where not exists (select * from invitation_organisation where idDestinataire=${element.Utilisateur?.id} and idOrganisation=${element.Organisation.id} LIMIT 1)")
+        val nbrDeLigneInséré: Int = db.update("insert into invitation_organisation (idDestinataire, idOrganisation, jeton, status) select ${element.Utilisateur?.id}, ${element.Organisation.id}, null, 'envoyé' from dual where not exists (select * from invitation_organisation where idDestinataire <=> ${element.Utilisateur?.id} and idOrganisation=${element.Organisation.id} LIMIT 1)")
 
-        if (nbrDeLigneInséré != 1) {
-            throw ConflitAvecUneRessourceExistanteException(
-                "Il y existe déjà une invitation à l'organisation ${element.Organisation.nomOrganisation} " +
-                        "assigné au participant ${element.Utilisateur?.prénom} ${element.Utilisateur?.nom} inscrit au service"
-            )
+        var invitation : InvitationOrganisation? = null
+
+        if (nbrDeLigneInséré == 1) {
+            //Query pour obtenir l'id de l'invitation créé.
+            val id = db.queryForObject<Int>("SELECT @lid:=LAST_INSERT_ID(); ")
+
+            //Assignation de l'invitation créé grace à son id obtenu plus haut
+            invitation = chercherParID(id)
         }
-
-        //Query pour obtenir l'id de l'invitation créé.
-        val id = db.queryForObject<Int>("SELECT @lid:=LAST_INSERT_ID(); ")
-
-        //Retour de l'invitation créé grace à son id obtenu plus haut
-        return chercherParID(id)
+        return invitation
     }
 
     override fun modifier(element: InvitationOrganisation): InvitationOrganisation? {
@@ -96,8 +106,37 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
     }
 
     override fun changerStatus(idInvitationOrganisation: Int, status: String): InvitationOrganisation? {
-        db.update("update Invitation_organisation set `status` = ? where id = ?",status, idInvitationOrganisation)
-        return chercherParID(idInvitationOrganisation)
+        //Lance une exception si l'invitation n'existe pas
+        val invitation = chercherParID(idInvitationOrganisation)
+        if (invitation == null) {
+            throw RessourceInexistanteException("L'invitation $idInvitationOrganisation à une organisation n'est pas inscrit au service")
+        } else {
+            //Changement de status de l'invitation
+            db.update("update Invitation_organisation set `status` = ? where id = ?",status, idInvitationOrganisation)
+
+            //Si le status est changé à accepté
+            if (status == "accepté") {
+                //Si l'invitation est assigné à un participant
+                if (invitation.Utilisateur != null) {
+                    try {
+                        //Si le select suivant fonctionne cela veut dire que le participant est déjà membre de l'organisation
+                        db.queryForObject("select * from Organisations_membres where Organisations_membres.id_organisation = ${invitation.Organisation.id} and Organisations_membres.id_utilisateur = ${invitation.Utilisateur?.id}", OrganisationMembresMapper())
+                        //Lance une exception de conflit car la requête select à confirmé que le participant est déjà membre de l'organisation
+                        throw ConflitAvecUneRessourceExistanteException("Le participant ${invitation.Utilisateur?.id} est déjà membre de l'organisation ${invitation.Organisation.id}")
+                    } catch (e : EmptyResultDataAccessException) {
+                        //Le participant n'a pas été trouvé comme membre de l'organisation alors on peut l'ajouté (pas trouvé alors le mapper a lancé une exception EmptyResultDataAccessException)
+                        //Ajout du participant comme membre de l'organisation
+                        db.update("insert into Organisations_membres (id_organisation,id_utilisateur)values (${invitation.Organisation.id} ,${invitation.Utilisateur?.id})")
+                        return chercherParID(idInvitationOrganisation)
+                    }
+
+                } else {
+                    //Sinon on Lance une exception
+                    RessourceInexistanteException("Aucun participant est assigné à l'invitation ${invitation.id}")
+                }
+            }
+            return chercherParID(idInvitationOrganisation)
+        }
     }
 
 
@@ -105,6 +144,13 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
     //Un select pour obtenir l'id de l'invitation dernièrement créé.
     //Un update sur l'invitation dernièrement créé grace à l'id pour y ajouter un jeton de 8 charactères alléatoire.
     override fun crééJeton(idOrganisation: Int): InvitationOrganisation? {
+        //Lance une exception si l'organisation n'existe pas
+        try {
+            db.queryForObject("select * from Organisation where id = $idOrganisation", OrganisationMapper())
+        } catch (e : EmptyResultDataAccessException) {
+            throw RessourceInexistanteException("L'organisation $idOrganisation n'existe pas")
+        }
+
         db.update(
             "INSERT INTO Invitation_organisation (idDestinataire, idOrganisation, status) VALUES (null, $idOrganisation,'généré'); ")
         val id = db.queryForObject<Int>("SELECT @lid:=LAST_INSERT_ID(); ")
@@ -135,7 +181,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         try {
             invitation = db.queryForObject("select * from Invitation_organisation as invitation left join utilisateur on idDestinataire = utilisateur.id join organisation on idOrganisation = organisation.id where jeton = ?", InvitationOrganisationMapper(),jeton)
         } catch (e : EmptyResultDataAccessException) {
-            throw RessourceInexistanteException("Le jeton ${jeton} à déjà été saisi et n'est donc plus valide")
+            throw RessourceInexistanteException("Aucune invitation inscrit dans le service contient le jeton ${jeton}")
         }
 
         //Lance une exception si le jeton à déjà été saisi
@@ -154,6 +200,6 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
             return chercherParID(invitation!!.id)
         }
 
-        throw ConflitAvecUneRessourceExistanteException("Le participant ${utilisateur.id} est déjà membre de cette l'organisation ${invitation.Organisation.id}")
+        throw ConflitAvecUneRessourceExistanteException("Le participant ${utilisateur.id} est déjà membre de l'organisation ${invitation.Organisation.id}")
     }
 }
