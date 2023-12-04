@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository
 class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrganisationDAO {
     override fun chercherTous(): List<InvitationOrganisation> =
         db.query(
-            "select * from Invitation_organisation left join utilisateur on Invitation_organisation.idDestinataire = utilisateur.id join organisation on Invitation_organisation.idOrganisation = organisation.id",
+            "select * from Invitation_organisation left join utilisateur on Invitation_organisation.idDestinataire = Utilisateur.code join organisation on Invitation_organisation.idOrganisation = organisation.id",
             InvitationOrganisationMapper()
         )
 
@@ -27,7 +27,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         var invitationOrganisation: InvitationOrganisation?
         try {
             invitationOrganisation = db.queryForObject(
-                "select * from Invitation_organisation as invitation left join utilisateur on idDestinataire = utilisateur.id join organisation on idOrganisation = organisation.id where invitation.id = $id",
+                "select * from Invitation_organisation as invitation left join utilisateur on idDestinataire = Utilisateur.code join organisation on idOrganisation = organisation.id where invitation.id = $id",
                 InvitationOrganisationMapper()
             )
         } catch (e: EmptyResultDataAccessException) {
@@ -45,13 +45,13 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
 
         //Lance une exception si le participant n'existe pas
         try {
-            if (element.Utilisateur?.id != null) {
-                db.queryForObject("select * from Utilisateur where id = ${element.Utilisateur?.id}", UtilisateurMapper())
+            if (element.Utilisateur?.code != null) {
+                db.queryForObject("select * from Utilisateur where id = ${element.Utilisateur?.code}", UtilisateurMapper())
             }
-        } catch (e : EmptyResultDataAccessException) {throw RessourceInexistanteException("Le participant ${element.Utilisateur?.id} n'existe pas")}
+        } catch (e : EmptyResultDataAccessException) {throw RessourceInexistanteException("Le participant ${element.Utilisateur?.code} n'existe pas")}
 
         //Insertion d'une invitation ayant un jeton null et un status envoyé seuleument si aucune inviation existe allant de cette organisation à ce destinateire.
-        val nbrDeLigneInséré: Int = db.update("insert into invitation_organisation (idDestinataire, idOrganisation, jeton, status) select ${element.Utilisateur?.id}, ${element.Organisation.id}, null, 'envoyé' from dual where not exists (select * from invitation_organisation where idDestinataire <=> ${element.Utilisateur?.id} and idOrganisation=${element.Organisation.id} LIMIT 1)")
+        val nbrDeLigneInséré: Int = db.update("insert into invitation_organisation (idDestinataire, idOrganisation, jeton, status) select ${element.Utilisateur?.code}, ${element.Organisation.id}, null, 'envoyé' from dual where not exists (select * from invitation_organisation where idDestinataire <=> ${element.Utilisateur?.code} and idOrganisation=${element.Organisation.id} LIMIT 1)")
 
         var invitation : InvitationOrganisation? = null
 
@@ -85,7 +85,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         }
 
         return db.query("select * from Invitation_organisation as invitation " +
-                "left join utilisateur on invitation.idDestinataire = utilisateur.id " +
+                "left join utilisateur on invitation.idDestinataire = Utilisateur.code " +
             "join organisation on invitation.idOrganisation = organisation.id " +
             "where invitation.idOrganisation = $idOrganisation", InvitationOrganisationMapper())
     }
@@ -100,7 +100,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         }
 
         return db.query("select * from Invitation_organisation as invitation " +
-                "join utilisateur on invitation.idDestinataire = utilisateur.id " +
+                "join utilisateur on invitation.idDestinataire = Utilisateur.code " +
                 "join organisation on invitation.idOrganisation = organisation.id " +
                 "where invitation.idDestinataire = $idParticipant", InvitationOrganisationMapper())
     }
@@ -120,13 +120,13 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
                 if (invitation.Utilisateur != null) {
                     try {
                         //Si le select suivant fonctionne cela veut dire que le participant est déjà membre de l'organisation
-                        db.queryForObject("select * from Organisations_membres where Organisations_membres.id_organisation = ${invitation.Organisation.id} and Organisations_membres.id_utilisateur = ${invitation.Utilisateur?.id}", OrganisationMembresMapper())
+                        db.queryForObject("select * from Organisations_membres where Organisations_membres.id_organisation = ${invitation.Organisation.id} and Organisations_membres.id_utilisateur = ${invitation.Utilisateur?.code}", OrganisationMembresMapper())
                         //Lance une exception de conflit car la requête select à confirmé que le participant est déjà membre de l'organisation
-                        throw ConflitAvecUneRessourceExistanteException("Le participant ${invitation.Utilisateur?.id} est déjà membre de l'organisation ${invitation.Organisation.id}")
+                        throw ConflitAvecUneRessourceExistanteException("Le participant ${invitation.Utilisateur?.code} est déjà membre de l'organisation ${invitation.Organisation.id}")
                     } catch (e : EmptyResultDataAccessException) {
                         //Le participant n'a pas été trouvé comme membre de l'organisation alors on peut l'ajouté (pas trouvé alors le mapper a lancé une exception EmptyResultDataAccessException)
                         //Ajout du participant comme membre de l'organisation
-                        db.update("insert into Organisations_membres (id_organisation,id_utilisateur)values (${invitation.Organisation.id} ,${invitation.Utilisateur?.id})")
+                        db.update("insert into Organisations_membres (id_organisation,id_utilisateur)values (${invitation.Organisation.id} ,${invitation.Utilisateur?.code})")
                         return chercherParID(idInvitationOrganisation)
                     }
 
@@ -171,15 +171,15 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
     override fun saisirJeton(jeton: String, utilisateur: Utilisateur): InvitationOrganisation? {
         //Lance une exception si le participant n'existe pas
         try {
-            db.queryForObject("select * from Utilisateur where id = ${utilisateur.id}", UtilisateurMapper())
+            db.queryForObject("select * from Utilisateur where id = ${utilisateur.code}", UtilisateurMapper())
         } catch (e : EmptyResultDataAccessException) {
-            throw RessourceInexistanteException("Le participant ${utilisateur.id} n'existe pas")
+            throw RessourceInexistanteException("Le participant ${utilisateur.code} n'existe pas")
         }
 
         //Lance une exception si le jeton saisi n'est pas inscrit dans une invitation
         var invitation : InvitationOrganisation? = null
         try {
-            invitation = db.queryForObject("select * from Invitation_organisation as invitation left join utilisateur on idDestinataire = utilisateur.id join organisation on idOrganisation = organisation.id where jeton = ?", InvitationOrganisationMapper(),jeton)
+            invitation = db.queryForObject("select * from Invitation_organisation as invitation left join utilisateur on idDestinataire = Utilisateur.code join organisation on idOrganisation = organisation.id where jeton = ?", InvitationOrganisationMapper(),jeton)
         } catch (e : EmptyResultDataAccessException) {
             throw RessourceInexistanteException("Aucune invitation inscrit dans le service contient le jeton ${jeton}")
         }
@@ -189,17 +189,17 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
 
         //Lance une exception si le participant est déjà membre de cette organisation
         try {
-            db.queryForObject("select * from Organisations_membres where Organisations_membres.id_organisation = ${invitation.Organisation.id} and Organisations_membres.id_utilisateur = ${utilisateur.id}", OrganisationMembresMapper())
+            db.queryForObject("select * from Organisations_membres where Organisations_membres.id_organisation = ${invitation.Organisation.id} and Organisations_membres.id_utilisateur = ${utilisateur.code}", OrganisationMembresMapper())
         } catch (e : EmptyResultDataAccessException) {
             //Assignation de l'invitation au participant et changement du status à 'accepté'
-            db.update("update Invitation_organisation set idDestinataire = ${utilisateur.id}, status = 'accepté' where id = ${invitation.id}")
+            db.update("update Invitation_organisation set idDestinataire = ${utilisateur.code}, status = 'accepté' where id = ${invitation.id}")
 
             //Ajout du participant comme membre de l'organisation
-            db.update("insert into Organisations_membres (id_organisation,id_utilisateur)values (${invitation.Organisation.id} ,${utilisateur?.id})")
+            db.update("insert into Organisations_membres (id_organisation,id_utilisateur)values (${invitation.Organisation.id} ,${utilisateur?.code})")
 
             return chercherParID(invitation!!.id)
         }
 
-        throw ConflitAvecUneRessourceExistanteException("Le participant ${utilisateur.id} est déjà membre de l'organisation ${invitation.Organisation.id}")
+        throw ConflitAvecUneRessourceExistanteException("Le participant ${utilisateur.code} est déjà membre de l'organisation ${invitation.Organisation.id}")
     }
 }

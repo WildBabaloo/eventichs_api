@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.security.Principal
 
 @RestController
 @RequestMapping("\${api.base-path:}")
@@ -58,8 +59,8 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     )
     @PostMapping(
         value = ["/organisations/invitations/"])
-    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation) : ResponseEntity<InvitationOrganisation>{
-        val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation(invitation)
+    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal) : ResponseEntity<InvitationOrganisation>{
+        val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation(invitation, principal.name)
         if (nouvelleInvitation != null) {
             val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

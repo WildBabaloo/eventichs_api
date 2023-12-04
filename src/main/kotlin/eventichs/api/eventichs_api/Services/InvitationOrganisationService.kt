@@ -11,7 +11,9 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     fun chercherParID(id: Int): InvitationOrganisation? = dao.chercherParID(id)
 
     //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
-    fun demandeJoindreOrganisation(invitation: InvitationOrganisation) : InvitationOrganisation? = dao.ajouter(invitation)
+    fun demandeJoindreOrganisation(invitation: InvitationOrganisation, code_Util : String) : InvitationOrganisation? {
+        return dao.ajouter(invitation)
+    }
 
     //Cas d'utilisation: 3.Consulter ses invitations(Participant+Organisation)
     fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation> = dao.chercherParOrganisation(idOrganisation)

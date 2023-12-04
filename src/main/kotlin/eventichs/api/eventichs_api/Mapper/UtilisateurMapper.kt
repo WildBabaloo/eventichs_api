@@ -7,10 +7,9 @@ import java.sql.ResultSet
 class UtilisateurMapper : RowMapper<Utilisateur> {
     override fun mapRow(résultat: ResultSet, rowNum: Int): Utilisateur? {
         val utilisateur = Utilisateur(
-            résultat.getInt("id"),
+            résultat.getString("code"),
             résultat.getString("nom"),
             résultat.getString("prénom"),
-            résultat.getString("motDePasse"),
             résultat.getString("courriel")
         )
         return utilisateur
