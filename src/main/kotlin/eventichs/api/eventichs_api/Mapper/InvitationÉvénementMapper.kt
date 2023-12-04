@@ -9,8 +9,8 @@ class InvitationÉvénementMapper: RowMapper<InvitationÉvénement> {
     override fun mapRow(résultat: ResultSet, rowNum: Int): InvitationÉvénement? {
         val invitationÉvénement = InvitationÉvénement(
             résultat.getInt("id"),
-            résultat.getInt("idÉxpéditeur"),
-            résultat.getInt("idDestinataire"),
+            résultat.getString("codeExpediteur"),
+            résultat.getString("codeDestinataire"),
             résultat.getInt("idÉvénement"),
             résultat.getString("jeton"),
             résultat.getString("status")

@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "35ccc8f8-2879-4518-be44-eb3ddca65e5e",
-		"name": "Eventichs",
+		"_postman_id": "13db4a02-86dc-49c3-abb8-ec0814bc0641",
+		"name": "Eventichs Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30691372",
-		"_collection_link": "https://grey-comet-547937.postman.co/workspace/Eventichs~a0ab6362-b950-47cf-8071-cfae093f57a6/collection/30691372-35ccc8f8-2879-4518-be44-eb3ddca65e5e?action=share&source=collection_link&creator=30691372"
+		"_exporter_id": "30751226"
 	},
 	"item": [
 		{
@@ -308,13 +307,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/evenements/invitations/destinataire/1",
+							"raw": "localhost:8080/utilisateur/invitations/destinataire/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"evenements",
+								"utilisateur",
 								"invitations",
 								"destinataire",
 								"1"
@@ -329,15 +328,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/evenements/invitations/10",
+							"raw": "localhost:8080/utilisateur/invitations/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"evenements",
+								"utilisateur",
 								"invitations",
-								"10"
+								"1"
 							]
 						}
 					},
@@ -349,13 +348,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/evenements/invitations/expediteur/1",
+							"raw": "localhost:8080/utilisateur/invitations/expediteur/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"evenements",
+								"utilisateur",
 								"invitations",
 								"expediteur",
 								"1"
@@ -382,7 +381,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/invitation/jetons/10/2",
+							"raw": "localhost:8080/invitation/jetons/1/2",
 							"host": [
 								"localhost"
 							],
@@ -390,7 +389,7 @@
 							"path": [
 								"invitation",
 								"jetons",
-								"10",
+								"1",
 								"2"
 							]
 						}
@@ -398,7 +397,35 @@
 					"response": []
 				},
 				{
-					"name": "creerInvitation()",
+					"name": "creerInvitation() NO-AUTH",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idExpéditeur\": 1,\r\n    \"idDestinataire\": 1,\r\n    \"idÉvénement\": 1,\r\n    \"jeton\": \"JETON123124124\",\r\n    \"status\": \"envoyé\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/evenements/invitation",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"evenements",
+								"invitation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "creerInvitation() AUTH",
 					"request": {
 						"method": "POST",
 						"header": [],

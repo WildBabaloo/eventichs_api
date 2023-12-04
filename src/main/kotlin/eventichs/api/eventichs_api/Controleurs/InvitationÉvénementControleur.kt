@@ -127,7 +127,7 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "409", description = "Le jeton est invalide."),
             ApiResponse(responseCode = "500", description = "Impossible de traiter le jeton, erreur du serveur.")]
     )
-    @GetMapping("/jetons/{id}/{quantité}")
+    @GetMapping("/invitation/jetons/{id}/{quantité}")
     fun générerJeton(@PathVariable id : Int,  @PathVariable quantité : Int) =
         service.genererJetonsEvenement(id)
 }
