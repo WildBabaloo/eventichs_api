@@ -25,6 +25,11 @@ dependencies {
     implementation("junit:junit:4.13.1")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.security:spring-security-oauth2-resource-server")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
+    implementation("org.springframework.security:spring-security-config")
+    implementation("org.springframework.security:spring-security-test")
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 }
