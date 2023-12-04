@@ -49,11 +49,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
-                3,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 1,
                 1,
@@ -69,10 +68,9 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(1))
-            .andExpect(jsonPath("$.utilisateur.id").value(3))
+            .andExpect(jsonPath("$.utilisateur.code").value("auth0|656d3ecc4178aefc03429538"))
             .andExpect(jsonPath("$.utilisateur.nom").value("nomUtil"))
             .andExpect(jsonPath("$.utilisateur.prénom").value("prénom"))
-            .andExpect(jsonPath("$.utilisateur.mot_de_passe").value("mdp"))
             .andExpect(jsonPath("$.utilisateur.email").value("email"))
             .andExpect(jsonPath("$.organisation.id").value("1"))
             .andExpect(jsonPath("$.organisation.idUtilisateur").value("1"))
@@ -109,11 +107,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
-                3,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 1,
                 1,
@@ -123,7 +120,7 @@ class InvitationOrganisationControleurTest {
             null,
             "envoyé")
 
-        Mockito.`when`(service.demandeJoindreOrganisation(invitation)).thenReturn(invitation)
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"auth0|656d3ecc4178aefc03429538")).thenReturn(invitation)
 
         mockMvc.perform(post("/organisations/invitations/")
             .contentType(MediaType.APPLICATION_JSON)
@@ -131,10 +128,9 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isCreated)
             .andExpect(header().string("Location",containsString("/organisations/invitations/1" )))
             .andExpect(jsonPath("$.id").value(1))
-            .andExpect(jsonPath("$.utilisateur.id").value(3))
+            .andExpect(jsonPath("$.utilisateur.code").value("auth0|656d3ecc4178aefc03429538"))
             .andExpect(jsonPath("$.utilisateur.nom").value("nomUtil"))
             .andExpect(jsonPath("$.utilisateur.prénom").value("prénom"))
-            .andExpect(jsonPath("$.utilisateur.mot_de_passe").value("mdp"))
             .andExpect(jsonPath("$.utilisateur.email").value("email"))
             .andExpect(jsonPath("$.organisation.id").value("1"))
             .andExpect(jsonPath("$.organisation.idUtilisateur").value("1"))
@@ -150,11 +146,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
-                3,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 18,
                 1,
@@ -163,7 +158,7 @@ class InvitationOrganisationControleurTest {
                 true),
             null,
             "envoyé")
-        Mockito.`when`(service.demandeJoindreOrganisation(invitation)).thenThrow(RessourceInexistanteException("L'organisation 18 n'existe pas"))
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"auth0|656d3ecc4178aefc03429538")).thenThrow(RessourceInexistanteException("L'organisation 18 n'existe pas"))
 
         mockMvc.perform(post("/organisations/invitations/")
             .contentType(MediaType.APPLICATION_JSON)
@@ -180,11 +175,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
-                23,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 3,
                 1,
@@ -193,7 +187,7 @@ class InvitationOrganisationControleurTest {
                 true),
             null,
             "envoyé")
-        Mockito.`when`(service.demandeJoindreOrganisation(invitation)).thenThrow(RessourceInexistanteException("Le participant 23 n'existe pas"))
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"auth0|656d3ecc4178aefc03429538")).thenThrow(RessourceInexistanteException("Le participant 23 n'existe pas"))
 
         mockMvc.perform(post("/organisations/invitations/")
             .contentType(MediaType.APPLICATION_JSON)
@@ -211,11 +205,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
-                1,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 3,
                 1,
@@ -224,7 +217,7 @@ class InvitationOrganisationControleurTest {
                 true),
             null,
             "envoyé")
-        Mockito.`when`(service.demandeJoindreOrganisation(invitation))
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"auth0|656d3ecc4178aefc03429538"))
             .thenThrow(ConflitAvecUneRessourceExistanteException("Il y existe déjà une invitation à l'organisation nomOrg assigné au participant prénom nomUtil inscrit au service"))
 
         mockMvc.perform(post("/organisations/invitations/")
@@ -252,11 +245,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             3,
             Utilisateur(
-                1,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 3,
                 1,
@@ -271,10 +263,9 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(3))
-            .andExpect(jsonPath("$.utilisateur.id").value(1))
+            .andExpect(jsonPath("$.utilisateur.code").value("auth0|656d3ecc4178aefc03429538"))
             .andExpect(jsonPath("$.utilisateur.nom").value("nomUtil"))
             .andExpect(jsonPath("$.utilisateur.prénom").value("prénom"))
-            .andExpect(jsonPath("$.utilisateur.mot_de_passe").value("mdp"))
             .andExpect(jsonPath("$.utilisateur.email").value("email"))
             .andExpect(jsonPath("$.organisation.id").value("3"))
             .andExpect(jsonPath("$.organisation.idUtilisateur").value("1"))
@@ -308,11 +299,10 @@ class InvitationOrganisationControleurTest {
         val listeInvitations : List<InvitationOrganisation> = listOf(InvitationOrganisation(
             5,
             Utilisateur(
-                1,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 3,
                 1,
@@ -328,11 +318,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$[0].id").value(5))
-            .andExpect(jsonPath("$[0].utilisateur.id").value(1))
-            .andExpect(jsonPath("$[0].utilisateur.nom").value("nomUtil"))
-            .andExpect(jsonPath("$[0].utilisateur.prénom").value("prénom"))
-            .andExpect(jsonPath("$[0].utilisateur.mot_de_passe").value("mdp"))
-            .andExpect(jsonPath("$[0].utilisateur.email").value("email"))
+            .andExpect(jsonPath("$.utilisateur.code").value("auth0|656d3ecc4178aefc03429538"))
+            .andExpect(jsonPath("$.utilisateur.nom").value("nomUtil"))
+            .andExpect(jsonPath("$.utilisateur.prénom").value("prénom"))
+            .andExpect(jsonPath("$.utilisateur.email").value("email"))
             .andExpect(jsonPath("$[0].organisation.id").value("3"))
             .andExpect(jsonPath("$[0].organisation.idUtilisateur").value("1"))
             .andExpect(jsonPath("$[0].organisation.nomOrganisation").value("nomOrg"))
@@ -365,11 +354,10 @@ class InvitationOrganisationControleurTest {
         val listeInvitations : List<InvitationOrganisation> = listOf(InvitationOrganisation(
             5,
             Utilisateur(
-                1,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 3,
                 1,
@@ -385,11 +373,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$[0].id").value(5))
-            .andExpect(jsonPath("$[0].utilisateur.id").value(1))
-            .andExpect(jsonPath("$[0].utilisateur.nom").value("nomUtil"))
-            .andExpect(jsonPath("$[0].utilisateur.prénom").value("prénom"))
-            .andExpect(jsonPath("$[0].utilisateur.mot_de_passe").value("mdp"))
-            .andExpect(jsonPath("$[0].utilisateur.email").value("email"))
+            .andExpect(jsonPath("$.utilisateur.code").value("auth0|656d3ecc4178aefc03429538"))
+            .andExpect(jsonPath("$.utilisateur.nom").value("nomUtil"))
+            .andExpect(jsonPath("$.utilisateur.prénom").value("prénom"))
+            .andExpect(jsonPath("$.utilisateur.email").value("email"))
             .andExpect(jsonPath("$[0].organisation.id").value("3"))
             .andExpect(jsonPath("$[0].organisation.idUtilisateur").value("1"))
             .andExpect(jsonPath("$[0].organisation.nomOrganisation").value("nomOrg"))
@@ -422,11 +409,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             8,
             Utilisateur(
-                3,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 1,
                 1,
@@ -443,10 +429,9 @@ class InvitationOrganisationControleurTest {
             .content(mapper.writeValueAsString(invitation)))
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").value(8))
-            .andExpect(jsonPath("$.utilisateur.id").value(3))
+            .andExpect(jsonPath("$.utilisateur.code").value("auth0|656d3ecc4178aefc03429538"))
             .andExpect(jsonPath("$.utilisateur.nom").value("nomUtil"))
             .andExpect(jsonPath("$.utilisateur.prénom").value("prénom"))
-            .andExpect(jsonPath("$.utilisateur.mot_de_passe").value("mdp"))
             .andExpect(jsonPath("$.utilisateur.email").value("email"))
             .andExpect(jsonPath("$.organisation.id").value("1"))
             .andExpect(jsonPath("$.organisation.idUtilisateur").value("1"))
@@ -480,11 +465,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             8,
             Utilisateur(
-                3,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 1,
                 1,
@@ -501,10 +485,9 @@ class InvitationOrganisationControleurTest {
             .content(mapper.writeValueAsString(invitation.Utilisateur!!)))
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").value(8))
-            .andExpect(jsonPath("$.utilisateur.id").value(3))
+            .andExpect(jsonPath("$.utilisateur.code").value("auth0|656d3ecc4178aefc03429538"))
             .andExpect(jsonPath("$.utilisateur.nom").value("nomUtil"))
             .andExpect(jsonPath("$.utilisateur.prénom").value("prénom"))
-            .andExpect(jsonPath("$.utilisateur.mot_de_passe").value("mdp"))
             .andExpect(jsonPath("$.utilisateur.email").value("email"))
             .andExpect(jsonPath("$.organisation.id").value("1"))
             .andExpect(jsonPath("$.organisation.idUtilisateur").value("1"))
@@ -520,11 +503,10 @@ class InvitationOrganisationControleurTest {
         val invitation = InvitationOrganisation(
             8,
             Utilisateur(
-                3,
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
                 "nomUtil",
-                "prénom",
-                "mdp",
-                "email"),
+                "prénom"),
             Organisation(
                 1,
                 1,

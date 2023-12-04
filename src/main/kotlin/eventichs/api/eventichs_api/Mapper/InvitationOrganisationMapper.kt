@@ -11,11 +11,10 @@ class InvitationOrganisationMapper : RowMapper<InvitationOrganisation>{
         var utilisateur : Utilisateur? = null
         if (résultat.getString("nom") != null) {
             utilisateur = Utilisateur(
-                résultat.getInt(6),
-                résultat.getString("nom"),
-                résultat.getString("prénom"),
+                résultat.getString(6),
                 résultat.getString("courriel"),
-                résultat.getString("motDePasse"))
+                résultat.getString("nom"),
+                résultat.getString("prénom"))
         }
         val invitation = InvitationOrganisation(
             résultat.getInt("id"),
