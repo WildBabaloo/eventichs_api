@@ -20,8 +20,8 @@ class InvitationOrganisationMapper : RowMapper<InvitationOrganisation>{
             résultat.getInt("id"),
             utilisateur,
             Organisation(
-                résultat.getInt(11),
-                résultat.getInt("idUtilisateur"),
+                résultat.getInt(10),
+                résultat.getString("codeUtilisateur"),
                 résultat.getString("nomOrganisation"),
                 résultat.getInt("catégorie_id"),
                 résultat.getBoolean("estPublic")

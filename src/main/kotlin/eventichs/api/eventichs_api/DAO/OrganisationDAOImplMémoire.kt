@@ -17,7 +17,7 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         db.update(
             "insert into Organisation values (?, ?, ?, ?)",
             element.id,
-            element.idUtilisateur,
+            element.codeUtilisateur,
             element.nomOrganisation,
             element.catégorie_id,
             element.estPublic
