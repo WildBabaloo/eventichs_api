@@ -82,7 +82,7 @@ lateinit var service: OrganisationService
 
     @Test
     fun `Étant donné un admin qui effectue une recherche pour une organisation exisatant on obtient un JSON qui contient l'organisation et un code de retour 200`(){
-        var uneOrganisation = Organisation(1,1,"Illuminati",1,false)
+        val uneOrganisation = Organisation(1,1,"Illuminati",1,false)
 
         Mockito.`when`(service.chercherParID(1)).thenReturn(uneOrganisation)
 
@@ -95,6 +95,43 @@ lateinit var service: OrganisationService
             .andExpect(jsonPath("$.nomOrganisation").value("Illuminati"))
             .andExpect(jsonPath("$.estPublic").value(false))
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    //
+    // @PostMapping("/organisations")
+    //
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Test
+    fun `Étant donné un participant veut créer une organisation on obtient un JSON qui contient l'organisation créée et un code de retour 200` () {
+        val uneOrganisation = Organisation(1,1,"Illuminati",1,false)
+
+        Mockito.`when`(service.ajouter(uneOrganisation)).thenReturn(uneOrganisation)
+
+        mockMvc.perform(get("/organisations"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.id").value(1))
+            .andExpect(jsonPath("$.idUtilisateur").value(1))
+            .andExpect(jsonPath("$.catégorie_id").value(1))
+            .andExpect(jsonPath("$.nomOrganisation").value("Illuminati"))
+            .andExpect(jsonPath("$.estPublic").value(false))
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Test
     fun `Étant donné une organisation qui effectue unee requête PUT pour enlever un participant non-exisatant on obtient un code de retour 404`(){
