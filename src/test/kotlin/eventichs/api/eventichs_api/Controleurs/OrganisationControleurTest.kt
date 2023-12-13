@@ -104,14 +104,14 @@ lateinit var service: OrganisationService
 
     @Test
     fun `Étant donné un participant veut créer une organisation on obtient un JSON qui contient l'organisation créée et un code de retour 200` () {
-        val uneOrganisation = Organisation(1,1,"Illuminati",1,false)
+        val uneOrganisation = Organisation(2,1,"Illuminati",1,false)
 
         Mockito.`when`(service.ajouter(uneOrganisation)).thenReturn(uneOrganisation)
 
         mockMvc.perform(get("/organisations"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(1))
+            .andExpect(jsonPath("$.id").value(2))
             .andExpect(jsonPath("$.idUtilisateur").value(1))
             .andExpect(jsonPath("$.catégorie_id").value(1))
             .andExpect(jsonPath("$.nomOrganisation").value("Illuminati"))

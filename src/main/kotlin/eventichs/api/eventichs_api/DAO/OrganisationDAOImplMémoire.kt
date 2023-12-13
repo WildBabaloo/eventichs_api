@@ -14,14 +14,18 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
 
     override fun ajouter(element: Organisation): Organisation? {
         db.update(
-            "insert into Organisation values (?, ?, ?, ?, ?)", OrganisationMapper())
-        return chercherParID(element.id)
+        "INSERT INTO Organisation (id, idUtilisateur, nomOrganisation, catégorie_id, estPublic) VALUES (?, ?, ?, ?, ?)",
+        element.id, element.idUtilisateur, element.nomOrganisation, element.catégorie_id, element.estPublic
+        )
+        return element
     }
 
     override fun modifier(element: Organisation): Organisation? {
         db.update(
-        "INSERT INTO Organisation (id, idUtilisateur, nomOrganisation, catégorie_id, estPublic) VALUES (?, ?, ?, ?, ?)",
-        element.id, element.idUtilisateur, element.nomOrganisation, element.catégorie_id, element.estPublic
+            "update Organisation set nomOrganisation = ?, catégorie_id = ?, estPublic = ? where id = $element.id",
+            element.nomOrganisation,
+            element.catégorie_id,
+            element.estPublic
         )
         return element
     }
