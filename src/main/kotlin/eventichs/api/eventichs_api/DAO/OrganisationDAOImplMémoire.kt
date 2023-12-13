@@ -26,8 +26,9 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     }
 
     override fun modifier(element: Organisation): Organisation? {
+        val id = element.id
         db.update(
-            "update Organisation set nomOrganisation = ?, catégorie_id = ?, estPublic = ? where id = $element.id",
+            "update Organisation set nomOrganisation = ?, catégorie_id = ?, estPublic = ? where id = $id",
             element.nomOrganisation,
             element.catégorie_id,
             element.estPublic
