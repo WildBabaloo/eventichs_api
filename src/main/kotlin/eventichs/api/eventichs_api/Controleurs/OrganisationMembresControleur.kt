@@ -57,7 +57,7 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
         description = "Retourne un status que ce participant à été ajouté",
         operationId = "ajouterParticipant",
         responses = [
-            ApiResponse(responseCode = "200", description = "Le participant est ajouté"),
+            ApiResponse(responseCode = "201", description = "Le participant est ajouté"),
             ApiResponse(responseCode = "404", description = "Le participant n'existe pas"),
             ApiResponse(responseCode = "409", description = "Le participant est déja dans l'organisation")]
     )
