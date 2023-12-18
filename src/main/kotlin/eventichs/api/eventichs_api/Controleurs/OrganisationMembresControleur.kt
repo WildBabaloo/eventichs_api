@@ -34,7 +34,7 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "404", description = "Ce participant n'existe pas dans le système")]
     )
     @GetMapping(
-        value = ["/utilisateurs/{codeParticipant}/organisations"],
+            value = ["/utilisateurs/{codeParticipant}/organisations"],
         produces = ["application/json"])
     fun obtenirOrganisationsParticipantParID(@PathVariable codeParticipant: Int) = service.chercherParParticipantID(codeParticipant)
 
