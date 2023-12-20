@@ -21,9 +21,8 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
 
     override fun chercherParOrganisation(organisation: String): List<Événement> {
 
-        val org = db.queryForObject("select * from Organisation where nomOrganisation = $organisation", OrganisationMapper())
-        val id = org?.nomOrganisation
-        return db.query("$selectQuery where Événement.organisation_id = $id", EvenementMapper())
+        val orgId = db.query("select id from Organisation where nomOrganisation = $organisation", OrganisationMapper())
+        return db.query("$selectQuery where Événement.organisation_id = $orgId", EvenementMapper())
     }
 
     override fun chercherParCategorie(categorie: String): List<Événement> {
