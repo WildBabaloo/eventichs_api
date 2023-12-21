@@ -42,7 +42,7 @@ lateinit var service: OrganisationService
 
     @Test
     fun `1- Étant donné un administrateur qui effectue une requete GET pour afficher toute les organisations lorsqu on exécute la requête on obtient un fichier JSON qui reqgroupe les organisations et un code de retour 200 `(){
-        var listorganisation: MutableList<Organisation> = mutableListOf(Organisation(1,1,"Illuminati",1,false))
+        var listorganisation: MutableList<Organisation> = mutableListOf(Organisation(1,"1","Illuminati",1,false))
         //listorganisation?.add(Organisation(1,1,"Illuminati",1,false))
 
         Mockito.`when`(service.chercherTous()).thenReturn(listorganisation)
@@ -84,7 +84,7 @@ lateinit var service: OrganisationService
 
     @Test
     fun `Étant donné un admin qui effectue une recherche pour une organisation exisatant on obtient un JSON qui contient l'organisation et un code de retour 200`(){
-        val uneOrganisation = Organisation(1,1,"Illuminati",1,false)
+        val uneOrganisation = Organisation(1,"1","Illuminati",1,false)
 
         Mockito.`when`(service.chercherParID(1)).thenReturn(uneOrganisation)
 
@@ -106,9 +106,9 @@ lateinit var service: OrganisationService
 
     @Test
     fun `Étant donné un participant veut créer une organisation on obtient un JSON qui contient l'organisation créée et un code de retour 200` () {
-        val uneOrganisation = Organisation(3,1,"Illuminati",1,false)
+        val uneOrganisation = Organisation(3,"1","Illuminati",1,false)
 
-        Mockito.`when`(service.ajouter(uneOrganisation)).thenReturn(uneOrganisation)
+        Mockito.`when`(service.ajouter(uneOrganisation,"")).thenReturn(uneOrganisation)
 
         mockMvc.perform(post("/organisations")).andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated)
