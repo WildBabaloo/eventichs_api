@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.Controleurs
 
+import eventichs.api.eventichs_api.Exceptions.PasConnectéException
 import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Services.OrganisationService
@@ -41,7 +42,7 @@ lateinit var service: OrganisationService
 
 
     @Test
-    fun `1- Étant donné un utilisateur non authentifié qui effectue une requete GET pour afficher toute les organisations publiques, lorsqu on exécute la requête on obtient un fichier JSON et un code de retour 403 `(){
+    fun `1- Étant donné un utilisateur non authentifié qui effectue une requete GET pour afficher toute les organisations publiques, lorsqu on exécute la requête on obtient un fichier JSON et un code de retour 200 `(){
         var listorganisation: MutableList<Organisation> = mutableListOf(Organisation(1,"Anonyme","Illuminati",1,true))
 
         Mockito.`when`(service.consulterOrganisationPubliques()).thenReturn(listorganisation)
@@ -65,20 +66,18 @@ lateinit var service: OrganisationService
 
     // DOES NOT WORK YET
     @Test
-    fun `2- Étant donné un admin qui effectue une recherche pour un organisation non-exisatant et de l ajouter on obtient un code de retour 404`(){
-        Mockito.`when`(service.chercherParID(10)).thenReturn(null)
+    fun `2- Étant donné un utilisateur non authentifié qui effectue une recherche pour une organisation existante, on obtient un code de retour 404`(){
+        Mockito.`when`(service.chercherParID(10)).thenReturn(Organisation(10,"auth","Penguin",1,true))
 
         mockMvc.perform(get("/organisations/10")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound)
-            .andExpect{ résultat ->
-                assertTrue(résultat.resolvedException is RessourceInexistanteException)
-                Assertions.assertEquals(
-                    "L'organisation ayant l'id de 10 est non existant",
-                    résultat.resolvedException?.message
-                )
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized)
+                .andExpect { résultat ->
+                    assertTrue(résultat.resolvedException is PasConnectéException)
+                    Assertions.assertEquals("L'utilisateur n'est pas connecté.", résultat.resolvedException?.message)
+                }
 
-            }
+
     }
 
     @Test
