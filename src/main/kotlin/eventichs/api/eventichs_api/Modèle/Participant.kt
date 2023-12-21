@@ -1,4 +1,4 @@
 package eventichs.api.eventichs_api.Modèle
 
-data class Participant(val id : Int, val nom : String, val prenom : String) {
+data class Participant(val code : String, val nom : String, val prenom : String) {
 }

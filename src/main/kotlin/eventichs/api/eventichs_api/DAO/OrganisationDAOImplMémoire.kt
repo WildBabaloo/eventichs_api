@@ -52,13 +52,24 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         db.query("select * from Organisation where catégorie_id = $idCategorie", OrganisationMapper())
 
     override fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean {
-        val organisation: Organisation? = chercherParID(id)
+        try {
+            val organisation: Organisation? = chercherParID(id)
+            if (organisation?.codeUtilisateur == codeUtilisateur) {
+                return true
+            }
 
-        if (organisation?.codeUtilisateur == codeUtilisateur) {
-            return true
+            return false
+        } catch (e: Exception) {
+            return false
         }
 
-        return false
+        //val organisation: Organisation? = chercherParID(id)
+
+       // if (organisation?.codeUtilisateur == codeUtilisateur) {
+           // return true
+        //}
+
+       // return false
     }
 
 }

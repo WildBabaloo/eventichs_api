@@ -12,17 +12,16 @@ import org.springframework.stereotype.Repository
 class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
     val selectQuery = "select Événement.id, Événement.nom, Événement.adresse, Événement.dateDebut, Événement.dateFin, Événement.type, Catégorie.nom as categorie, Événement.description, Événement.image, Organisation.nomOrganisation as organisation from Événement join Catégorie on Événement.categorie_id = Catégorie.id join Organisation on Événement.organisation_id = Organisation.id"
     override fun chercherTous(): List<Événement> =
-            db.query("$selectQuery", EvenementMapper())
+            db.query(selectQuery, EvenementMapper())
 
     override fun chercherParID(id: Int): Événement? =
             db.queryForObject("$selectQuery where Événement.id = $id", EvenementMapper())
     override fun chercherEvenementPublic(): List<Événement> =
         db.query("$selectQuery where Événement.type = 'public'", EvenementMapper())
 
-    override fun chercherParOrganisation(organisation: String): List<Événement> {
+    override fun chercherParOrganisation(organisation: Int): List<Événement> {
 
-        val orgId = db.query("select id from Organisation where nomOrganisation = $organisation", OrganisationMapper())
-        return db.query("$selectQuery where Événement.organisation_id = $orgId", EvenementMapper())
+        return db.query("$selectQuery where Événement.organisation_id = $organisation", EvenementMapper())
     }
 
     override fun chercherParCategorie(categorie: String): List<Événement> {

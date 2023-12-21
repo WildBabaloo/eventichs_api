@@ -17,7 +17,7 @@ class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEven
     override fun chercherParUtilisateurID(id: Int):  List<Événement> =
             db.query("$selectQuery inner join Utilisateur_événement on Utilisateur_événement.idEvenement = Événement.id WHERE Utilisateur_événement.idUtilisateur = $id", EvenementMapper())
     override fun chercherParEvenementID(id: Int): List<Participant> =
-            db.query("select Utilisateur.id, Utilisateur.nom, Utilisateur.prénom From Utilisateur inner join Utilisateur_événement on Utilisateur_événement.idUtilisateur = Utilisateur.id WHERE Utilisateur_événement.idEvenement = $id", ParticipantMapper())
+            db.query("select Utilisateur.code, Utilisateur.nom, Utilisateur.prénom From Utilisateur inner join Utilisateur_événement on Utilisateur_événement.codeUtilisateur = Utilisateur.code WHERE Utilisateur_événement.idEvenement = $id", ParticipantMapper())
     override fun supprimerParUtilisateurID(id: Int): UtilisateurÉvénement? {
         val element = db.queryForObject("select * from Utilisateur_événement where idUtilisateur = $id", UtilisateurEvenementMapper())
         db.update("DELETE from Utilisateur_événement where idUtilisateur = $id")
