@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper
 class UtilisateurEvenementMapper : RowMapper<UtilisateurÉvénement> {
     override fun mapRow(résultat: ResultSet, RowNum: Int): UtilisateurÉvénement {
         val utilisateurÉvénement = UtilisateurÉvénement(
-                résultat.getInt("idUtilisateur"),
+                résultat.getString("codeUtilisateur"),
                 résultat.getInt("idEvenement"))
         return utilisateurÉvénement
     }

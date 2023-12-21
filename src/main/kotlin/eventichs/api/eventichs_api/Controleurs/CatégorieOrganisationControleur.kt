@@ -69,7 +69,7 @@ class CatégorieOrganisationControleur(val service: CatégorieOrganisationServic
             ApiResponse(responseCode = "404", description = "La catégorie n'existe pas.")
         ]
     )
-    @GetMapping("/organisations/categories/{id}")
+    @PutMapping("/organisations/categories/{id}")
     fun modifierCategorie(@PathVariable id: Int, @RequestBody catégorie: Catégorie, principal: Principal?): ResponseEntity<Catégorie> {
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
