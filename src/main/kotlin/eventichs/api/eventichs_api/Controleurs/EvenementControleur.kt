@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 @RequestMapping("\${api.base-path:}")
 @RestController
@@ -20,7 +21,7 @@ class EvenementControleur(val service : EvenementService) {
         operationId = "obtenirEvenements"
     )
     @GetMapping("/evenements")
-    fun obtenirEvenements() = service.chercherTous()
+    fun obtenirEvenements(principal: Principal?) = service.chercherTous()
     @Operation(
         summary = "Obtenir un évenement spécifique par son ID.",
         description = "Retourne l'évènement qui porte l'ID spécifié dans tous les évènements du service",
