@@ -3,6 +3,7 @@ import eventichs.api.eventichs_api.Exceptions.PasConnectéException
 import eventichs.api.eventichs_api.Modèle.Événement
 import eventichs.api.eventichs_api.Services.EvenementService
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
@@ -21,7 +22,7 @@ class EvenementControleur(val service : EvenementService) {
             responses = [
                 ApiResponse(responseCode = "201", description = "Événements trouvés"),
                 ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
-                ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cet invitation")i]
+                ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cet invitation")]
 
     )
     @GetMapping("/evenements")

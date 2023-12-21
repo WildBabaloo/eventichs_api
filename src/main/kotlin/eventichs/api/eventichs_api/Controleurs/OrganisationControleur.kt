@@ -120,9 +120,9 @@ class OrganisationControleur(val service: OrganisationService) {
             ApiResponse(responseCode = "200", description = "les organisations publiques ont été trouvé"),
             ApiResponse(responseCode = "404", description = "Aucune organisation publique n'as pas été trouvé")]
     )
-    @GetMapping("/organisations/publiques")
+    @GetMapping("/organisations")
     fun obtenirOrganisationsPubliques(principal: Principal?): List<Organisation> {
-        if (principal == null) { throw PasConnectéException("L'utilisateur n'est pas connecté.") }
+        // if (principal == null) { throw PasConnectéException("L'utilisateur n'est pas connecté.") }
 
         return service.consulterOrganisationPubliques()
     }
