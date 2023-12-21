@@ -615,7 +615,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\" : 1,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation 1\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation X\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -623,14 +623,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/1",
+									"raw": "localhost:8080/organisations/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -1270,7 +1270,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\" : \"2\",\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"catégorie_id\" : \"1\",\r\n    \"estPublic\" : true\r\n}",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation 2\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1297,7 +1297,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\" : 1,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation 1\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation X\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1305,14 +1305,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/1",
+									"raw": "localhost:8080/organisations/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -2039,7 +2039,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\" : \"2\",\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"catégorie_id\" : \"1\",\r\n    \"estPublic\" : true\r\n}",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation 2\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2066,7 +2066,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\" : 1,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation 1\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation X\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2074,14 +2074,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/1",
+									"raw": "localhost:8080/organisations/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -2790,7 +2790,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\" : \"2\",\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"catégorie_id\" : \"1\",\r\n    \"estPublic\" : true\r\n}",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation 2\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2817,7 +2817,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\" : 1,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation 1\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation X\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2825,14 +2825,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/1",
+									"raw": "localhost:8080/organisations/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"1"
+										"2"
 									]
 								}
 							},
