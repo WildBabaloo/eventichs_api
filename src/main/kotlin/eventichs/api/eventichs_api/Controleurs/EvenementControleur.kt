@@ -24,7 +24,7 @@ class EvenementControleur(val service : EvenementService) {
         responses = [
             ApiResponse(responseCode = "201", description = "Événements trouvés"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
-            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cet événement")]
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de consulter cet événement")]
     )
     @GetMapping("/evenements")
     fun obtenirEvenements(principal: Principal?) : List<Événement>{
@@ -41,7 +41,7 @@ class EvenementControleur(val service : EvenementService) {
         responses = [
             ApiResponse(responseCode = "201", description = "Événement trouvé"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
-            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cet événement"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de consulter cet événement"),
             ApiResponse(responseCode = "404", description = "L'événement n'existe pas dans le service")]
     )
     @GetMapping("/evenements/{id}")
@@ -59,7 +59,7 @@ class EvenementControleur(val service : EvenementService) {
             responses = [
                 ApiResponse(responseCode = "201", description = "Événement trouvé"),
                 ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
-                ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cet événement"),
+                ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de consulter cet événement"),
                 ApiResponse(responseCode = "404", description = "L'organisation n'existe pas dans le service")]
     )
     @GetMapping("/organisations/{id}/evenements")
@@ -77,7 +77,7 @@ class EvenementControleur(val service : EvenementService) {
             responses = [
                 ApiResponse(responseCode = "200", description = "L'événement a été effacé"),
                 ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
-                ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit d'effacer cet événement"),
+                ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit d'effacer cet événement"),
                 ApiResponse(responseCode = "404", description = "L'événement n'existe pas")]
     )
     @DeleteMapping("/evenements/{id}")
@@ -95,7 +95,7 @@ class EvenementControleur(val service : EvenementService) {
         responses = [
             ApiResponse(responseCode = "200", description = "L'événement a été modifié"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
-            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de modifier cet événement"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de modifier cet événement"),
             ApiResponse(responseCode = "404", description = "L'événement ou l'organisation n'existent pas")]
     )
     @PutMapping("/evenements/{id}")
@@ -117,7 +117,7 @@ class EvenementControleur(val service : EvenementService) {
     responses = [
         ApiResponse(responseCode = "200", description = "L'événement a été modifié"),
         ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
-        ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de modifier cet événement"),
+        ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de modifier cet événement"),
         ApiResponse(responseCode = "404", description = "L'événement ou l'organisation n'existent pas")]
     )
     @PostMapping("/evenements")
