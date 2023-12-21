@@ -9,11 +9,7 @@ import org.springframework.stereotype.Service
 class OrganisationService(val dao: OrganisationDAO) {
     fun chercherTous(): List<Organisation> = dao.chercherTous()
     fun chercherParID(id: Int): Organisation? = dao.chercherParID(id)
-    fun ajouter(element: Organisation, codeUtilisateur: String): Organisation? {
-        if (!dao.validerUtilisateur(element.id, codeUtilisateur)) { throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette organisation") }
-
-        return dao.ajouter(element)
-    }
+    fun ajouter(element: Organisation, codeUtilisateur: String): Organisation? = dao.ajouter(element)
     fun supprimerParID(id: Int, codeUtilisateur: String): Organisation? {
         if (!dao.validerUtilisateur(id, codeUtilisateur)) { throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette organisation") }
 
