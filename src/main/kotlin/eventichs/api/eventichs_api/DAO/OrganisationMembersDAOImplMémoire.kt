@@ -16,16 +16,16 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
     override fun chercherTous(): List<OrganisationMembres> =
         db.query("select * from Organisations_membres", OrganisationMembresMapper())
     override fun chercherParUtilisateurID(codeUtilisateur: String): List<OrganisationMembres> =
-        db.query("select * from Organisations_membres where code_utilisateur = $codeUtilisateur", OrganisationMembresMapper())
+        db.query("select * from Organisations_membres where code_utilisateur = '$codeUtilisateur'", OrganisationMembresMapper())
 
     override fun chercherParOrganisationID(id: Int): List<OrganisationMembres> =
          db.query("select * from Organisations_membres where id_organisation = $id", OrganisationMembresMapper())
 
     override fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean {
-        var organisation: Organisation?
-
+        val organisation: Organisation?
+        println("Principal Name $codeUtilisateur")
         try {
-            organisation = db.queryForObject("select * from Organisation where codeUtilisateur = $codeUtilisateur", OrganisationMapper())
+            organisation = db.queryForObject("select * from organisation where codeUtilisateur = '$codeUtilisateur'", OrganisationMapper())
         } catch (e: EmptyResultDataAccessException) {
             throw RessourceInexistanteException("L'organisation associé à le code utilisateur $codeUtilisateur n'existe pas!")
         }
@@ -40,8 +40,8 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
 
     override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
         db.update(
-            "Update Organisations_membres set code_utilisateur=$codeUtilisateur where id_organisation=$codeOrganisation"
-            , OrganisationMembresMapper()
+            "insert into organisations_membres values (?, ?)",
+            codeOrganisation, codeUtilisateur
         )
 
         return db.queryForObject("select * from Organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur", OrganisationMembresMapper())
@@ -50,8 +50,7 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
 
     override fun enleverParticipant(codeOrganisation: Int, codeUtilisateur: String) {
         db.update(
-            "Update Organisations_membres set code_utilisateur = null where id_organisation= $codeOrganisation and code_utilisateur = $codeUtilisateur"
-            , OrganisationMembresMapper()
+            "delete from organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur"
         )
     }
 

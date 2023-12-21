@@ -41,11 +41,11 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "404", description = "Ce participant n'existe pas dans le système")]
     )
     @GetMapping(
-            value = ["/utilisateurs/{codeUtilisateur}/organisations"],
+            value = ["/utilisateurs/organisations"],
         produces = ["application/json"])
-    fun obtenirOrganisationsParticipantParID(@PathVariable codeUtilisateur: String, principal: Principal?): List<OrganisationMembres> {
+    fun obtenirOrganisationsParticipantParID(principal: Principal?): List<OrganisationMembres> {
         if (principal == null) { throw PasConnectéException("L'utilisateur n'est pas connecté.") }
-        return service.chercherParParticipantID(codeUtilisateur)
+        return service.chercherParParticipantID(principal.name)
     }
 
     @Operation(
@@ -78,8 +78,9 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
     fun ajouterParticipant(@PathVariable codeOrganisation: Int, @RequestBody codeUtilisateur: String, principal: Principal?): ResponseEntity<OrganisationMembres> {
         if (principal == null) { throw PasConnectéException("L'utilisateur n'est pas connecté.") }
 
-        val organisationMembres = service.ajouterParticipant(codeOrganisation, codeUtilisateur)
+        val organisationMembres = service.ajouterParticipant(codeOrganisation, codeUtilisateur, principal.name)
         if (organisationMembres != null) {
+            println(organisationMembres)
             val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/organisations/{codeOrganisation}/participants/{codeUtilisateur}")
@@ -101,9 +102,9 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "404", description = "Le participant n'existe pas"),
             ApiResponse(responseCode = "409", description = "Le participant n'est pas dans l'organisation")]
     )
-    @DeleteMapping("organisations/{codeOrganisation}/participants/{codeUtilisateur}")
+    @DeleteMapping("/organisations/{codeOrganisation}/participants/{codeUtilisateur}")
     fun enleverParticipant(@PathVariable codeOrganisation: Int, @PathVariable codeUtilisateur: String, principal: Principal?) {
         if (principal == null) { throw PasConnectéException("L'utilisateur n'est pas connecté.") }
-        service.enleverParticipant(codeOrganisation, codeUtilisateur)
+        service.enleverParticipant(codeOrganisation, codeUtilisateur, principal.name)
     }
 }
