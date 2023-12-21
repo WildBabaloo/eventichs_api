@@ -33,6 +33,13 @@ class EvenementControleur(val service : EvenementService) {
         description = "Supprime et retourne l'évènement qui porte l'ID spécifié dans tous les évènements du service",
         operationId = "supprimerEvenement"
     )
+    @GetMapping("/organisations/{nom}/evenements")
+    fun obtenirEvenementParOrganisation(@PathVariable nom: String) = service.chercherParOrganisation(nom)
+    @Operation(
+            summary = "Supprimer un évenement spécifique par son ID.",
+            description = "Supprime et retourne l'évènement qui porte l'ID spécifié dans tous les évènements du service",
+            operationId = "supprimerEvenement"
+    )
     @DeleteMapping("/evenements/{id}")
     fun supprimerEvenement(@PathVariable id: Int) = service.supprimerParID(id)
     @Operation(
