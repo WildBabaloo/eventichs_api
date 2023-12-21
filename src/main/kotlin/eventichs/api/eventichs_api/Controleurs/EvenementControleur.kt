@@ -1,10 +1,9 @@
 package eventichs.api.eventichs_api.Controleurs
+import eventichs.api.eventichs_api.Exceptions.PasConnectéException
 import eventichs.api.eventichs_api.Modèle.Événement
 import eventichs.api.eventichs_api.Services.EvenementService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
@@ -21,7 +20,12 @@ class EvenementControleur(val service : EvenementService) {
         operationId = "obtenirEvenements"
     )
     @GetMapping("/evenements")
-    fun obtenirEvenements(principal: Principal?) = service.chercherTous()
+    fun obtenirEvenements(principal: Principal?) : List<Événement>{
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
+        return service.chercherTous()
+    }
     @Operation(
         summary = "Obtenir un évenement spécifique par son ID.",
         description = "Retourne l'évènement qui porte l'ID spécifié dans tous les évènements du service",
@@ -34,8 +38,8 @@ class EvenementControleur(val service : EvenementService) {
         description = "Supprime et retourne l'évènement qui porte l'ID spécifié dans tous les évènements du service",
         operationId = "supprimerEvenement"
     )
-    @GetMapping("/organisations/{nom}/evenements")
-    fun obtenirEvenementParOrganisation(@PathVariable nom: String) = service.chercherParOrganisation(nom)
+    @GetMapping("/organisations/{id}/evenements")
+    fun obtenirEvenementParOrganisation(@PathVariable id: Int) = service.chercherParOrganisation(id)
     @Operation(
             summary = "Supprimer un évenement spécifique par son ID.",
             description = "Supprime et retourne l'évènement qui porte l'ID spécifié dans tous les évènements du service",
