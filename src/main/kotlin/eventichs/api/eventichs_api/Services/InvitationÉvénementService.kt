@@ -16,17 +16,17 @@ class InvitationÉvénementService(val dao: InvitationÉvénementDAO) {
         }
         return dao.chercherParIdDestinataire(id)
     }
-    fun chercherInvitationÉvénementParId(id: Int): InvitationÉvénement? = dao.chercherParID(id)
+    fun chercherInvitationÉvénementParId(id: Int, name: String): InvitationÉvénement? = dao.chercherParID(id)
 
-    fun créerInvitationÉvénement(invitation: InvitationÉvénement) = dao.ajouter(invitation)
+    fun créerInvitationÉvénement(invitation: InvitationÉvénement, name: String) = dao.ajouter(invitation)
 
-    fun modifierInvitationÉvénement(invitation: InvitationÉvénement) = dao.modifier(invitation)
+    fun modifierInvitationÉvénement(invitation: InvitationÉvénement, name: String) = dao.modifier(invitation)
     fun chercherInvitationsÉvénementsParIdExpediteur(id: String, name: String): List<InvitationÉvénement> = dao.chercherParIdExpediteur(id)
 
-    fun supprimerInvitationsÉvénementsParId(id: Int) = dao.supprimerParID(id)
+    fun supprimerInvitationsÉvénementsParId(id: Int, name: String) = dao.supprimerParID(id)
 
 
-    fun entrerJetonEvenement(id: Int, jeton: String) = dao.entrerJetonEvenement(id, jeton)
+    fun entrerJetonEvenement(id: String, jeton: String) = dao.entrerJetonEvenement(id, jeton)
 
     fun genererJetonsEvenement(id: Int) = dao.creerJeton(id)
 
