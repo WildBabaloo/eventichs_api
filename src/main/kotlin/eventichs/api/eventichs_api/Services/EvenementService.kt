@@ -8,7 +8,7 @@ import eventichs.api.eventichs_api.Modèle.Événement
 class EvenementService(val dao : EvenementDAO) {
     fun chercherTous(): List<Événement> = dao.chercherTous()
     fun chercherParID(id: Int): Événement? = dao.chercherParID(id)
-    fun chercherParOrganisation(nom: String) : List<Événement> = dao.chercherParOrganisation(nom)
+    fun chercherParOrganisation(id: Int) : List<Événement> = dao.chercherParOrganisation(id)
     fun chercherEvenementPublic() : List<Événement> = dao.chercherEvenementPublic()
     fun supprimerParID(id:Int) : Événement? = dao.supprimerParID(id)
     fun modifierEvenement(id:Int, evenement : Événement ) : Événement? = dao.modifier(id,evenement)
