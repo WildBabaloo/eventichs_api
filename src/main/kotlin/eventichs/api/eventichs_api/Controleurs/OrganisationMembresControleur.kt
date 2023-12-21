@@ -35,9 +35,9 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "404", description = "Ce participant n'existe pas dans le système")]
     )
     @GetMapping(
-            value = ["/utilisateurs/{codeParticipant}/organisations"],
+            value = ["/utilisateurs/{codeUtilisateur}/organisations"],
         produces = ["application/json"])
-    fun obtenirOrganisationsParticipantParID(@PathVariable codeParticipant: Int) = service.chercherParParticipantID(codeParticipant)
+    fun obtenirOrganisationsParticipantParID(@PathVariable codeUtilisateur: String) = service.chercherParParticipantID(codeUtilisateur)
 
     @Operation(
         summary = "Obtenir des participants à une organisation selon son id.",
@@ -63,7 +63,7 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "409", description = "Le participant est déja dans l'organisation")]
     )
     @PostMapping(value = ["/organisations/{codeOrganisation}/participants"])
-    fun ajouterParticipant(@PathVariable codeOrganisation: Int, @RequestBody idParticpant: Int) = service.ajouterParticipant(codeOrganisation, idParticpant)
+    fun ajouterParticipant(@PathVariable codeOrganisation: Int, @RequestBody codeUtilisateur: String) = service.ajouterParticipant(codeOrganisation, codeUtilisateur)
 
 
     @Operation(
@@ -75,6 +75,6 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "404", description = "Le participant n'existe pas"),
             ApiResponse(responseCode = "409", description = "Le participant n'est pas dans l'organisation")]
     )
-    @DeleteMapping("organisations/{codeOrganisation}/participants/{codeParticipant}")
-    fun enleverParticipant(@PathVariable codeOrganisation: Int, @PathVariable codeParticipant: Int) = service.enleverParticipant(codeOrganisation, codeParticipant)
+    @DeleteMapping("organisations/{codeOrganisation}/participants/{codeUtilisateur}")
+    fun enleverParticipant(@PathVariable codeOrganisation: Int, @PathVariable codeUtilisateur: String) = service.enleverParticipant(codeOrganisation, codeUtilisateur)
 }

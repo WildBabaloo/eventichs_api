@@ -1,9 +1,14 @@
 package eventichs.api.eventichs_api.DAO
 
 
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
+import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Mapper.OrganisationMembresMapper
+import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.OrganisationMembres
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -17,7 +22,20 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
          db.query("select * from Organisations_membres where id_organisation = $id", OrganisationMembresMapper())
 
     override fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean {
-        TODO("Not yet implemented")
+        var organisation: Organisation?
+
+        try {
+            organisation = db.queryForObject("select * from Organisation where codeUtilisateur = $codeUtilisateur", OrganisationMapper())
+        } catch (e: EmptyResultDataAccessException) {
+            throw RessourceInexistanteException("L'organisation associé à le code utilisateur $codeUtilisateur n'existe pas!")
+        }
+
+        if (organisation?.codeUtilisateur == codeUtilisateur) {
+            return true
+        }
+
+        return false
+
     }
 
     override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String){
