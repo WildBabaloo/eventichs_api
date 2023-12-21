@@ -33,7 +33,7 @@ test:
     - api
 
 deploy_to_server:
-  needs: [test]
+  needs: [build]
   stage: deploy
   script:
     - apk update && apk add openssh-client
