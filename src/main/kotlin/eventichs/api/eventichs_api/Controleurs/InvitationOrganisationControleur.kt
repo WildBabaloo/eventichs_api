@@ -45,6 +45,9 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         value = ["/organisations/invitations/{id}"],
         produces = ["application/json"])
     fun obtenirInvitationsParId(@PathVariable id: Int, principal: Principal?) : InvitationOrganisation {
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
         return service.chercherParID(id) ?: throw RessourceInexistanteException("L'invitation $id à une organisation n'est pas inscrit au service")
     }
 
@@ -64,12 +67,13 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     )
     @PostMapping(
         value = ["/organisations/invitations"])
-    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal?) : ResponseEntity<InvitationOrganisation>{
+    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal) : ResponseEntity<InvitationOrganisation>{
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
 
-        val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation(invitation, principal.name)
+        val nouvelleInvitation : InvitationOrganisation? =
+            principal?.name?.let { service.demandeJoindreOrganisation(invitation, it) }
         if (nouvelleInvitation != null) {
             val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

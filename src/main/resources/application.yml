@@ -1,5 +1,5 @@
 auth0:
-  audience: http://eventichs.api/
+  audience: http://eventichs.api
 spring:
   security:
     oauth2:

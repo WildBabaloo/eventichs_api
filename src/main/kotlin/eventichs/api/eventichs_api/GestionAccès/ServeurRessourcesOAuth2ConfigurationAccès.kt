@@ -30,13 +30,10 @@ class ServeurRessourcesOAuth2ConfigurationAccès {
             authorizeHttpRequests {
                 authorize("/", permitAll)
                 authorize(HttpMethod.GET, "/**", permitAll)
-                authorize(HttpMethod.GET, "/organisations/invitations/*", permitAll)
-                //authorize(HttpMethod.PUT, "/**", permitAll)
-                //authorize(HttpMethod.DELETE, "/**", permitAll)
-                //authorize(HttpMethod.POST, "/restaurant", authenticated)
-                //authorize(HttpMethod.POST, "/**", authenticated)
-                //authorize(HttpMethod.PUT, "/**", authenticated)
-                //authorize(HttpMethod.DELETE, "/**", authenticated)
+                authorize(HttpMethod.POST, "/**", permitAll)
+                authorize(HttpMethod.POST, "/organisations/invitations/", permitAll)
+                authorize(HttpMethod.PUT, "/**", permitAll)
+                authorize(HttpMethod.DELETE, "/**", permitAll)
                 authorize(anyRequest, authenticated)
             }
             oauth2ResourceServer {

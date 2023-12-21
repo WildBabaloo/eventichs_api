@@ -1059,11 +1059,44 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "localhost Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
 				"type": "oauth2",
 				"oauth2": [
+					{
+						"key": "client_authentication",
+						"value": "body",
+						"type": "string"
+					},
+					{
+						"key": "headerPrefix",
+						"value": "Bearer",
+						"type": "string"
+					},
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
 					{
 						"key": "password",
 						"value": "{{joeMDP}}",
@@ -1100,11 +1133,6 @@
 							}
 						],
 						"type": "any"
-					},
-					{
-						"key": "scope",
-						"value": "openid",
-						"type": "string"
 					},
 					{
 						"key": "grant_type",
@@ -1749,6 +1777,28 @@
 				"type": "oauth2",
 				"oauth2": [
 					{
+						"key": "client_authentication",
+						"value": "body",
+						"type": "string"
+					},
+					{
+						"key": "tokenRequestParams",
+						"value": [
+							{
+								"key": "audience",
+								"value": "http://eventichs.api",
+								"enabled": true,
+								"send_as": "request_body"
+							}
+						],
+						"type": "any"
+					},
+					{
+						"key": "headerPrefix",
+						"value": "Bearer",
+						"type": "string"
+					},
+					{
 						"key": "password",
 						"value": "{{samMDP}}",
 						"type": "string"
@@ -1777,18 +1827,6 @@
 						"key": "accessTokenUrl",
 						"value": "{{serveur_authentification}}",
 						"type": "string"
-					},
-					{
-						"key": "tokenRequestParams",
-						"value": [
-							{
-								"key": "audience",
-								"value": "http://eventichs.api",
-								"enabled": true,
-								"send_as": "request_body"
-							}
-						],
-						"type": "any"
 					},
 					{
 						"key": "scope",
