@@ -30,15 +30,16 @@ class ServeurRessourcesOAuth2ConfigurationAccès {
             authorizeHttpRequests {
                 authorize("/", permitAll)
                 authorize(HttpMethod.GET, "/**", permitAll)
-                //authorize(HttpMethod.POST, "/restaurant", authenticated)
-                //authorize(HttpMethod.POST, "/**", authenticated)
-                //authorize(HttpMethod.PUT, "/**", authenticated)
-                //authorize(HttpMethod.DELETE, "/**", authenticated)
+                authorize(HttpMethod.POST, "/**", permitAll)
+                authorize(HttpMethod.POST, "/organisations/invitations/", permitAll)
+                authorize(HttpMethod.PUT, "/**", permitAll)
+                authorize(HttpMethod.DELETE, "/**", permitAll)
                 authorize(anyRequest, authenticated)
             }
             oauth2ResourceServer {
                 jwt { }
             }
+            csrf { disable() } // désactivation temporaire de la protection par défaut de spring sur les opérations POST, PUT et DELETE
         }
         return http.build()
     }

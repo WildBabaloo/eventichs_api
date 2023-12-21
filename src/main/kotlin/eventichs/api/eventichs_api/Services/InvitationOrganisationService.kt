@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service
 @Service
 class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     fun chercherTous(): List<InvitationOrganisation> = dao.chercherTous()
-    fun chercherParID(id: Int): InvitationOrganisation? = dao.chercherParID(id)
+    fun chercherParID(id: Int, code_util: String): InvitationOrganisation? {
+        return dao.chercherParID(id)
+    }
 
     //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
     fun demandeJoindreOrganisation(invitation: InvitationOrganisation, code_Util : String) : InvitationOrganisation? {

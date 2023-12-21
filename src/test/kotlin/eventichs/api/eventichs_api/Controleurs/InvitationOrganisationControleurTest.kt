@@ -318,7 +318,7 @@ class InvitationOrganisationControleurTest {
 
         Mockito.`when`(service.chercherParParticipant(1)).thenReturn(listeInvitations)
 
-        mockMvc.perform(get("/utilisateurs/1/invitations"))
+        mockMvc.perform(get("/utilisateurs/1/invitations/organisations"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$[0].id").value(5))
@@ -339,7 +339,7 @@ class InvitationOrganisationControleurTest {
     fun `10- Étant donné un participant ayant l'id 1 qui n'est pas inscrite au service qui a une invitation lorsqu'on effectue une requête GET de recherche par participant selon l'id 1 alors on obtient un code de retour 404 et le message d'erreur «Le participant 1 n'existe pas»` (){
         Mockito.`when`(service.chercherParParticipant(1)).thenThrow(RessourceInexistanteException("Le participant 1 n'existe pas"))
 
-        mockMvc.perform(get("/utilisateurs/1/invitations"))
+        mockMvc.perform(get("/utilisateurs/1/invitations/organisations"))
             .andExpect(status().isNotFound)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is RessourceInexistanteException)
