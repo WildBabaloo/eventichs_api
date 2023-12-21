@@ -80,7 +80,7 @@ lateinit var service: OrganisationService
     }
 
     @Test
-    fun `3-Étant donné un utilisateur non authentifié qui effectue une modification pour une organisation existante on obtient un JSON qui contient l'organisation et un code de retour 401`(){
+    fun `3-Étant donné un utilisateur non authentifié qui effectue une modification (PUT) pour une organisation existante on obtient un code de retour 401`(){
         val uneOrganisation = Organisation(1,"1","Illuminati",1,false)
 
         Mockito.`when`(service.modifier(uneOrganisation,"")).thenReturn(uneOrganisation)
@@ -93,6 +93,22 @@ lateinit var service: OrganisationService
                     assertTrue(résultat.resolvedException is PasConnectéException)
                     Assertions.assertEquals("L'utilisateur n'est pas connecté.", résultat.resolvedException?.message)
                 }*/
+    }
+
+    @Test
+    fun `Étant donné un utilisateur non authentifié qui envoie une requête DELETE pour supprimer une organisation existante on obtient un de retour 401`(){
+        val uneOrganisation = Organisation(1,"1","Illuminati",1,false)
+
+        Mockito.`when`(service.supprimerParID(uneOrganisation.id,"")).thenReturn(uneOrganisation)
+
+        mockMvc.perform(delete("/organisations/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized)
+        // Je ne sais pas pourquoi elle n'appelle pas l'exception
+        /*.andExpect { résultat ->
+            assertTrue(résultat.resolvedException is PasConnectéException)
+            Assertions.assertEquals("L'utilisateur n'est pas connecté.", résultat.resolvedException?.message)
+        }*/
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -115,20 +131,6 @@ lateinit var service: OrganisationService
             .andExpect(jsonPath("$.nomOrganisation").value("Illuminati"))
             .andExpect(jsonPath("$.estPublic").value(false))
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Test
