@@ -51,4 +51,12 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     override fun filtrerOrganisationParGouts(idCategorie: Int): List<Organisation> =
         db.query("select * from Organisation where catégorie_id = $idCategorie", OrganisationMapper())
 
+    override fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun validerOrganisation(idOrganisation: Int, codeUtilisateur: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
 }
