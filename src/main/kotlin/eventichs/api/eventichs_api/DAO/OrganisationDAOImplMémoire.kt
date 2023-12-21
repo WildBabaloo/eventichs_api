@@ -16,7 +16,7 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
 
     override fun ajouter(element: Organisation): Organisation? {
         db.update(
-            "insert into Organisation values (?, ?, ?, ?)",
+            "insert into Organisation values (?, ?, ?, ?, ?)",
             element.id,
             element.codeUtilisateur,
             element.nomOrganisation,
