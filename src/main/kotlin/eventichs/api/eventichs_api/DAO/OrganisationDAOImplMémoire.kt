@@ -52,11 +52,13 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         db.query("select * from Organisation where catégorie_id = $idCategorie", OrganisationMapper())
 
     override fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean {
-        TODO("Not yet implemented")
-    }
+        val organisation: Organisation? = chercherParID(id)
 
-    override fun validerOrganisation(idOrganisation: Int, codeUtilisateur: String): Boolean {
-        TODO("Not yet implemented")
+        if (organisation?.codeUtilisateur == codeUtilisateur) {
+            return true
+        }
+
+        return false
     }
 
 }

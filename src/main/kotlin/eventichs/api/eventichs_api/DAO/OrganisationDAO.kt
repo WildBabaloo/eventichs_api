@@ -11,7 +11,6 @@ interface OrganisationDAO: DAO<Organisation> {
     fun consulterOrganisationPubliques(): List<Organisation>
     fun filtrerOrganisationParGouts(idCategorie: Int): List<Organisation>
     fun validerUtilisateur(id: Int, codeUtilisateur: String) : Boolean
-    fun validerOrganisation(idOrganisation : Int, codeUtilisateur : String) : Boolean
 
 
 }
