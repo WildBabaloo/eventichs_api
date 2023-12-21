@@ -7,7 +7,7 @@ import java.sql.ResultSet
 class ParticipantMapper : RowMapper<Participant> {
     override fun mapRow(résultat: ResultSet, RowNum: Int): Participant {
         val participant = Participant(
-                résultat.getInt("id"),
+                résultat.getString("code"),
                 résultat.getString("nom"),
                 résultat.getString("prénom"))
         return participant
