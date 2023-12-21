@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service
 @Service
 class UtilisateurEvenementService(val dao : UtilisateurEvenementDAO) {
 
-    fun chercherTous() : List<UtilisateurÉvénement> = dao.chercherTous()
+    fun chercherTous(name : String) : List<UtilisateurÉvénement> = dao.chercherTous()
 
-    fun chercherEvenementsParUtilisateur(id: Int): List<Événement> = dao.chercherParUtilisateurID(id)
+    fun chercherEvenementsParUtilisateur(name : String): List<Événement> = dao.chercherParUtilisateurID(name)
 
-    fun chercherUtilisateursParEvenement(id: Int) : List<Participant> = dao.chercherParEvenementID(id)
+    fun chercherUtilisateursParEvenement(id: Int, name : String) : List<Participant> = dao.chercherParEvenementID(id)
 
-    fun ajouter(utilisateurÉvénement: UtilisateurÉvénement): UtilisateurÉvénement? = dao.ajouter(utilisateurÉvénement)
+    fun ajouter(ÉvénementId: Int, name : String): UtilisateurÉvénement? = dao.ajouter(UtilisateurÉvénement(name, ÉvénementId))
 
-    fun supprimerParUtilisateur(id : Int) : UtilisateurÉvénement? = dao.supprimerParUtilisateurID(id)
+    fun supprimerParUtilisateur(name : String) : UtilisateurÉvénement? = dao.supprimerParUtilisateurID(name)
 
-    fun supprimerParEvenement(id : Int) : UtilisateurÉvénement? = dao.supprimerParEvenementID(id)
+    fun supprimerParEvenement(id : Int, name : String) : UtilisateurÉvénement? = dao.supprimerParEvenementID(id)
 }
