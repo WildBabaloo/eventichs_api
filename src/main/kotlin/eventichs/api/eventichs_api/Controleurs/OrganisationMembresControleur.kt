@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("\${api.base-path:}")
 class OrganisationMembresControleur(val service: OrganisationMembresService) {
 
-    @Operation(
-        summary = "Obtenir les membres des organisations.",
-        description = "Retourne une liste des membres des organisations",
-        operationId = "obtenirOrganisationsMembres"
-    )
-    @GetMapping("/organisationsMembres")
-    fun obtenirOrganisationsMembres() = service.chercherTous()
+    // PAS D'ADMIN :(
+    //@Operation(
+        //summary = "Obtenir les membres des organisations.",
+        //description = "Retourne une liste des membres des organisations",
+        //operationId = "obtenirOrganisationsMembres"
+    //)
+    //@GetMapping("/organisationsMembres")
+    //fun obtenirOrganisationsMembres() = service.chercherTous()
 
     @Operation(
         summary = "Obtenir les organisations qu'un partipant est membre à",
