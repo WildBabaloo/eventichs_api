@@ -14,6 +14,6 @@ interface OrganisationMembersDAO: DAO<OrganisationMembres> {
 
     fun chercherParOrganisationID(id: Int): List<OrganisationMembres>
 
-    fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean
+    fun validerUtilisateur(codeUtilisateur: String): Boolean
 
 }

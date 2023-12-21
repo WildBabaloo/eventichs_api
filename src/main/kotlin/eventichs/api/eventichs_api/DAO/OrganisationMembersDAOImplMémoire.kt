@@ -21,7 +21,7 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
     override fun chercherParOrganisationID(id: Int): List<OrganisationMembres> =
          db.query("select * from Organisations_membres where id_organisation = $id", OrganisationMembresMapper())
 
-    override fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean {
+    override fun validerUtilisateur(codeUtilisateur: String): Boolean {
         var organisation: Organisation?
 
         try {
