@@ -1,6 +1,7 @@
 package eventichs.api.eventichs_api.Controleurs
 
 import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteException
+import eventichs.api.eventichs_api.Exceptions.PasConnectéException
 import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import eventichs.api.eventichs_api.Modèle.Utilisateur
@@ -22,6 +23,7 @@ import java.security.Principal
 )
 class InvitationOrganisationControleur(val service: InvitationOrganisationService) {
 
+    /* Utilisé pour tester ou pour un future compte admin.
     @Operation(
         summary = "Obtenir la liste des invitations aux organisation.",
         description = "Retourne la liste de toutes les invitations à des organisation inscrites dans le service.",
@@ -29,6 +31,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     )
     @GetMapping("/organisations/invitations")
     fun obtenirInvitationOrganisation() = service.chercherTous()
+    */
 
     @Operation(
         summary = "Obtenir une invitation à une organisation selon son id.",
@@ -41,7 +44,9 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     @GetMapping(
         value = ["/organisations/invitations/{id}"],
         produces = ["application/json"])
-    fun obtenirInvitationsParId(@PathVariable id: Int) = service.chercherParID(id) ?: throw RessourceInexistanteException("L'invitation $id à une organisation n'est pas inscrit au service")
+    fun obtenirInvitationsParId(@PathVariable id: Int, principal: Principal?) : InvitationOrganisation {
+        return service.chercherParID(id) ?: throw RessourceInexistanteException("L'invitation $id à une organisation n'est pas inscrit au service")
+    }
 
     // ---------------------------------------------------------------------
     //
@@ -58,8 +63,12 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
             ApiResponse(responseCode = "409", description = "Une invitation pour cette organisation et ce participant existe déjà dans le service")]
     )
     @PostMapping(
-        value = ["/organisations/invitations/"])
-    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal) : ResponseEntity<InvitationOrganisation>{
+        value = ["/organisations/invitations"])
+    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal?) : ResponseEntity<InvitationOrganisation>{
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
+
         val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation(invitation, principal.name)
         if (nouvelleInvitation != null) {
             val uri = ServletUriComponentsBuilder
@@ -90,7 +99,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     @GetMapping(
         value = ["/organisations/{idOrganisation}/invitations"],
         produces = ["application/json"])
-    fun obtenirInvitationOrganisation(@PathVariable idOrganisation: Int) : List<InvitationOrganisation> = service.chercherParOrganisation(idOrganisation)
+    fun obtenirInvitationOrganisation(@PathVariable idOrganisation: Int, principal: Principal?) : List<InvitationOrganisation> = service.chercherParOrganisation(idOrganisation)
 
     // ---------------------------------------------------------------------
     //
@@ -106,9 +115,9 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
             ApiResponse(responseCode = "404", description = "Ce participant n'existe pas")]
     )
     @GetMapping(
-        value = ["/utilisateurs/{idParticipant}/invitations"],
+        value = ["/utilisateurs/{idParticipant}/invitations/organisations"],
         produces = ["application/json"])
-    fun obtenirInvitationParticipant(@PathVariable idParticipant: Int) : List<InvitationOrganisation> = service.chercherParParticipant(idParticipant)
+    fun obtenirInvitationParticipant(@PathVariable idParticipant: Int, principal: Principal?) : List<InvitationOrganisation> = service.chercherParParticipant(idParticipant)
 
     // ---------------------------------------------------------------------
     //
@@ -126,7 +135,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     )
     @PutMapping(
         value = ["/organisations/invitations/{id}/status/{status}"])
-    fun changerStatus(@PathVariable id: Int, @PathVariable status : String) = service.changerStatus(id, status)
+    fun changerStatus(@PathVariable id: Int, @PathVariable status : String, principal: Principal?) = service.changerStatus(id, status)
 
     // ---------------------------------------------------------------------
     //
@@ -144,7 +153,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     )
     @PutMapping(
         value = ["/organisations/jetons/{jeton}"])
-    fun saisirJeton(@PathVariable jeton : String, @RequestBody utilisateur : Utilisateur) = service.saisirJeton(jeton, utilisateur)
+    fun saisirJeton(@PathVariable jeton : String, @RequestBody utilisateur : Utilisateur, principal: Principal?) = service.saisirJeton(jeton, utilisateur)
 
     // ---------------------------------------------------------------------
     //
@@ -161,7 +170,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     )
     @PostMapping(
         value = ["/organisations/{idOrganisation}/jetons"])
-    fun crééJeton(@PathVariable idOrganisation : Int) : ResponseEntity<InvitationOrganisation>{
+    fun crééJeton(@PathVariable idOrganisation : Int, principal: Principal?) : ResponseEntity<InvitationOrganisation>{
         val nouvelleInvitation : InvitationOrganisation? = service.crééJeton(idOrganisation)
 
         if (nouvelleInvitation != null) {
@@ -191,5 +200,5 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     )
     @DeleteMapping(
         value = ["/organisations/invitations/{id}"])
-    fun effacerInvitation(@PathVariable id: Int) = service.effacerInvitation(id)
+    fun effacerInvitation(@PathVariable id: Int, principal: Principal?) = service.effacerInvitation(id)
 }

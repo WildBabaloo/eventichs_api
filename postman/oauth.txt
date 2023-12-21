@@ -4,11 +4,14 @@ Procedure de configuration oauth avec postman
 authorization type : OAuth 2.0
 Add auth data to : Request Headers
 
-Grant type : Client credentials
+Grant type : Password Credentials
 Access Token URL : https://dev-xa2f6qcrb7kap33n.us.auth0.com/oauth/token
 client id : lWikwLG2UkMXoCvLoa4z7AGARWOCPZiv
 client secret : 5V14hP1livmhQXXF1v7p906YhD8q9FLRUbyKvyaFdrzLw_B3PCSmzuz8QFI_COWC
 client authentification : send as basic auth header
+username:    email in db (found in SQL/insert_DB_tables.sql in this project)
+Password:    password in db (found in SQL/insert_DB_tables.sql in this project)
+scape: openid
 
 ==Token Request==
 Key        |Value                   |Send In

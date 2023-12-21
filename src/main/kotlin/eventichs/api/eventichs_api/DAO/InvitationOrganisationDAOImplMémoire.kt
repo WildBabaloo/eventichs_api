@@ -85,7 +85,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         }
 
         return db.query("select * from Invitation_organisation as invitation " +
-                "left join utilisateur on invitation.idDestinataire = Utilisateur.code " +
+                "left join utilisateur on invitation.codeDestinataire = utilisateur.code " +
             "join organisation on invitation.idOrganisation = organisation.id " +
             "where invitation.idOrganisation = $idOrganisation", InvitationOrganisationMapper())
     }

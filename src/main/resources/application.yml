@@ -6,3 +6,6 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://dev-xa2f6qcrb7kap33n.us.auth0.com/
+logging:
+  level:
+    org.springframework.security.web: DEBUG
