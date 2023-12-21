@@ -4,6 +4,7 @@ import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteEx
 import eventichs.api.eventichs_api.Exceptions.PasConnectéException
 import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
+import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.Utilisateur
 import eventichs.api.eventichs_api.Services.InvitationOrganisationService
 import io.swagger.v3.oas.annotations.Operation
@@ -40,16 +41,15 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         responses = [
             ApiResponse(responseCode = "200", description = "L'invitation a été trouvé"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
-            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cet invitation"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cette invitation"),
             ApiResponse(responseCode = "404", description = "L'invitation recherché n'existe pas dans le service")]
     )
     @GetMapping(
         value = ["/organisations/invitations/{id}"],
         produces = ["application/json"])
     fun obtenirInvitationsParId(@PathVariable id: Int, principal: Principal?) : InvitationOrganisation {
-        if (principal == null) {
-            throw PasConnectéException("L'utilisateur n'est pas connecté.")
-        }
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
         return service.chercherParID(id, principal.name) ?: throw RessourceInexistanteException("L'invitation $id à une organisation n'est pas inscrit au service")
     }
 
@@ -64,18 +64,16 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "demandeJoindreOrganisation",
         responses = [
             ApiResponse(responseCode = "201", description = "L'invitation a été créé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
             ApiResponse(responseCode = "404", description = "Impossible de créer une invitation à cette organisation pour ce participant"),
             ApiResponse(responseCode = "409", description = "Une invitation pour cette organisation et ce participant existe déjà dans le service")]
     )
     @PostMapping(
         value = ["/organisations/invitations"])
     fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal) : ResponseEntity<InvitationOrganisation>{
-        if (principal == null) {
-            throw PasConnectéException("L'utilisateur n'est pas connecté.")
-        }
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
 
-        val nouvelleInvitation : InvitationOrganisation? =
-            principal?.name?.let { service.demandeJoindreOrganisation(invitation, it) }
+        val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation(invitation, principal.name)
         if (nouvelleInvitation != null) {
             val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -100,12 +98,18 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "obtenirInvitationOrganisation",
         responses = [
             ApiResponse(responseCode = "200", description = "Les invitations de cet organisation ont été trouvé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cette invitation"),
             ApiResponse(responseCode = "404", description = "Cette organisation n'existe pas")]
     )
     @GetMapping(
         value = ["/organisations/{idOrganisation}/invitations"],
         produces = ["application/json"])
-    fun obtenirInvitationOrganisation(@PathVariable idOrganisation: Int, principal: Principal?) : List<InvitationOrganisation> = service.chercherParOrganisation(idOrganisation)
+    fun obtenirInvitationOrganisation(@PathVariable idOrganisation: Int, principal: Principal?) : List<InvitationOrganisation> {
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
+        return service.chercherParOrganisation(idOrganisation, principal.name)
+    }
 
     // ---------------------------------------------------------------------
     //
@@ -118,16 +122,22 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "obtenirInvitationParticipant",
         responses = [
             ApiResponse(responseCode = "200", description = "Les invitations de ce participant ont été trouvé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
             ApiResponse(responseCode = "404", description = "Ce participant n'existe pas")]
     )
     @GetMapping(
-        value = ["/utilisateurs/{idParticipant}/invitations/organisations"],
+        value = ["/utilisateurs/invitations/organisations"],
         produces = ["application/json"])
-    fun obtenirInvitationParticipant(@PathVariable idParticipant: Int, principal: Principal?) : List<InvitationOrganisation> = service.chercherParParticipant(idParticipant)
+    fun obtenirInvitationParticipant(principal: Principal?) : List<InvitationOrganisation> {
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
+        return service.chercherParParticipant(principal.name)
+    }
+
 
     // ---------------------------------------------------------------------
     //
-    // Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
+    // Cas d'utilisation: 4.Accepter la demande du participant de joindre l'organisation(Organisation)
     //
     // ---------------------------------------------------------------------
     @Operation(
@@ -136,12 +146,19 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "changerStatus",
         responses = [
             ApiResponse(responseCode = "200", description = "Le status de l'invitation a été modifié"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cette invitation"),
             ApiResponse(responseCode = "404", description = "L'invitation à modifier n'existe pas dans le service"),
             ApiResponse(responseCode = "409", description = "Le participant est déjà membre de l'organisation qu'il essaye de joindre")]
     )
     @PutMapping(
-        value = ["/organisations/invitations/{id}/status/{status}"])
-    fun changerStatus(@PathVariable id: Int, @PathVariable status : String, principal: Principal?) = service.changerStatus(id, status)
+        value = ["/organisations/invitations/status/{status}"])
+    fun changerStatus(@RequestBody invitation: InvitationOrganisation, @PathVariable status : String, principal: Principal?) : InvitationOrganisation? {
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
+        return service.changerStatus(invitation, status, principal.name)
+    }
+
 
     // ---------------------------------------------------------------------
     //
@@ -154,12 +171,17 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "saisirJeton",
         responses = [
             ApiResponse(responseCode = "200", description = "L'invitation qui contient ce jeton à été attribué au participant et enregistré comme 'accepté'"),
-            ApiResponse(responseCode = "404", description = "Impossible d'attribuer une invitation qui a ce jeton à ce participant"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
             ApiResponse(responseCode = "409", description = "Ce participant est déjà membre de cette organisation")]
     )
     @PutMapping(
         value = ["/organisations/jetons/{jeton}"])
-    fun saisirJeton(@PathVariable jeton : String, @RequestBody utilisateur : Utilisateur, principal: Principal?) = service.saisirJeton(jeton, utilisateur)
+    fun saisirJeton(@PathVariable jeton : String, principal: Principal?) :InvitationOrganisation? {
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
+        return service.saisirJeton(jeton, principal.name)
+    }
+
 
     // ---------------------------------------------------------------------
     //
@@ -172,12 +194,16 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "crééJeton",
         responses = [
             ApiResponse(responseCode = "201", description = "L'invitation qui contient un jeton a été créé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cette invitation"),
             ApiResponse(responseCode = "404", description = "Cette organisation n'existe pas")]
     )
     @PostMapping(
-        value = ["/organisations/{idOrganisation}/jetons"])
-    fun crééJeton(@PathVariable idOrganisation : Int, principal: Principal?) : ResponseEntity<InvitationOrganisation>{
-        val nouvelleInvitation : InvitationOrganisation? = service.crééJeton(idOrganisation)
+        value = ["/organisations/jetons"])
+    fun crééJeton(@RequestBody organisation: Organisation, principal: Principal?) : ResponseEntity<InvitationOrganisation>{
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
+        val nouvelleInvitation : InvitationOrganisation? = service.crééJeton(organisation, principal.name)
 
         if (nouvelleInvitation != null) {
             val uri = ServletUriComponentsBuilder
@@ -202,9 +228,15 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "effacerInvitation",
         responses = [
             ApiResponse(responseCode = "200", description = "L'invitation a été effacé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cette invitation"),
             ApiResponse(responseCode = "404", description = "L'invitation n'existe pas")]
     )
     @DeleteMapping(
         value = ["/organisations/invitations/{id}"])
-    fun effacerInvitation(@PathVariable id: Int, principal: Principal?) = service.effacerInvitation(id)
+    fun effacerInvitation(@PathVariable id: Int, principal: Principal?) : InvitationOrganisation? {
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
+        return service.effacerInvitation(id, principal.name)
+    }
 }

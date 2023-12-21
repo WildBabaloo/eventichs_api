@@ -24,13 +24,15 @@ interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
 
     fun chercherParOrganisation(idOrganisation: Int) : List<InvitationOrganisation>
 
-    fun chercherParParticipant(idParticipant: Int) : List<InvitationOrganisation>
+    fun chercherParParticipant(codeParticipant: String) : List<InvitationOrganisation>
 
     fun changerStatus(idInvitationOrganisation : Int, status : String) : InvitationOrganisation?
 
     fun crééJeton(idOrganisation : Int) : InvitationOrganisation?
 
-    fun saisirJeton(jeton : String, utilisateur: Utilisateur) : InvitationOrganisation?
+    fun saisirJeton(jeton : String, code_util : String) : InvitationOrganisation?
 
     fun validerUtilisateur(id : Int, code_util : String) : Boolean
+    fun validerOrganisationInvitation(idInvitation : Int, code_util : String) : Boolean
+    fun validerOrganisation(idOrganisation : Int, code_util : String) : Boolean
 }

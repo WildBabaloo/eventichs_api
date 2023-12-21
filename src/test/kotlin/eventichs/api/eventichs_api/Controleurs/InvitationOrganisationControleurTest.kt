@@ -47,6 +47,7 @@ class InvitationOrganisationControleurTest {
     // @GetMapping("/organisations/invitations/{id}")
     //
     // -----------------------------------------------------------------------------------------------------------------
+    @WithMockUser("Anonym")
     @Test // obtenirInvitationsParId() 200 OK
     fun `1- Étant donné une invitation ayant l'id 1 qui existe dans le service lorsqu'on effectue une requête GET de recherche par id alors on obtient un JSON qui contient l'invitation dont l'id est 1 et un code de retour 200` (){
         val invitation = InvitationOrganisation(
@@ -65,9 +66,9 @@ class InvitationOrganisationControleurTest {
             null,
             "envoyé")
 
-        Mockito.`when`(service.chercherParID(1)).thenReturn(invitation)
+        Mockito.`when`(service.chercherParID(1,"Anonyme")).thenReturn(invitation)
 
-        mockMvc.perform(get("/organisations/invitations/1"))
+        mockMvc.perform(get("/organisations/invitations/1").with(csrf()))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(1))
@@ -84,10 +85,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("envoyé"))
     }
 
-
+    @WithMockUser("Anonym")
     @Test  // obtenirInvitationsParId() 404 isNotFound
     fun `2- Étant donné l'invitation dont l'id est 8 et qui n'est pas inscrite au service lorsqu'on effectue une requête GET de recherche par id  alors on obtient un code de retour 404 et le message d'erreur «L'invitation 8 à une organisation n'est pas inscrit au service»`() {
-        Mockito.`when`(service.chercherParID(8)).thenReturn(null)
+        Mockito.`when`(service.chercherParID(8,"Anonym")).thenReturn(null)
 
         mockMvc.perform(get("/organisations/invitations/8")
             .contentType(MediaType.APPLICATION_JSON))
@@ -105,7 +106,7 @@ class InvitationOrganisationControleurTest {
     // Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
     //
     // -----------------------------------------------------------------------------------------------------------------
-    @WithMockUser
+    @WithMockUser("Anonym")
     @Test  //demandeJoindreOrganisation() 201 isCreated
     fun `3- Étant donnée une invitation à une organisation dont l'id de l'organisation est 1 et celui du participant est auth0|656d3ecc4178aefc03429538 lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 201 et un JSON qui contient l'invitation créé`(){
         val invitation = InvitationOrganisation(
@@ -145,6 +146,7 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("envoyé"))*/
     }
 
+    @WithMockUser("Anonym")
     @Test  //demandeJoindreOrganisation() 404 notFound (organisation inxesitante)
     fun `4- Étant donnée une invitation à une organisation dont l'id de l'organisation est 18 mais celle-ci n'est pas inscrite au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 404 et le message d'erreur «L'organisation 18 n'existe pas»`(){
         val invitation = InvitationOrganisation(
@@ -174,6 +176,7 @@ class InvitationOrganisationControleurTest {
             }
     }
 
+    @WithMockUser("Anonym")
     @Test  //demandeJoindreOrganisation() 404 notFound (participant inxesitant)
     fun `5- Étant donnée une invitation à une organisation dont l'id du participant est 23 mais celui-ci n'est pas inscrit au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 404 et le message d'erreur «Le participant 23 n'existe pas»`(){
         val invitation = InvitationOrganisation(
@@ -204,6 +207,7 @@ class InvitationOrganisationControleurTest {
     }
 
 
+    @WithMockUser("Anonym")
     @Test  //demandeJoindreOrganisation() 409 isConflict
     fun `6- Étant donnée une invitation à une organisation dont l'id de l'organisation est 3 et celui du participant est 1 et qui est déjà inscrite au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 409 et et le message «Il y existe déjà une invitation à l'organisation nomOrg assigné au participant prénom nomUtil inscrit au service»` () {
         val invitation = InvitationOrganisation(
@@ -244,6 +248,7 @@ class InvitationOrganisationControleurTest {
     // Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
     //
     // -----------------------------------------------------------------------------------------------------------------
+    @WithMockUser("Anonym")
     @Test //effacerInvitation() 200 ok
     fun `7- Étant donné une invitation avec l'id 3 à une organisation inscrite au service lorsqu'on effectue une requête DELETE selon l'id 3 alors on obtient un JSON qui contient l'invitation effacé et un code de retour 200` (){
         val invitation = InvitationOrganisation(
@@ -261,7 +266,7 @@ class InvitationOrganisationControleurTest {
                 true),
             null,
             "envoyé")
-        Mockito.`when`(service.effacerInvitation(3)).thenReturn(invitation)
+        Mockito.`when`(service.effacerInvitation(3,"Anonym")).thenReturn(invitation)
 
         mockMvc.perform(delete("/organisations/invitations/3"))
             .andExpect(status().isOk)
@@ -280,9 +285,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("envoyé"))
     }
 
+    @WithMockUser("Anonym")
     @Test //effacerInvitation() 404 notFound
     fun `8- Étant donné une invitation avec l'id 3 à une organisation pas inscrite au service lorsqu'on effectue une requête DELETE selon l'id 3 alors on obtient un code de retour 404 et le message d'erreur «L'invitation 3 à une organisation n'est pas inscrit au service»` (){
-        Mockito.`when`(service.effacerInvitation(3)).thenThrow(RessourceInexistanteException("L'invitation 3 à une organisation n'est pas inscrit au service"))
+        Mockito.`when`(service.effacerInvitation(3,"Anonym")).thenThrow(RessourceInexistanteException("L'invitation 3 à une organisation n'est pas inscrit au service"))
 
         mockMvc.perform(delete("/organisations/invitations/3"))
             .andExpect(status().isNotFound)
@@ -298,6 +304,7 @@ class InvitationOrganisationControleurTest {
     // Cas d'utilisation: 3.Consulter ses invitations(Participant)
     //
     // -----------------------------------------------------------------------------------------------------------------
+    @WithMockUser("Anonym")
     @Test // obtenirInvitationParticipant() 200 ok
     fun `9- Étant donné un participant ayant l'id 1 inscrit au service qui a une invitation lorsqu'on effectue une requête GET de recherche par participant selon l'id 1 alors on obtient un JSON d'une liste qui contient une InvitationOrganisation ayant l'id 5 et un code de retour 200` (){
         val listeInvitations : List<InvitationOrganisation> = listOf(InvitationOrganisation(
@@ -316,7 +323,7 @@ class InvitationOrganisationControleurTest {
             null,
             "envoyé"))
 
-        Mockito.`when`(service.chercherParParticipant(1)).thenReturn(listeInvitations)
+        Mockito.`when`(service.chercherParParticipant("Anonym")).thenReturn(listeInvitations)
 
         mockMvc.perform(get("/utilisateurs/1/invitations/organisations"))
             .andExpect(status().isOk)
@@ -335,9 +342,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$[0].status").value("envoyé"))
     }
 
+    @WithMockUser("Anonym")
     @Test // obtenirInvitationParticipant() 404 notFound
     fun `10- Étant donné un participant ayant l'id 1 qui n'est pas inscrite au service qui a une invitation lorsqu'on effectue une requête GET de recherche par participant selon l'id 1 alors on obtient un code de retour 404 et le message d'erreur «Le participant 1 n'existe pas»` (){
-        Mockito.`when`(service.chercherParParticipant(1)).thenThrow(RessourceInexistanteException("Le participant 1 n'existe pas"))
+        Mockito.`when`(service.chercherParParticipant("Anonym")).thenThrow(RessourceInexistanteException("Le participant 1 n'existe pas"))
 
         mockMvc.perform(get("/utilisateurs/1/invitations/organisations"))
             .andExpect(status().isNotFound)
@@ -353,6 +361,7 @@ class InvitationOrganisationControleurTest {
     // Cas d'utilisation: 3.Consulter ses invitations(Organisation)
     //
     // -----------------------------------------------------------------------------------------------------------------
+    @WithMockUser("Anonym")
     @Test // obtenirInvitationOrganisation() 200 ok
     fun `11- Étant donné une organisation ayant l'id 1 inscrit au service qui a une invitation lorsqu'on effectue une requête GET de recherche par organisation selon l'id 1 alors on obtient un JSON d'une liste qui contient une InvitationOrganisation ayant l'id 5 et un code de retour 200` (){
         val listeInvitations : List<InvitationOrganisation> = listOf(InvitationOrganisation(
@@ -371,7 +380,7 @@ class InvitationOrganisationControleurTest {
             null,
             "envoyé"))
 
-        Mockito.`when`(service.chercherParOrganisation(1)).thenReturn(listeInvitations)
+        Mockito.`when`(service.chercherParOrganisation(1,"Anonym")).thenReturn(listeInvitations)
 
         mockMvc.perform(get("/organisations/1/invitations"))
             .andExpect(status().isOk)
@@ -390,9 +399,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$[0].status").value("envoyé"))
     }
 
+    @WithMockUser("Anonym")
     @Test // obtenirInvitationOrganisation() 404 notFound
     fun `12- Étant donné une organisation ayant l'id 1 qui n'est pas inscrite au service qui a une invitation lorsqu'on effectue une requête GET de recherche par organisation selon l'id 1 alors on obtient un code de retour 404 et le message d'erreur «L'organisation 1 n'existe pas»` (){
-        Mockito.`when`(service.chercherParOrganisation(1)).thenThrow(RessourceInexistanteException("L'organisation 1 n'existe pas"))
+        Mockito.`when`(service.chercherParOrganisation(1,"Anonym")).thenThrow(RessourceInexistanteException("L'organisation 1 n'existe pas"))
 
         mockMvc.perform(get("/organisations/1/invitations"))
             .andExpect(status().isNotFound)
@@ -408,6 +418,7 @@ class InvitationOrganisationControleurTest {
     // Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
     //
     // -----------------------------------------------------------------------------------------------------------------
+    @WithMockUser("Anonym")
     @Test // changerStatus() 200 ok -> vert
     fun `13- Étant donnée une invitation à une organisation ayant l'id 8 inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 200 et un JSON qui contient l'invitation modifié`(){
         val invitation = InvitationOrganisation(
@@ -426,7 +437,7 @@ class InvitationOrganisationControleurTest {
             null,
             "accepté")
 
-        Mockito.`when`(service.changerStatus(8, "accepté")).thenReturn(invitation)
+        Mockito.`when`(service.changerStatus(invitation, "accepté","Anonym")).thenReturn(invitation)
 
         mockMvc.perform(put("/organisations/invitations/8/status/accepté")
             .contentType(MediaType.APPLICATION_JSON)
@@ -446,9 +457,26 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("accepté"))
     }
 
+    @WithMockUser("Anonym")
     @Test // changerStatus() 404 notFound
     fun `14- Étant donnée une invitation à une organisation ayant l'id 8 qui n'est pas inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 404 et le message d'erreur «L'invitation 8 à une organisation n'est pas inscrit au service»`(){
-        Mockito.`when`(service.changerStatus(8, "accepté")).thenThrow(RessourceInexistanteException("L'invitation 8 à une organisation n'est pas inscrit au service"))
+        val invitation = InvitationOrganisation(
+            3,
+            Utilisateur(
+                "auth0|656d3ecc4178aefc03429538",
+                "email",
+                "nomUtil",
+                "prénom"),
+            Organisation(
+                3,
+                "auth0|656d2dbea19599c9209a4f01",
+                "nomOrg",
+                1,
+                true),
+            null,
+            "envoyé")
+
+        Mockito.`when`(service.changerStatus(invitation, "accepté","Anonym")).thenThrow(RessourceInexistanteException("L'invitation 8 à une organisation n'est pas inscrit au service"))
 
         mockMvc.perform(put("/organisations/invitations/8/status/accepté"))
             .andExpect(status().isNotFound)
@@ -464,6 +492,7 @@ class InvitationOrganisationControleurTest {
     // Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
     //
     // -----------------------------------------------------------------------------------------------------------------
+    @WithMockUser("Anonym")
     @Test // saisirJeton() 200 ok
     fun `15- Étant donnée une invitation à une organisation ayant le jeton 'VF5S6H55' inscrite au service lorsqu'on effectue une requête PUT pour changer le status à "accepté" de l'invitation ayant le jeton 'VF5S6H55' alors on obtient un code de retour 200 et un JSON qui contient l'invitation modifié`(){
         val invitation = InvitationOrganisation(
@@ -482,7 +511,7 @@ class InvitationOrganisationControleurTest {
             "VF5S6H55",
             "accepté")
 
-        Mockito.`when`(service.saisirJeton("VF5S6H55", invitation.Utilisateur!!)).thenReturn(invitation)
+        Mockito.`when`(service.saisirJeton("VF5S6H55","Anonym")).thenReturn(invitation)
 
         mockMvc.perform(put("/organisations/jetons/VF5S6H55")
             .contentType(MediaType.APPLICATION_JSON)
@@ -502,6 +531,7 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("accepté"))
     }
 
+    @WithMockUser("Anonym")
     @Test // saisirJeton() 404 notFound
     fun `16- Étant donnée une invitation à une organisation ayant un jeton 'VF5S6H55' qui n'est pas inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" de l'invitation ayant le jeton 'VF5S6H55' alors on obtient un code de retour 404 et le message d'erreur «Aucune invitation inscrit dans le service contient le jeton VF5S6H55»`(){
         val invitation = InvitationOrganisation(
@@ -520,7 +550,7 @@ class InvitationOrganisationControleurTest {
             "VF5S6H55",
             "accepté")
 
-        Mockito.`when`(service.saisirJeton("VF5S6H55", invitation.Utilisateur!!)).thenThrow(RessourceInexistanteException("Aucune invitation inscrit dans le service contient le jeton VF5S6H55"))
+        Mockito.`when`(service.saisirJeton("VF5S6H55","Anonym")).thenThrow(RessourceInexistanteException("Aucune invitation inscrit dans le service contient le jeton VF5S6H55"))
 
         mockMvc.perform(put("/organisations/jetons/VF5S6H55")
             .contentType(MediaType.APPLICATION_JSON)
@@ -538,6 +568,7 @@ class InvitationOrganisationControleurTest {
     // Cas d'utilisation: 6.Générer son jeton d'invitation
     //
     // -----------------------------------------------------------------------------------------------------------------
+    @WithMockUser("Anonym")
     @Test // crééJeton() 200 ok
     fun `17- Étant donné une organisation ayant l'id 3 inscrit au service qui a une invitation lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 3 alors on obtient un JSON d'une liste qui contient une InvitationOrganisation ayant un jeton généré et assigné à aucun utilisateur  et un code de retour 201` (){
         val invitation = InvitationOrganisation(
@@ -552,7 +583,7 @@ class InvitationOrganisationControleurTest {
             "OYX4J399",
             "généré")
 
-        Mockito.`when`(service.crééJeton(3)).thenReturn(invitation)
+        Mockito.`when`(service.crééJeton(invitation.Organisation,"Anonym")).thenReturn(invitation)
 
         mockMvc.perform(post("/organisations/3/jetons"))
             .andExpect(status().isCreated)
@@ -567,10 +598,17 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.jeton").value("OYX4J399"))
             .andExpect(jsonPath("$.status").value("généré"))
     }
-
+    @WithMockUser("Anonym")
     @Test // crééJeton() 404 notFound
     fun `18- Étant donné une organisation ayant l'id 36 qui n'est pas inscrite au service lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 36 alors on obtient un code de retour 404 et le message d'erreur «L'organisation 36 n'existe pas»` (){
-        Mockito.`when`(service.crééJeton(36)).thenThrow(RessourceInexistanteException("L'organisation 36 n'existe pas"))
+        val organisation = Organisation(
+            1,
+            "auth0|656d2dbea19599c9209a4f01",
+            "nomOrg",
+            1,
+            true)
+
+        Mockito.`when`(service.crééJeton(organisation,"Anonym")).thenThrow(RessourceInexistanteException("L'organisation 36 n'existe pas"))
 
         mockMvc.perform(post("/organisations/36/jetons"))
             .andExpect(status().isNotFound)
