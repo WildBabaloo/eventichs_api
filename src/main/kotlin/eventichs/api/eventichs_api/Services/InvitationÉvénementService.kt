@@ -10,7 +10,7 @@ class InvitationÉvénementService(val dao: InvitationÉvénementDAO) {
 
     fun chercherTous(): List<InvitationÉvénement> = dao.chercherTous()
 
-    fun chercherInvitationsÉvénementsParIdDestinataire(id: Int, code_util: String): List<InvitationÉvénement> {
+    fun chercherInvitationsÉvénementsParIdDestinataire(id: String, code_util: String): List<InvitationÉvénement> {
         if (dao.validerUtilisateur(id, code_util) == false){
             throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter les invitations d'un autre utilisateur.")
         }
@@ -21,7 +21,7 @@ class InvitationÉvénementService(val dao: InvitationÉvénementDAO) {
     fun créerInvitationÉvénement(invitation: InvitationÉvénement) = dao.ajouter(invitation)
 
     fun modifierInvitationÉvénement(invitation: InvitationÉvénement) = dao.modifier(invitation)
-    fun chercherInvitationsÉvénementsParIdExpediteur(id: Int): List<InvitationÉvénement> = dao.chercherParIdExpediteur(id)
+    fun chercherInvitationsÉvénementsParIdExpediteur(id: String, name: String): List<InvitationÉvénement> = dao.chercherParIdExpediteur(id)
 
     fun supprimerInvitationsÉvénementsParId(id: Int) = dao.supprimerParID(id)
 

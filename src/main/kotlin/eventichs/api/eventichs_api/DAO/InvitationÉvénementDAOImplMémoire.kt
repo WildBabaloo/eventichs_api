@@ -58,11 +58,11 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
         return db.queryForObject("SELECT * FROM Invitation_événement WHERE id = $id", InvitationÉvénementMapper())
     }
 
-    override fun chercherParIdDestinataire(id: Int): List<InvitationÉvénement> {
+    override fun chercherParIdDestinataire(id: String): List<InvitationÉvénement> {
         return db.query("SELECT * FROM Invitation_événement WHERE codeDestinataire = $id", InvitationÉvénementMapper())
     }
 
-    override fun chercherParIdExpediteur(id: Int): List<InvitationÉvénement> {
+    override fun chercherParIdExpediteur(id: String): List<InvitationÉvénement> {
         return db.query("SELECT * FROM Invitation_événement WHERE codeExpediteur = $id", InvitationÉvénementMapper())
     }
 
@@ -94,9 +94,8 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
         return chercherParID(id)
     }
 
-    override fun validerUtilisateur(id: Int, code_util: String): Boolean {
-        val invitation : InvitationÉvénement? = chercherParID(id)
-        if (invitation?.idDestinataire == code_util ) {
+    override fun validerUtilisateur(id: String, code_util: String): Boolean {
+        if (id == code_util ) {
             return true
         }
         return false

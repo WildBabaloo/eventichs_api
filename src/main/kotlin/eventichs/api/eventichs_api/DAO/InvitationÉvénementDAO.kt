@@ -15,13 +15,13 @@ interface InvitationÉvénementDAO: DAO<InvitationÉvénement> {
 
     override fun supprimerParID(id: Int): InvitationÉvénement?
 
-    fun chercherParIdDestinataire(id: Int): List<InvitationÉvénement>
+    fun chercherParIdDestinataire(id: String): List<InvitationÉvénement>
 
-    fun chercherParIdExpediteur(id: Int): List<InvitationÉvénement>
+    fun chercherParIdExpediteur(id: String): List<InvitationÉvénement>
 
     fun entrerJetonEvenement(id: Int, jeton: String): InvitationÉvénement?
 
     fun creerJeton(idEvenement: Int): InvitationÉvénement?
-    fun validerUtilisateur(id : Int, code_util: String): Boolean
+    fun validerUtilisateur(id : String, code_util: String): Boolean
 
 }

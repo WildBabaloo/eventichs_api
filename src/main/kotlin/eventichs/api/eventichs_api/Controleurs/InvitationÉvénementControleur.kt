@@ -27,14 +27,12 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "200", description = "Une ou plusieures invitations ont été trouvées"),
             ApiResponse(responseCode = "404", description = "Aucune invitation trouvée")]
     )
-    @GetMapping(
-        value = ["/utilisateur/invitations/destinataire/{id}"],
-        produces = ["application/json"])
-    fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable id: Int, principal: Principal?): List<InvitationÉvénement> {
+    @GetMapping("/utilisateur/invitations/destinataire/{codeDestinataire}")
+    fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable codeDestinataire: String,  principal: Principal?): List<InvitationÉvénement> {
         if (principal == null) {
             throw PasConnectéException("l'utilisateur n'est pas connecté.")
         }
-        val invitations = service.chercherInvitationsÉvénementsParIdDestinataire(id, principal.name)
+        val invitations = service.chercherInvitationsÉvénementsParIdDestinataire(codeDestinataire, principal.name)
 
         if (invitations.isNotEmpty()) {
             return invitations
@@ -50,9 +48,20 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "200", description = "Une ou plusieures invitations ont été trouvées"),
             ApiResponse(responseCode = "404", description = "Aucune invitation trouvée")]
     )
-    @GetMapping("/utilisateur/invitations/expediteur/{id}")
-    fun obtenirInvitationsÉvénementsParIdExpediteur(@PathVariable id: Int) =
-        service.chercherInvitationsÉvénementsParIdExpediteur(id)
+    @GetMapping("/utilisateur/invitations/expediteur/{idExpediteur}")
+    fun obtenirInvitationsÉvénementsParIdExpediteur(@PathVariable idExpediteur: String, principal: Principal?): List<InvitationÉvénement> {
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
+
+        val invitations = service.chercherInvitationsÉvénementsParIdExpediteur(idExpediteur, principal.name)
+
+        if (invitations.isNotEmpty()){
+            return invitations
+        } else {
+            throw RessourceInexistanteException("Aucune invitation trouvée")
+        }
+    }
 
 
     @Operation(
