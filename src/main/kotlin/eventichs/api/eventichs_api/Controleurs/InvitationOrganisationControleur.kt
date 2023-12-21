@@ -39,6 +39,8 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         operationId = "obtenirInvitationsParId",
         responses = [
             ApiResponse(responseCode = "200", description = "L'invitation a été trouvé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cet invitation"),
             ApiResponse(responseCode = "404", description = "L'invitation recherché n'existe pas dans le service")]
     )
     @GetMapping(
@@ -48,7 +50,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
-        return service.chercherParID(id) ?: throw RessourceInexistanteException("L'invitation $id à une organisation n'est pas inscrit au service")
+        return service.chercherParID(id, principal.name) ?: throw RessourceInexistanteException("L'invitation $id à une organisation n'est pas inscrit au service")
     }
 
     // ---------------------------------------------------------------------
