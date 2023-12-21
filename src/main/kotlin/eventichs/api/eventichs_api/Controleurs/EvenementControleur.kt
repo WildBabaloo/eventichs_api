@@ -100,7 +100,9 @@ class EvenementControleur(val service : EvenementService) {
     )
     @PutMapping("/evenements/{id}")
     fun modifierEvenement(@PathVariable id: Int, @RequestBody evenement : Événement, principal: Principal?) : ResponseEntity<Événement> {
-
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
         val événementModifié : Événement? = service.modifierEvenement(id, evenement, principal)
             val uri = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -122,6 +124,9 @@ class EvenementControleur(val service : EvenementService) {
     )
     @PostMapping("/evenements")
     fun ajouterEvenement(@RequestBody evenement : Événement, principal: Principal?) : ResponseEntity<Événement>{
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
         val nouvelEvenement : Événement? = service.ajouterEvenement(evenement, principal)
         val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
