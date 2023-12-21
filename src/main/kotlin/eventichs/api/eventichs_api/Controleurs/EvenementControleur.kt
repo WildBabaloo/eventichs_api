@@ -1,4 +1,5 @@
 package eventichs.api.eventichs_api.Controleurs
+import eventichs.api.eventichs_api.Exceptions.PasConnectéException
 import eventichs.api.eventichs_api.Modèle.Événement
 import eventichs.api.eventichs_api.Services.EvenementService
 import io.swagger.v3.oas.annotations.Operation
@@ -6,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 @RequestMapping("\${api.base-path:}")
 @RestController
@@ -20,7 +22,12 @@ class EvenementControleur(val service : EvenementService) {
         operationId = "obtenirEvenements"
     )
     @GetMapping("/evenements")
-    fun obtenirEvenements() = service.chercherTous()
+    fun obtenirEvenements(principal: Principal?) : List<Événement>{
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
+        return service.chercherTous()
+    }
     @Operation(
         summary = "Obtenir un évenement spécifique par son ID.",
         description = "Retourne l'évènement qui porte l'ID spécifié dans tous les évènements du service",
