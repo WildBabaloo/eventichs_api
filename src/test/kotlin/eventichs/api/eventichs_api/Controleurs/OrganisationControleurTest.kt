@@ -56,6 +56,12 @@ lateinit var service: OrganisationService
             .andExpect(jsonPath("$[0].nomOrganisation").value("Illuminati"))
             .andExpect(jsonPath("$[0].estPublic").value(false))
 
+
+
+
+
+        
+
     }
 
     // -----------------------------------------------------------------------------------------------------------------
