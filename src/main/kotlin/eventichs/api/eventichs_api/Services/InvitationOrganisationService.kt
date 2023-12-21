@@ -1,6 +1,7 @@
 package eventichs.api.eventichs_api.Services
 
 import eventichs.api.eventichs_api.DAO.InvitationOrganisationDAO
+import eventichs.api.eventichs_api.Exceptions.DroitAccèsInsuffisantException
 import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
 import eventichs.api.eventichs_api.Modèle.Utilisateur
 import org.springframework.stereotype.Service
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service
 class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     fun chercherTous(): List<InvitationOrganisation> = dao.chercherTous()
     fun chercherParID(id: Int, code_util: String): InvitationOrganisation? {
+        if (dao.validerUtilisateur(id, code_util) == false) {
+            throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cet invitation")
+        }
         return dao.chercherParID(id)
     }
 

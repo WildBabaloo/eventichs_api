@@ -202,4 +202,15 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
 
         throw ConflitAvecUneRessourceExistanteException("Le participant ${utilisateur.code} est déjà membre de l'organisation ${invitation.Organisation.id}")
     }
+
+    override fun validerUtilisateur(id: Int, code_util : String) : Boolean {
+        val invitation : InvitationOrganisation? = chercherParID(id)
+        if (invitation?.Utilisateur?.code == code_util) {
+            return true
+        }
+        if (invitation?.Organisation?.codeUtilisateur == code_util) {
+            return true
+        }
+        return false
+    }
 }

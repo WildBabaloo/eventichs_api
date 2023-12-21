@@ -31,4 +31,6 @@ interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
     fun crééJeton(idOrganisation : Int) : InvitationOrganisation?
 
     fun saisirJeton(jeton : String, utilisateur: Utilisateur) : InvitationOrganisation?
+
+    fun validerUtilisateur(id : Int, code_util : String) : Boolean
 }
