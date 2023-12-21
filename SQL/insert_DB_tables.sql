@@ -16,6 +16,8 @@ INSERT INTO `eventichsBD`.`Catégorie_Organisation` (`nom`, `description`) VALUE
 
 -- Insertion Organisation
 INSERT INTO `eventichsBD`.`Organisation` (`nomOrganisation`, `codeUtilisateur`, `catégorie_id`) VALUES ('Rosemont', 'auth0|656d2dbea19599c9209a4f01', '1');
+INSERT INTO `eventichsBD`.`Organisation` (`nomOrganisation`, `codeUtilisateur`, `catégorie_id`, `estPublic`) VALUES ('Les JoeBios', 'auth0|656d3cb6a19599c9209a6099', '2', true);
+INSERT INTO `eventichsBD`.`Organisation` (`nomOrganisation`, `codeUtilisateur`, `catégorie_id`, `estPublic`) VALUES ('FBI', 'auth0|656d3d344178aefc03429343', '3', false);
 
 -- Insertion Événement
 INSERT INTO `eventichsBD`.`Événement` (`nom`, `adresse`,`dateDebut`, `dateFin`, `type`, `categorie_id`, `description`,  `organisation_id`) VALUES ('Soiré','134 avenue Parc', '2023-10-10', '2020-10-11', 'public', '1', 'soirée très cool', '1');

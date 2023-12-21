@@ -51,4 +51,14 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     override fun filtrerOrganisationParGouts(idCategorie: Int): List<Organisation> =
         db.query("select * from Organisation where catégorie_id = $idCategorie", OrganisationMapper())
 
+    override fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean {
+        val organisation: Organisation? = chercherParID(id)
+
+        if (organisation?.codeUtilisateur == codeUtilisateur) {
+            return true
+        }
+
+        return false
+    }
+
 }
