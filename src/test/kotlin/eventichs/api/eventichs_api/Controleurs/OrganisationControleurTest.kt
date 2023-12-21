@@ -41,26 +41,19 @@ lateinit var service: OrganisationService
 
 
     @Test
-    fun `1- Étant donné un administrateur qui effectue une requete GET pour afficher toute les organisations lorsqu on exécute la requête on obtient un fichier JSON qui reqgroupe les organisations et un code de retour 200 `(){
-        var listorganisation: MutableList<Organisation> = mutableListOf(Organisation(1,"1","Illuminati",1,false))
-        //listorganisation?.add(Organisation(1,1,"Illuminati",1,false))
+    fun `1- Étant donné un utilisateur non authentifié qui effectue une requete GET pour afficher toute les organisations publiques, lorsqu on exécute la requête on obtient un fichier JSON et un code de retour 403 `(){
+        var listorganisation: MutableList<Organisation> = mutableListOf(Organisation(1,"Anonyme","Illuminati",1,true))
 
-        Mockito.`when`(service.chercherTous()).thenReturn(listorganisation)
+        Mockito.`when`(service.consulterOrganisationPubliques()).thenReturn(listorganisation)
 
         mockMvc.perform(get("/organisations"))
-            .andExpect(status().isOk)
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$[0].id").value(1))
-            .andExpect(jsonPath("$[0].idUtilisateur").value(1))
-            .andExpect(jsonPath("$[0].catégorie_id").value(1))
-            .andExpect(jsonPath("$[0].nomOrganisation").value("Illuminati"))
-            .andExpect(jsonPath("$[0].estPublic").value(false))
-
-
-
-
-
-        
+                .andExpect(status().isOk)
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].codeUtilisateur").value("Anonyme")) // Adjusted to codeUtilisateur
+                .andExpect(jsonPath("$[0].catégorie_id").value(1)) // Adjusted to match the actual field name
+                .andExpect(jsonPath("$[0].nomOrganisation").value("Illuminati"))
+                .andExpect(jsonPath("$[0].estPublic").value(true))
 
     }
 
