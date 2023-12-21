@@ -1,5 +1,5 @@
 drop schema if exists `eventichsBD`;
-create schema if not exists `eventichsBD` default character set utf8;
+create schema if not exists `eventichsBD` default character set utf8mb4 COLLATE utf8mb4_general_ci;
 use `eventichsBD`;
 
 -- ----------------------------------------------------------------------------------------------

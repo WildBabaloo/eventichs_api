@@ -17,7 +17,7 @@ class UtilisateurControleur(val service: UtilisateurService) {
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
 
     @GetMapping("/utilisateurs/{id}")
-    fun connexion(@PathVariable id : Int) = service.chercherParID(id) ?: throw RessourceInexistanteException("L'utilisateur $id n'est pas inscrit au service")
+    fun connexion(@PathVariable id : String) = service.chercherParID(id) ?: throw RessourceInexistanteException("L'utilisateur $id n'est pas inscrit au service")
     @PutMapping("/utilisateurs/{id}")
     fun modifier(@PathVariable id : Int, @RequestBody utilisateur: Utilisateur):
             ResponseEntity<InvitationOrganisation> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
