@@ -69,6 +69,9 @@ class CatégorieControleur(val service : CatégorieService) {
     )
     @PutMapping("/categories/{id}")
     fun modifierCategorie(@PathVariable id: Int, @RequestBody catégorie: Catégorie, principal: Principal?): ResponseEntity<Catégorie> {
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
         val catégorieModifiée : Catégorie? = service.modifierCatégorie(catégorie, principal)
             val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -91,6 +94,9 @@ class CatégorieControleur(val service : CatégorieService) {
     )
     @PostMapping("/categories")
     fun ajouterCategorie(@RequestBody catégorie: Catégorie, principal: Principal?): ResponseEntity<Catégorie> {
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
         val nouvelleCatégorie: Catégorie? = service.ajouterCatégorie(catégorie, principal)
         val uri = ServletUriComponentsBuilder
             .fromCurrentRequest()
