@@ -1,4 +1,4 @@
-package eventichs.api.eventichs_api.DAO
+package eventichs.api.eventichs_api.Mapper
 
 import eventichs.api.eventichs_api.Modèle.Événement
 import org.springframework.jdbc.core.RowMapper
@@ -13,10 +13,10 @@ class EvenementMapper : RowMapper<Événement>{
                 résultat.getDate("dateDebut"),
                 résultat.getDate("dateFin"),
                 résultat.getString("type"),
-                résultat.getInt("categorie_id"),
+                résultat.getString("categorie"),
                 résultat.getString("description"),
-                résultat.getString("photo"),
-                résultat.getInt("organisation_id"))
+                résultat.getString("image"),
+                résultat.getString("organisation"))
 
         return event
     }

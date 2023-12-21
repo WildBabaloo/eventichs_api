@@ -1,26 +1,32 @@
 package eventichs.api.eventichs_api.Controleurs
 
 import eventichs.api.eventichs_api.Modèle.Catégorie
+import io.swagger.v3.oas.annotations.tags.Tag
+import eventichs.api.eventichs_api.Services.CatégorieService
+import eventichs.api.eventichs_api.Services.EvenementService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("\${api.base-path:}")
-class CatégorieControleur {
-    @PostMapping("/catégories")
-    fun inscrire(@RequestBody catégorie: Catégorie):
-            ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+@Tag(
+    name = "Catégorie",
+    description = "Points d'accès aux ressources liées aux catégories d'evenements existantes sur le service."
+)
+class CatégorieControleur(val service : CatégorieService) {
 
-    @GetMapping("/catégories/{id}")
-    fun connexion(@PathVariable id: Int):
-            ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    @GetMapping("/categories")
+    fun obtenirCategories() = service.chercherTous()
 
-    @PutMapping("/catégories/{id}")
-    fun modifier(@PathVariable id: Int, @RequestBody catégorie: Catégorie):
-            ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    @GetMapping("/categories/{id}")
+    fun obtenirCategorieParID(@PathVariable id: Int) = service.chercherParID(id)
 
-    @DeleteMapping("/catégories/{id}")
-    fun effacer(@PathVariable id: Int):
-            ResponseEntity<Catégorie> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    @PutMapping("/categories/{id}")
+    fun modifierCategorie(@PathVariable id: Int, @RequestBody catégorie: Catégorie) = service.modifierCatégorie(catégorie)
+
+    @PostMapping("/categories")
+    fun ajouterCategorie(@RequestBody catégorie: Catégorie) = service.ajouterCatégorie(catégorie)
+    @DeleteMapping("/categories/{id}")
+    fun effacerCategorie(@PathVariable id: Int) = service.supprimerParID(id)
 }

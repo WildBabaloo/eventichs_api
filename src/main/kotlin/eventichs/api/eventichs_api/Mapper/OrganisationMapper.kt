@@ -1,4 +1,4 @@
-package eventichs.api.eventichs_api.DAO
+package eventichs.api.eventichs_api.Mapper
 
 import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.jdbc.core.RowMapper
@@ -8,7 +8,7 @@ class OrganisationMapper: RowMapper<Organisation> {
     override fun mapRow(resultat: ResultSet, rowNum: Int): Organisation? {
         val uneOrganisation = Organisation(
             resultat.getInt("id"),
-            resultat.getInt("idUtilisateur"),
+            resultat.getString("codeUtilisateur"),
             resultat.getString("nomOrganisation"),
             resultat.getInt("catégorie_id"),
             resultat.getBoolean("estPublic")

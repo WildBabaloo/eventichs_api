@@ -1,5 +1,7 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Mapper.OrganisationMapper
+import eventichs.api.eventichs_api.Mapper.UtilisateurMapper
 import eventichs.api.eventichs_api.Modèle.Utilisateur
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
@@ -10,6 +12,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate): UtilisateurDAO {
         TODO("Not yet implemented")
     }
 
+    override fun chercherParID(id: String): Utilisateur? = db.queryForObject("select * from Utilisateur where code = $id", UtilisateurMapper())
     override fun chercherParID(id: Int): Utilisateur? {
         TODO("Not yet implemented")
     }

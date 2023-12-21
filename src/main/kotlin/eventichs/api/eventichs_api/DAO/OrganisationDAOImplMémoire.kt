@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.dao.DataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
@@ -14,15 +15,15 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         db.queryForObject("select * from Organisation where id = $id", OrganisationMapper())
 
     override fun ajouter(element: Organisation): Organisation? {
-        try {
-            db.update(
-                    "INSERT INTO Organisation (id, idUtilisateur, nomOrganisation, catégorie_id, estPublic) VALUES (?, ?, ?, ?, ?)",
-                    element.id, element.idUtilisateur, element.nomOrganisation, element.catégorie_id, element.estPublic
-            )
-            return chercherParID(element.id)
-        } catch (e: DataAccessException) {
-            return null
-        }
+        db.update(
+            "insert into Organisation values (?, ?, ?, ?)",
+            element.id,
+            element.codeUtilisateur,
+            element.nomOrganisation,
+            element.catégorie_id,
+            element.estPublic
+        )
+        return element
     }
 
     override fun modifier(element: Organisation): Organisation? {
@@ -48,6 +49,6 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         db.query("select * from Organisation where estPublic=true", OrganisationMapper())
 
     override fun filtrerOrganisationParGouts(idCategorie: Int): List<Organisation> =
-        db.query("select * from Organisation where catégorie_id = $idCategorie",OrganisationMapper())
+        db.query("select * from Organisation where catégorie_id = $idCategorie", OrganisationMapper())
 
 }

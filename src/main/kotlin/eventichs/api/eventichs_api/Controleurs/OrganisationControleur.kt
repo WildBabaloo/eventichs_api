@@ -45,16 +45,44 @@ class OrganisationControleur(val service: OrganisationService) {
     )
     @PostMapping("/organisations")
     fun ajouterOrganisation(@RequestBody organisation: Organisation) = service.ajouter(organisation)
-
+    @Operation(
+        summary = "Modifier une organisation ",
+        description = "Modifie les attributs d'une organisation qui existe dans la liste des organisations",
+        operationId = "modifierOrganisation",
+        responses = [
+            ApiResponse(responseCode = "200", description = "l'organisation a été modifié"),
+            ApiResponse(responseCode = "404", description = "l'organisation n'eas pas été modifié")]
+    )
     @PutMapping("/organisations/{id}")
     fun modifierOrganisation(@RequestBody organisation: Organisation) = service.modifier(organisation)
-
+    @Operation(
+        summary = "supprimer une organisation ",
+        description = "Supprime une organisation qui existe dans la liste des organisations",
+        operationId = "supprimerOrganisation",
+        responses = [
+            ApiResponse(responseCode = "200", description = "l'organisation a été supprimé"),
+            ApiResponse(responseCode = "404", description = "l'organisation n'as pas été supprimé")]
+    )
     @DeleteMapping("/organisations/{id}")
     fun supprimerOrganisation(@PathVariable id: Int) = service.supprimerParID(id)
-
+    @Operation(
+        summary = "obtenir la listes des organisations publiques ",
+        description = "Retourne la liste des organisations qui existe dont le status est publique",
+        operationId = "ChercherOrganisationPublique",
+        responses = [
+            ApiResponse(responseCode = "200", description = "les organisations publiques ont été trouvé"),
+            ApiResponse(responseCode = "404", description = "Aucune organisation publique n'as pas été trouvé")]
+    )
     @GetMapping("/organisations/publiques")
     fun obtenirOrganisationsPubliques() = service.consulterOrganisationPubliques()
-
+    @Operation(
+        summary = "obtenir la listes des organisations par gouts ",
+        description = "Retourne la liste des organisations filtés par gouts",
+        operationId = "obtenirOrganisationsParGout",
+        responses = [
+            ApiResponse(responseCode = "200", description = "les organisations filtrés ont été trouvées"),
+            ApiResponse(responseCode = "404", description = "les organisations filtrés n'ont pas été trouvé")]
+    )
     @GetMapping("/gouts/{idCategorie}/organisations")
     fun obtenirOrganisationsParGout(@PathVariable idCategorie: Int) = service.filtrerOrganisationParGouts(idCategorie)
 

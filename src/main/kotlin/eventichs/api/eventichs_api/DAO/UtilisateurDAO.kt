@@ -5,7 +5,7 @@ import eventichs.api.eventichs_api.Modèle.Utilisateur
 interface UtilisateurDAO : DAO<Utilisateur> {
     override fun chercherTous(): List<Utilisateur>
 
-    override fun chercherParID(id: Int): Utilisateur?
+    fun chercherParID(id: String): Utilisateur?
 
     override fun ajouter(element: Utilisateur): Utilisateur?
 
