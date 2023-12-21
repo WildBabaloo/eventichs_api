@@ -17,7 +17,12 @@ class EvenementControleur(val service : EvenementService) {
     @Operation(
         summary = "Obtenir la liste des évenements.",
         description = "Retourne la liste de tous les évènements dans le service.",
-        operationId = "obtenirEvenements"
+        operationId = "obtenirEvenements",
+            responses = [
+                ApiResponse(responseCode = "201", description = "Événements trouvés"),
+                ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
+                ApiResponse(responseCode = "403", description = "L'utilisateur n'as pas le droit de consulter cet invitation")i]
+
     )
     @GetMapping("/evenements")
     fun obtenirEvenements(principal: Principal?) : List<Événement>{
