@@ -38,11 +38,13 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
 
     }
 
-    override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String){
+    override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
         db.update(
             "Update Organisations_membres set code_utilisateur=$codeUtilisateur where id_organisation=$codeOrganisation"
             , OrganisationMembresMapper()
         )
+
+        return db.queryForObject("select * from Organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur", OrganisationMembresMapper())
 
     }
 
