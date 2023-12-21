@@ -2,6 +2,7 @@ package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Modèle.Organisation
+import org.springframework.dao.DataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
@@ -26,8 +27,9 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     }
 
     override fun modifier(element: Organisation): Organisation? {
+        val id = element.id
         db.update(
-            "update Organisation set nomOrganisation = ?, catégorie_id = ?, estPublic = ? where id = $element.id",
+            "update Organisation set nomOrganisation = ?, catégorie_id = ?, estPublic = ? where id = $id",
             element.nomOrganisation,
             element.catégorie_id,
             element.estPublic
