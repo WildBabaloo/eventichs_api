@@ -12,7 +12,10 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate): UtilisateurDAO {
         TODO("Not yet implemented")
     }
 
-    override fun chercherParID(id: Int): Utilisateur? = db.queryForObject("select * from Utilisateur where id = $id", UtilisateurMapper())
+    override fun chercherParID(id: String): Utilisateur? = db.queryForObject("select * from Utilisateur where code = $id", UtilisateurMapper())
+    override fun chercherParID(id: Int): Utilisateur? {
+        TODO("Not yet implemented")
+    }
 
     override fun ajouter(element: Utilisateur): Utilisateur? {
         TODO("Not yet implemented")

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository
 class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrganisationDAO {
     override fun chercherTous(): List<InvitationOrganisation> =
         db.query(
-            "select * from Invitation_organisation left join utilisateur on Invitation_organisation.codeDestinataire = Utilisateur.code join organisation on Invitation_organisation.idOrganisation = organisation.id",
+            "select * from Invitation_organisation left join Utilisateur on Invitation_organisation.codeDestinataire = Utilisateur.code join Organisation on Invitation_organisation.idOrganisation = Organisation.id",
             InvitationOrganisationMapper()
         )
 
@@ -27,7 +27,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         var invitationOrganisation: InvitationOrganisation?
         try {
             invitationOrganisation = db.queryForObject(
-                "select * from Invitation_organisation as invitation left join utilisateur on codeDestinataire = Utilisateur.code join organisation on idOrganisation = organisation.id where invitation.id = $id",
+                "select * from Invitation_organisation as invitation left join Utilisateur on codeDestinataire = Utilisateur.code join Organisation on idOrganisation = Organisation.id where invitation.id = $id",
                 InvitationOrganisationMapper()
             )
         } catch (e: EmptyResultDataAccessException) {
