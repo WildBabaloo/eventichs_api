@@ -28,7 +28,7 @@ interface InvitationOrganisationDAO : DAO<InvitationOrganisation>  {
 
     fun changerStatus(idInvitationOrganisation : Int, status : String) : InvitationOrganisation?
 
-    fun crééJeton(idOrganisation : Int) : InvitationOrganisation?
+    fun créerJeton(idOrganisation : Int) : InvitationOrganisation?
 
     fun saisirJeton(jeton : String, code_util : String) : InvitationOrganisation?
 

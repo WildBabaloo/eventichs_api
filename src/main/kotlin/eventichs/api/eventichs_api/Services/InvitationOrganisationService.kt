@@ -56,12 +56,12 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     }
 
     //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
-    fun crééJeton(organisation : Organisation, code_Util: String) : InvitationOrganisation? {
+    fun créerJeton(organisation : Organisation, code_Util: String) : InvitationOrganisation? {
         if (dao.validerOrganisation(organisation.id, code_Util) == false) {
             throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation")
         }
 
-        return dao.crééJeton(organisation.id)
+        return dao.créerJeton(organisation.id)
     }
 
 
