@@ -93,4 +93,12 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
                 "where id=$id;")
         return chercherParID(id)
     }
+
+    override fun validerUtilisateur(id: Int, code_util: String): Boolean {
+        val invitation : InvitationÉvénement? = chercherParID(id)
+        if (invitation?.idDestinataire == code_util ) {
+            return true
+        }
+        return false
+    }
 }

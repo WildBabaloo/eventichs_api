@@ -1,14 +1,14 @@
 package eventichs.api.eventichs_api.Controleurs
 
-import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
+import eventichs.api.eventichs_api.Exceptions.PasConnectéException
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationÉvénement
 import eventichs.api.eventichs_api.Services.InvitationÉvénementService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.swagger.v3.oas.annotations.responses.ApiResponse
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 @RestController
 @RequestMapping("\${api.base-path:}")
@@ -27,10 +27,21 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "200", description = "Une ou plusieures invitations ont été trouvées"),
             ApiResponse(responseCode = "404", description = "Aucune invitation trouvée")]
     )
-    @GetMapping("/utilisateur/invitations/destinataire/{id}")
-    fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable id: Int) =
-        service.chercherInvitationsÉvénementsParIdDestinataire(id)
+    @GetMapping(
+        value = ["/utilisateur/invitations/destinataire/{id}"],
+        produces = ["application/json"])
+    fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable id: Int, principal: Principal?): List<InvitationÉvénement> {
+        if (principal == null) {
+            throw PasConnectéException("l'utilisateur n'est pas connecté.")
+        }
+        val invitations = service.chercherInvitationsÉvénementsParIdDestinataire(id, principal.name)
 
+        if (invitations.isNotEmpty()) {
+            return invitations
+        } else {
+            throw RessourceInexistanteException("Aucune invitation trouvée")
+        }
+    }
     @Operation(
         summary = "Obtenir la liste des invitations créés par l'id de l'éxpéditeur indiqué",
         description = "Retourne la liste de toutes les invitations dont l'id de l'éxpéditeur est égal à celui entré dans la reqête.",

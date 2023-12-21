@@ -22,5 +22,6 @@ interface InvitationÉvénementDAO: DAO<InvitationÉvénement> {
     fun entrerJetonEvenement(id: Int, jeton: String): InvitationÉvénement?
 
     fun creerJeton(idEvenement: Int): InvitationÉvénement?
+    fun validerUtilisateur(id : Int, code_util: String): Boolean
 
 }
