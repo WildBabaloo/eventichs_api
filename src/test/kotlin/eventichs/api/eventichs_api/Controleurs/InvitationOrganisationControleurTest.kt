@@ -836,7 +836,7 @@ class InvitationOrganisationControleurTest {
     //
     // -----------------------------------------------------------------------------------------------------------------
     @WithMockUser("Joe")
-    @Test // crééJeton() 200 ok
+    @Test // créerJeton() 200 ok
     fun `17- Étant donné une organisation ayant l'id 3 inscrit au service qui a une invitation lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 3 alors on obtient un JSON d'une liste qui contient une InvitationOrganisation ayant un jeton généré et assigné à aucun utilisateur  et un code de retour 201` (){
         val invitation = InvitationOrganisation(
             54,
@@ -869,7 +869,7 @@ class InvitationOrganisationControleurTest {
     }
 
     @WithMockUser("Anonym")
-    @Test // crééJeton() 401 UNAUTHORIZED
+    @Test // créerJeton() 401 UNAUTHORIZED
     fun `18,1- Étant donné une organisation ayant l'id 36 qui n'est pas inscrite au service et un utilisateur qui n'est pas connecté lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 36 alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»` (){
         val organisation = Organisation(
             1,
@@ -913,7 +913,7 @@ class InvitationOrganisationControleurTest {
     }
 
     @WithMockUser("Joe")
-    @Test // crééJeton() 404 notFound
+    @Test // créerJeton() 404 notFound
     fun `18- Étant donné une organisation ayant l'id 36 qui n'est pas inscrite au service lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 36 alors on obtient un code de retour 404 et le message d'erreur «L'organisation 36 n'existe pas»` (){
         val organisation = Organisation(
             1,
