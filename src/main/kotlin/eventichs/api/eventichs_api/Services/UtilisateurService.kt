@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class UtilisateurService(val dao : UtilisateurDAO) {
-    fun chercherParID(id: Int): Utilisateur? = dao.chercherParID(id)
+    fun chercherParID(id: String): Utilisateur? = dao.chercherParID(id)
 }
