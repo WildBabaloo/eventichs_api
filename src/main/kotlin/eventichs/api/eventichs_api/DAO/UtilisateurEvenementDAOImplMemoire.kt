@@ -1,12 +1,15 @@
 package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Mapper.EvenementMapper
+import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Mapper.ParticipantMapper
 import eventichs.api.eventichs_api.Mapper.UtilisateurEvenementMapper
+import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.Participant
 import eventichs.api.eventichs_api.Modèle.UtilisateurÉvénement
 import eventichs.api.eventichs_api.Modèle.Événement
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -17,7 +20,7 @@ class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEven
     override fun chercherParUtilisateurID(codeUtilisateur: String):  List<Événement> =
             db.query("$selectQuery inner join Utilisateur_événement on Utilisateur_événement.idEvenement = Événement.id WHERE Utilisateur_événement.codeUtilisateur = $codeUtilisateur", EvenementMapper())
     override fun chercherParEvenementID(id: Int): List<Participant> =
-            db.query("select Utilisateur.code, Utilisateur.nom, Utilisateur.prénom From Utilisateur inner join Utilisateur_événement on Utilisateur_événement.codeUtilisateur = Utilisateur.code WHERE Utilisateur_événement.idEvenement = $id", ParticipantMapper())
+            db.query("select Utilisateur.code, Utilisateur.nom, Utilisateur.prénom From Utilisateur inner join Utilisateur_événement on Utilisateur_événement.codeUtilisateur1 = Utilisateur.code WHERE Utilisateur_événement.idEvenement = $id", ParticipantMapper())
     override fun supprimerParUtilisateurID(codeUtilisateur: String): UtilisateurÉvénement? {
         val element = db.queryForObject("select * from Utilisateur_événement where codeUtilisateur = $codeUtilisateur", UtilisateurEvenementMapper())
         db.update("DELETE from Utilisateur_événement where codeUtilisateur = $codeUtilisateur")
@@ -36,7 +39,22 @@ class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEven
         return element
     }
 
-//Fonctions inutiles
+    override fun validerUtilisateur(eventId: Int, codeUtilisateur: String): Boolean {
+        try {
+            val sql = "SELECT organisation_id FROM Événement WHERE id = ?"
+            val idOrg =  db.queryForObject(sql, Long::class.java, eventId)
+            val organisation = db.queryForObject("SELECT * FROM Organisation WHERE id = $idOrg", OrganisationMapper())
+
+            if (organisation?.codeUtilisateur == codeUtilisateur) {
+                return true
+            }
+            return false
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    //Fonctions inutiles
 override fun supprimerParID(id: Int): UtilisateurÉvénement? {
     TODO("Not yet implemented")
 }
