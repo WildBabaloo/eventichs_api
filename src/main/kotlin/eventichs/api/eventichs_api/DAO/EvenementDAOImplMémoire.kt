@@ -73,7 +73,10 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
 
         return element
     }
+    fun validerParticipant(idEvent : Int, codeUtil : String){
 
+    }
+    fun validerMembreOrganisation(){}
     override fun modifier(element: Événement): Événement? {
         TODO("Not yet implemented")
     }
