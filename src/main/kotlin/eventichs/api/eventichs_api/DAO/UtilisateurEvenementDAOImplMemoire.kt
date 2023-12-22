@@ -12,15 +12,15 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEvenementDAO {
-    val selectQuery = "select Événement.id, Événement.nom, Événement.adresse, Événement.dateDebut, Événement.dateFin, Événement.type, Catégorie.nom as categorie, Événement.description, Événement.image, Événement.organisation_id  from Événement join Catégorie on Événement.categorie_id = Catégorie.id"
+    val selectQuery = "select * from Événement "
     override fun chercherTous(): List<UtilisateurÉvénement> =
             db.query("select * from Utilisateur_événement", UtilisateurEvenementMapper())
     override fun chercherParUtilisateurID(codeUtilisateur: String):  List<Événement> =
-            db.query("$selectQuery inner join Utilisateur_événement on Utilisateur_événement.idEvenement = Événement.id WHERE Utilisateur_événement.codeUtilisateur = $codeUtilisateur", EvenementMapper())
+            db.query("$selectQuery inner join Utilisateur_événement on Utilisateur_événement.idEvenement = Événement.id WHERE Utilisateur_événement.codeUtilisateur = '$codeUtilisateur'", EvenementMapper())
     override fun chercherParEvenementID(id: Int): List<Participant> =
             db.query("select Utilisateur.code, Utilisateur.nom, Utilisateur.prénom From Utilisateur inner join Utilisateur_événement on Utilisateur_événement.codeUtilisateur = Utilisateur.code WHERE Utilisateur_événement.idEvenement = $id", ParticipantMapper())
     override fun supprimerParID(id: Int, codeUtilisateur: String): UtilisateurÉvénement? {
-        val element = db.queryForObject("select * from Utilisateur_événement where codeUtilisateur = $codeUtilisateur", UtilisateurEvenementMapper())
+        val element = db.queryForObject("select * from Utilisateur_événement where codeUtilisateur = '$codeUtilisateur'", UtilisateurEvenementMapper())
         db.update("DELETE from Utilisateur_événement where codeUtilisateur = $codeUtilisateur")
         return element
     }
