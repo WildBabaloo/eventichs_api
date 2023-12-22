@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Mapper.InvitationÉvénementMapper
 import eventichs.api.eventichs_api.Modèle.InvitationÉvénement
 import org.springframework.jdbc.core.JdbcTemplate
@@ -21,20 +22,24 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
     }
 
     override fun modifier(id: Int, element: InvitationÉvénement): InvitationÉvénement? {
-        db.update("UPDATE Invitation_événement SET " +
-                "codeExpediteur = ?," +
-                "codeDestinataire = ?," +
-                "idÉvénement = ?," +
-                "jeton = ?," +
-                "status = ?" +
-                "WHERE id = ?",
-            element.idExpéditeur,
-            element.idDestinataire,
-            element.idÉvénement,
-            element.jeton,
-            element.status,
-            id)
+        try {
 
+            db.update("UPDATE Invitation_événement SET " +
+                    "codeExpediteur = ?," +
+                    "codeDestinataire = ?," +
+                    "idÉvénement = ?," +
+                    "jeton = ?," +
+                    "status = ?" +
+                    "WHERE id = ?",
+                    element.idExpéditeur,
+                    element.idDestinataire,
+                    element.idÉvénement,
+                    element.jeton,
+                    element.status,
+                    id)
+        }catch (e: Exception){
+            throw RessourceInexistanteException("l'item à modifier n'existe pas.")
+        }
         return element
     }
 
@@ -59,7 +64,11 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
     }
 
     override fun chercherParID(id: Int): InvitationÉvénement? {
-        return db.queryForObject("SELECT * FROM Invitation_événement WHERE id = $id", InvitationÉvénementMapper())
+        try {
+            return db.queryForObject("SELECT * FROM Invitation_événement WHERE id = $id", InvitationÉvénementMapper())
+        }catch (e: Exception){
+            throw RessourceInexistanteException("l'item à modifier n'existe pas.")
+        }
     }
 
     override fun chercherParIdDestinataire(id: String): List<InvitationÉvénement> {
