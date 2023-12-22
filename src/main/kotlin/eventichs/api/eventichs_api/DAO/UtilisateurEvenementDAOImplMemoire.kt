@@ -4,12 +4,10 @@ import eventichs.api.eventichs_api.Mapper.EvenementMapper
 import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Mapper.ParticipantMapper
 import eventichs.api.eventichs_api.Mapper.UtilisateurEvenementMapper
-import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.Participant
 import eventichs.api.eventichs_api.Modèle.UtilisateurÉvénement
 import eventichs.api.eventichs_api.Modèle.Événement
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -32,6 +30,11 @@ class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEven
                 "insert into Utilisateur_événement values (?, ?)",
                 element.codeUtilisateur,
                 element.idEvenement)
+        return element
+    }
+
+    fun chercherParID(eventId: Int, codeUtil : String): UtilisateurÉvénement? {
+        val element = db.queryForObject("select * from Utilisateur_événement where codeUtilisateur = '$codeUtil' AND idEvenement = $eventId" , UtilisateurEvenementMapper())
         return element
     }
 

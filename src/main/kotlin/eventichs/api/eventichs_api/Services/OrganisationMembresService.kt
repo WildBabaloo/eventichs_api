@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 @Service
 class OrganisationMembresService(val dao: OrganisationMembersDAO) {
     fun chercherTous(): List<OrganisationMembres> = dao.chercherTous()
-    fun ajouterParticipant(codeOrganisation: Int, idParticipant: Int) = dao.ajouterParticipant(codeOrganisation, idParticipant)
-    fun enleverParticipant(codeOrganisation: Int, idParticipant: Int) = dao.enleverParticipant(codeOrganisation, idParticipant)
-    fun chercherParParticipantID(id: Int): List<OrganisationMembres> = dao.chercherParUtilisateurID(id)
+    fun ajouterParticipant(codeOrganisation: Int, idParticipant: String) = dao.ajouterParticipant(codeOrganisation, idParticipant)
+    fun enleverParticipant(codeOrganisation: Int, idParticipant: String) = dao.enleverParticipant(codeOrganisation, idParticipant)
+    fun chercherParParticipantID(id: String): List<OrganisationMembres> = dao.chercherParUtilisateurID(id)
     fun chercherParOrganisationID(id: Int): List<OrganisationMembres> = dao.chercherParOrganisationID(id)
 }

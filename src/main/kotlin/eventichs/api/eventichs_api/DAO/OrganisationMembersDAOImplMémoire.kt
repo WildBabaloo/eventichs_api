@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository
 class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMembersDAO {
     override fun chercherTous(): List<OrganisationMembres> =
         db.query("select * from Organisations_membres", OrganisationMembresMapper())
-    override fun chercherParUtilisateurID(id: Int): List<OrganisationMembres> =
+    override fun chercherParUtilisateurID(id: String): List<OrganisationMembres> =
         db.query("select * from Organisations_membres where id_utilisateur = $id", OrganisationMembresMapper())
 
     override fun chercherParOrganisationID(id: Int): List<OrganisationMembres> =
          db.query("select * from Organisations_membres where id_organisation = $id", OrganisationMembresMapper())
 
-    override fun ajouterParticipant(codeOrganisation: Int, IdParticipant: Int){
+    override fun ajouterParticipant(codeOrganisation: Int, IdParticipant: String){
         db.update(
             "Update Organisations_membres set id_utilisateur=$IdParticipant where id_organisation=$codeOrganisation"
             , OrganisationMembresMapper()
@@ -24,11 +24,16 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
 
     }
 
-    override fun enleverParticipant(codeOrganisation: Int, idParticipant: Int) {
+    override fun enleverParticipant(codeOrganisation: Int, idParticipant: String) {
         db.update(
             "Update Organisations_membres set id_utilisateur= null where id_organisation= $codeOrganisation and id_utilisateur = $idParticipant"
             , OrganisationMembresMapper()
         )
+    }
+    fun existe(id: Int, codeUtil: String): Boolean {
+        val sql = "SELECT COUNT(*) FROM Organisations_membres WHERE id_organisation = ? AND id_utilisateur = ?"
+        val count = db.queryForObject(sql, Long::class.java, id, codeUtil)
+        return count > 0
     }
 
     // Fonction Inutiles

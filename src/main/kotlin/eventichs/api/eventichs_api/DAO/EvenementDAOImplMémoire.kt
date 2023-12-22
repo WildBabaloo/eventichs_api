@@ -73,10 +73,20 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
 
         return element
     }
-    fun validerParticipant(idEvent : Int, codeUtil : String){
-
+    override fun validerParticipant(idEvent : Int, codeUtil : String): Boolean{
+        val dao = UtilisateurEvenementDAOImplMemoire(db)
+        return  dao.chercherParID(idEvent, codeUtil) != null
     }
-    fun validerMembreOrganisation(){}
+    override fun validerOrganisateur(idEvent : Int, codeUtil : String): Boolean{
+        val sql = "SELECT organisation_id FROM Événement WHERE id = ?"
+        val idOrg = db.queryForObject(sql, Int::class.java, idEvent)
+        val orgdao = OrganisationDAOImplMémoire(db)
+        return orgdao.chercherParID(idOrg)!!.codeUtilisateur == codeUtil
+    }
+    override fun validerMembreOrganisation(idEvent : Int, codeUtil : String) : Boolean{
+        val membreOrgDao = OrganisationMembersDAOImplMémoire(db)
+        return membreOrgDao.existe(idEvent, codeUtil)
+    }
     override fun modifier(element: Événement): Événement? {
         TODO("Not yet implemented")
     }

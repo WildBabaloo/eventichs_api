@@ -85,7 +85,7 @@ class EvenementControleur(val service : EvenementService) {
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
-        return service.supprimerParID(id)
+        return service.supprimerParID(id, principal.name)
     }
 
     @Operation(
@@ -103,7 +103,7 @@ class EvenementControleur(val service : EvenementService) {
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
-        val événementModifié : Événement? = service.modifierEvenement(id, evenement, principal)
+        val événementModifié : Événement? = service.modifierEvenement(id, evenement, principal.name)
             val uri = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/evenements/{id}")
@@ -127,7 +127,7 @@ class EvenementControleur(val service : EvenementService) {
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
-        val nouvelEvenement : Événement? = service.ajouterEvenement(evenement, principal)
+        val nouvelEvenement : Événement? = service.ajouterEvenement(evenement, principal.name)
         val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/evenements/{id}")

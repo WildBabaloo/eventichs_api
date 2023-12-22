@@ -2,8 +2,10 @@ package eventichs.api.eventichs_api.Services
 
 import org.springframework.stereotype.Service
 import eventichs.api.eventichs_api.DAO.EvenementDAO
+
+import eventichs.api.eventichs_api.Exceptions.DroitAccèsInsuffisantException
 import eventichs.api.eventichs_api.Modèle.Événement
-import java.security.Principal
+
 
 @Service
 class EvenementService(val dao : EvenementDAO) {
@@ -11,10 +13,24 @@ class EvenementService(val dao : EvenementDAO) {
         return dao.chercherTous()
     }
     fun chercherParID(id: Int, name: String): Événement? {
+        if (!dao.validerParticipant(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
         return dao.chercherParID(id)
     }
-    fun chercherParOrganisation(id: Int, name: Any) : List<Événement> = dao.chercherParOrganisation(id)
-    fun supprimerParID(id:Int) : Événement? = dao.supprimerParID(id)
-    fun modifierEvenement(id: Int, evenement: Événement, principal: Principal?) : Événement? = dao.modifier(id,evenement)
-    fun ajouterEvenement(evenement: Événement, principal: Any?) : Événement? = dao.ajouter(evenement)
+
+    fun chercherParOrganisation(id: Int, name: String) : List<Événement>{
+        if (!dao.validerMembreOrganisation(id,name)||!dao.validerOrganisateur(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+        return dao.chercherParOrganisation(id)
+    }
+    fun supprimerParID(id:Int, name : String) : Événement?  {
+        if (!dao.validerOrganisateur(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+        return dao.supprimerParID(id)
+    }
+    fun modifierEvenement(id: Int, evenement: Événement, name : String) : Événement? {
+        if (!dao.validerOrganisateur(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+        return dao.modifier(id,evenement)
+    }
+    fun ajouterEvenement(evenement: Événement, name: String) : Événement? {
+        if (!evenement.id?.let { dao.validerOrganisateur(it,name) }!!){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+        return dao.ajouter(evenement)
+    }
 }

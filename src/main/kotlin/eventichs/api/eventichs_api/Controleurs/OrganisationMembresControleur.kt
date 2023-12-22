@@ -1,7 +1,5 @@
 package eventichs.api.eventichs_api.Controleurs
 
-import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
-import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Services.OrganisationMembresService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -36,7 +34,7 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
     @GetMapping(
             value = ["/utilisateurs/{codeParticipant}/organisations"],
         produces = ["application/json"])
-    fun obtenirOrganisationsParticipantParID(@PathVariable codeParticipant: Int) = service.chercherParParticipantID(codeParticipant)
+    fun obtenirOrganisationsParticipantParID(@PathVariable codeParticipant: String) = service.chercherParParticipantID(codeParticipant)
 
     @Operation(
         summary = "Obtenir des participants à une organisation selon son id.",
@@ -62,7 +60,7 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "409", description = "Le participant est déja dans l'organisation")]
     )
     @PostMapping(value = ["/organisations/{codeOrganisation}/participants"])
-    fun ajouterParticipant(@PathVariable codeOrganisation: Int, @RequestBody idParticpant: Int) = service.ajouterParticipant(codeOrganisation, idParticpant)
+    fun ajouterParticipant(@PathVariable codeOrganisation: Int, @RequestBody idParticpant: String) = service.ajouterParticipant(codeOrganisation, idParticpant)
 
 
     @Operation(
@@ -75,5 +73,5 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "409", description = "Le participant n'est pas dans l'organisation")]
     )
     @DeleteMapping("organisations/{codeOrganisation}/participants/{codeParticipant}")
-    fun enleverParticipant(@PathVariable codeOrganisation: Int, @PathVariable codeParticipant: Int) = service.enleverParticipant(codeOrganisation, codeParticipant)
+    fun enleverParticipant(@PathVariable codeOrganisation: Int, @PathVariable codeParticipant: String) = service.enleverParticipant(codeOrganisation, codeParticipant)
 }
