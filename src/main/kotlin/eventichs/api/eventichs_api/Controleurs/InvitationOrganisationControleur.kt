@@ -69,7 +69,9 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
             ApiResponse(responseCode = "409", description = "Une invitation pour cette organisation et ce participant existe déjà dans le service")]
     )
     @PostMapping(
-        value = ["/organisations/invitations"])
+        value = ["/organisations/invitations"],
+        consumes = ["application/json"],
+        produces = ["application/json"])
     fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal) : ResponseEntity<InvitationOrganisation>{
         if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
 
@@ -152,7 +154,9 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
             ApiResponse(responseCode = "409", description = "Le participant est déjà membre de l'organisation qu'il essaye de joindre")]
     )
     @PutMapping(
-        value = ["/organisations/invitations/status/{status}"])
+        value = ["/organisations/invitations/status/{status}"],
+        consumes = ["application/json"],
+        produces = ["application/json"])
     fun changerStatus(@RequestBody invitation: InvitationOrganisation, @PathVariable status : String, principal: Principal?) : InvitationOrganisation? {
         if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
 
@@ -175,7 +179,8 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
             ApiResponse(responseCode = "409", description = "Ce participant est déjà membre de cette organisation")]
     )
     @PutMapping(
-        value = ["/organisations/jetons/{jeton}"])
+        value = ["/organisations/jetons/{jeton}"],
+        produces = ["application/json"])
     fun saisirJeton(@PathVariable jeton : String, principal: Principal?) :InvitationOrganisation? {
         if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
 
@@ -191,7 +196,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
     @Operation(
         summary = "Créer une invitation pour une organisation.",
         description = "Retourne l'invitation créée pour joindre une organisation avec un idParticipant null, un jeton alléatoire et un status 'généré'.",
-        operationId = "crééJeton",
+        operationId = "créerJeton",
         responses = [
             ApiResponse(responseCode = "201", description = "L'invitation qui contient un jeton a été créé"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas connecté"),
@@ -199,11 +204,13 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
             ApiResponse(responseCode = "404", description = "Cette organisation n'existe pas")]
     )
     @PostMapping(
-        value = ["/organisations/jetons"])
-    fun crééJeton(@RequestBody organisation: Organisation, principal: Principal?) : ResponseEntity<InvitationOrganisation>{
+        value = ["/organisations/jetons"],
+        consumes = ["application/json"],
+        produces = ["application/json"])
+    fun créerJeton(@RequestBody organisation: Organisation, principal: Principal?) : ResponseEntity<InvitationOrganisation>{
         if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
 
-        val nouvelleInvitation : InvitationOrganisation? = service.crééJeton(organisation, principal.name)
+        val nouvelleInvitation : InvitationOrganisation? = service.créerJeton(organisation, principal.name)
 
         if (nouvelleInvitation != null) {
             val uri = ServletUriComponentsBuilder
@@ -233,7 +240,8 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
             ApiResponse(responseCode = "404", description = "L'invitation n'existe pas")]
     )
     @DeleteMapping(
-        value = ["/organisations/invitations/{id}"])
+        value = ["/organisations/invitations/{id}"],
+        produces = ["application/json"])
     fun effacerInvitation(@PathVariable id: Int, principal: Principal?) : InvitationOrganisation? {
         if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
 

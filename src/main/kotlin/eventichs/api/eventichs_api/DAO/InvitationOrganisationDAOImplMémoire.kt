@@ -140,7 +140,7 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
     //Insertion d'une invitation ayant aucun destinataire, le bon id Organisation et le status 'envoyé'
     //Un select pour obtenir l'id de l'invitation dernièrement créé.
     //Un update sur l'invitation dernièrement créé grace à l'id pour y ajouter un jeton de 8 charactères alléatoire.
-    override fun crééJeton(idOrganisation: Int): InvitationOrganisation? {
+    override fun créerJeton(idOrganisation: Int): InvitationOrganisation? {
         //Lance une exception si l'organisation n'existe pas
         try {
             db.queryForObject("select * from Organisation where id = $idOrganisation", OrganisationMapper())

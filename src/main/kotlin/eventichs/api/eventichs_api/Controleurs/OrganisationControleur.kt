@@ -33,7 +33,7 @@ class OrganisationControleur(val service: OrganisationService) {
     @Operation(
         summary = "Obtenir la liste des organisations par ID",
         description = "Retourne la liste de l'organisation inscrit au service selon l'ID donné",
-        operationId = "obtenirOrgasationsParID",
+        operationId = "obtenirOrganisationsParID",
         responses = [
             ApiResponse(responseCode = "200", description = "L'organisation à été trouvé"),
             ApiResponse(responseCode = "404", description = "L'organisation avec l'id recherché n'existe pas dans le service")

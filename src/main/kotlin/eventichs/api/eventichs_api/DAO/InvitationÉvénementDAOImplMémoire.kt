@@ -58,15 +58,15 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
         return db.queryForObject("SELECT * FROM Invitation_événement WHERE id = $id", InvitationÉvénementMapper())
     }
 
-    override fun chercherParIdDestinataire(id: Int): List<InvitationÉvénement> {
+    override fun chercherParIdDestinataire(id: String): List<InvitationÉvénement> {
         return db.query("SELECT * FROM Invitation_événement WHERE codeDestinataire = $id", InvitationÉvénementMapper())
     }
 
-    override fun chercherParIdExpediteur(id: Int): List<InvitationÉvénement> {
+    override fun chercherParIdExpediteur(id: String): List<InvitationÉvénement> {
         return db.query("SELECT * FROM Invitation_événement WHERE codeExpediteur = $id", InvitationÉvénementMapper())
     }
 
-    override fun entrerJetonEvenement(idInvité: Int, jeton: String): InvitationÉvénement? {
+    override fun entrerJetonEvenement(idInvité: String, jeton: String): InvitationÉvénement? {
         val invitationAvecJetonExiste = db.queryForObject("SELECT * FROM Invitation_événement WHERE jeton = $jeton", InvitationÉvénementMapper())
         val idInvitation : Int? = invitationAvecJetonExiste?.id
         db.update("UPDATE Invitation_événement SET codeDestinataire = $idInvité, status = 'accepté' WHERE codeInvitation = $idInvitation", InvitationÉvénementMapper())
@@ -92,5 +92,12 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
                 ")" +
                 "where id=$id;")
         return chercherParID(id)
+    }
+
+    override fun validerUtilisateur(id: String, code_util: String): Boolean {
+        if (id == code_util ) {
+            return true
+        }
+        return false
     }
 }

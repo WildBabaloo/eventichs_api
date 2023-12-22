@@ -12,7 +12,7 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     fun chercherTous(): List<InvitationOrganisation> = dao.chercherTous()
     fun chercherParID(id: Int, code_util: String): InvitationOrganisation? {
         if (dao.validerUtilisateur(id, code_util) == false) {
-            throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation")
+            throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
         }
         return dao.chercherParID(id)
     }
@@ -20,7 +20,7 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
     fun demandeJoindreOrganisation(invitation: InvitationOrganisation, code_Util : String) : InvitationOrganisation? {
         if (invitation.Utilisateur?.code != code_Util || invitation.Organisation?.codeUtilisateur == code_Util) {
-            throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation")
+            throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
         }
         return dao.ajouter(invitation)
     }
@@ -28,7 +28,7 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     //Cas d'utilisation: 3.Consulter ses invitations(Participant+Organisation)
     fun chercherParOrganisation(idOrganisation: Int, code_Util : String) : List<InvitationOrganisation> {
         if (dao.validerOrganisation(idOrganisation, code_Util) == false) {
-            throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation")
+            throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
         }
         return dao.chercherParOrganisation(idOrganisation)
     }
@@ -41,7 +41,7 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     //Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
     fun changerStatus(invitation : InvitationOrganisation, status : String, code_Util: String) : InvitationOrganisation? {
         if (dao.validerOrganisationInvitation(invitation.Organisation.id, code_Util) == false) {
-            throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation")
+            throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
         }
 
         return dao.changerStatus(invitation.id, status)
@@ -56,19 +56,19 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     }
 
     //Cas d'utilisation: 6.Générer son jeton d'invitation (Organisation)
-    fun crééJeton(organisation : Organisation, code_Util: String) : InvitationOrganisation? {
+    fun créerJeton(organisation : Organisation, code_Util: String) : InvitationOrganisation? {
         if (dao.validerOrganisation(organisation.id, code_Util) == false) {
-            throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation")
+            throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
         }
 
-        return dao.crééJeton(organisation.id)
+        return dao.créerJeton(organisation.id)
     }
 
 
     //Cas d'utilisation: 7.Éffacer une invitation (Participant + Organisation)
     fun effacerInvitation(id : Int, code_Util: String) : InvitationOrganisation? {
         if (dao.validerUtilisateur(id, code_Util) == false) {
-            throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation")
+            throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
         }
 
         return dao.supprimerParID(id)

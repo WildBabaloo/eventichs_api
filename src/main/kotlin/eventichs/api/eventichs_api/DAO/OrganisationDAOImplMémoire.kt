@@ -3,6 +3,7 @@ package eventichs.api.eventichs_api.DAO
 import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.dao.DataAccessException
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
@@ -59,7 +60,7 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
             }
 
             return false
-        } catch (e: Exception) {
+        } catch (e: EmptyResultDataAccessException) {
             return false
         }
 
