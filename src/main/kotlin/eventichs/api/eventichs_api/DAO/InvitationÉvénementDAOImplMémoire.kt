@@ -1,7 +1,9 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Mapper.EvenementMapper
 import eventichs.api.eventichs_api.Mapper.InvitationÉvénementMapper
 import eventichs.api.eventichs_api.Modèle.InvitationÉvénement
+import eventichs.api.eventichs_api.Modèle.Événement
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
@@ -100,4 +102,11 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
         }
         return false
     }
+
+//    override fun validerÉvènement(idEvenement: Int, code_util: String): Boolean {
+//        var evenement: Événement?
+//        try {
+//            evenement = db.queryForObject("SELECT * FROM Événement WHERE organisation_id IN (SELECT id FROM Organisation WHERE codeUtilisateur = $code_util);", )
+//        } catch ()
+//    }
 }
