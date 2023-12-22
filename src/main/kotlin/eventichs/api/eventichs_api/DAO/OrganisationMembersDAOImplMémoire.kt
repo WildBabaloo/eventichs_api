@@ -54,7 +54,7 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
         )
     }
     fun existe(id: Int, codeUtil: String): Boolean {
-        val sql = "SELECT COUNT(*) FROM Organisations_membres WHERE id_organisation = ? AND id_utilisateur = ?"
+        val sql = "SELECT COUNT(*) FROM Organisations_membres WHERE id_organisation = ? AND code_utilisateur = ?"
         val count = db.queryForObject(sql, Long::class.java, id, codeUtil)
         return count > 0
     }
