@@ -21,16 +21,12 @@ class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEven
             db.query("$selectQuery inner join Utilisateur_événement on Utilisateur_événement.idEvenement = Événement.id WHERE Utilisateur_événement.codeUtilisateur = $codeUtilisateur", EvenementMapper())
     override fun chercherParEvenementID(id: Int): List<Participant> =
             db.query("select Utilisateur.code, Utilisateur.nom, Utilisateur.prénom From Utilisateur inner join Utilisateur_événement on Utilisateur_événement.codeUtilisateur1 = Utilisateur.code WHERE Utilisateur_événement.idEvenement = $id", ParticipantMapper())
-    override fun supprimerParUtilisateurID(codeUtilisateur: String): UtilisateurÉvénement? {
+    override fun supprimerParID(id: Int, codeUtilisateur: String): UtilisateurÉvénement? {
         val element = db.queryForObject("select * from Utilisateur_événement where codeUtilisateur = $codeUtilisateur", UtilisateurEvenementMapper())
         db.update("DELETE from Utilisateur_événement where codeUtilisateur = $codeUtilisateur")
         return element
     }
-    override fun supprimerParEvenementID(id: Int): UtilisateurÉvénement? {
-        val element = db.queryForObject("select * from Utilisateur_événement where idEvenement = $id", UtilisateurEvenementMapper())
-        db.update("DELETE from Utilisateur_événement where idEvenement = $id")
-        return element
-    }
+
     override fun ajouter(element: UtilisateurÉvénement): UtilisateurÉvénement? {
         db.update(
                 "insert into Utilisateur_événement values (?, ?)",
@@ -55,13 +51,13 @@ class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEven
     }
 
     //Fonctions inutiles
-override fun supprimerParID(id: Int): UtilisateurÉvénement? {
-    TODO("Not yet implemented")
-}
     override fun chercherParID(id: Int): UtilisateurÉvénement? {
         TODO("Not yet implemented")
     }
     override fun modifier(element: UtilisateurÉvénement): UtilisateurÉvénement? {
+        TODO("Not yet implemented")
+    }
+    override fun supprimerParID(id: Int): UtilisateurÉvénement? {
         TODO("Not yet implemented")
     }
 }

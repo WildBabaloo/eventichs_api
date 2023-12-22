@@ -93,12 +93,12 @@ class UtilisateurEvenementControleur(val service : UtilisateurEvenementService) 
                 ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas d'effectuer cette action"),
                 ApiResponse(responseCode = "404", description = "L'utilisateur ne fait pas partie de cet événement")]
     )
-    @DeleteMapping("/utilisateurevenements/utilisateur")
-    fun quitterÉvénement(principal: Principal?) {
+    @DeleteMapping("/evenement/{eventId}/quitter")
+    fun quitterÉvénement(@PathVariable eventId : Int , principal: Principal?) {
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
-        service.supprimerParUtilisateur(principal.name)
+        service.supprimerParUtilisateur(eventId,principal.name)
 }
     @Operation(
             summary = "Joint un utilisateur à un événement.",
@@ -110,7 +110,7 @@ class UtilisateurEvenementControleur(val service : UtilisateurEvenementService) 
                 ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas d'effectuer cette action"),
                 ApiResponse(responseCode = "404", description = "L'événement n'existe pas")]
     )
-    @PostMapping("/rejoindre/{eventId}")
+    @PostMapping("/evenements/{eventId}/rejoindre")
     fun rejoindreEvenement(@PathVariable eventId : Int , principal: Principal?) : UtilisateurÉvénement?{
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
