@@ -25,7 +25,7 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
         val organisation: Organisation?
         println("Principal Name $codeUtilisateur")
         try {
-            organisation = db.queryForObject("select * from organisation where codeUtilisateur = '$codeUtilisateur'", OrganisationMapper())
+            organisation = db.queryForObject("select * from Organisation where codeUtilisateur = '$codeUtilisateur'", OrganisationMapper())
         } catch (e: EmptyResultDataAccessException) {
             throw RessourceInexistanteException("L'organisation associé à le code utilisateur $codeUtilisateur n'existe pas!")
         }
