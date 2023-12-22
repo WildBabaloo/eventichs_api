@@ -183,6 +183,6 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
     fun générerJeton(@PathVariable idEvenement : Int,  @PathVariable quantité : Int, principal: Principal?): InvitationÉvénement? {
         if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
 
-        return service.genererJetonsEvenement(idEvenement)
+        return service.genererJetonsEvenement(idEvenement, principal.name)
     }
 }
