@@ -102,9 +102,9 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "404", description = "Le participant n'existe pas"),
             ApiResponse(responseCode = "409", description = "Le participant n'est pas dans l'organisation")]
     )
-    @DeleteMapping("/organisations/{codeOrganisation}/participants/{codeUtilisateur}")
-    fun enleverParticipant(@PathVariable codeOrganisation: Int, @PathVariable codeUtilisateur: String, principal: Principal?) {
+    @DeleteMapping("/organisations/participants")
+    fun enleverParticipant(@RequestBody organisationMembres: OrganisationMembres, principal: Principal?) {
         if (principal == null) { throw PasConnectéException("L'utilisateur n'est pas connecté.") }
-        service.enleverParticipant(codeOrganisation, codeUtilisateur, principal.name)
+        service.enleverParticipant(organisationMembres.id_organisation, organisationMembres.code_utilisateur, principal.name)
     }
 }

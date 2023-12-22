@@ -57,7 +57,7 @@ override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String):
 
     override fun enleverParticipant(codeOrganisation: Int, codeUtilisateur: String) {
         db.update(
-            "delete from organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur"
+            "delete from organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = '$codeUtilisateur'"
         )
     }
     fun existe(id: Int, codeUtil: String): Boolean {

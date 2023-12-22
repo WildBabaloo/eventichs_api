@@ -14,10 +14,10 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
         db.query("select * from Organisation", OrganisationMapper())
 
     override fun chercherParID(id: Int): Organisation? {
-        var org: Organisation? = null
+        var org: Organisation?
         try {
-             org= db.queryForObject("select * from Organisation where id = $id", OrganisationMapper())
-        } catch(e:RessourceInexistanteException){
+             org = db.queryForObject("select * from Organisation where id = $id", OrganisationMapper())
+        } catch(e: EmptyResultDataAccessException){
             throw RessourceInexistanteException("L'organisation avec l'id de $id n'est pas inscrit au service")
         }
         return org
