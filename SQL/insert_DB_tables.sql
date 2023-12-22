@@ -41,7 +41,6 @@ INSERT INTO `eventichsBD`.`Utilisateur_événement` (`codeUtilisateur`, `idEvene
 INSERT INTO `eventichsBD`.`Utilisateur_événement` (`codeUtilisateur`, `idEvenement`) VALUES ('auth0|656d3cb6a19599c9209a6099', '7');
 INSERT INTO `eventichsBD`.`Utilisateur_événement` (`codeUtilisateur`, `idEvenement`) VALUES ('auth0|656d3cb6a19599c9209a6099', '6');
 
-INSERT INTO `eventichsBD`.`Utilisateur_événement` (`codeUtilisateur`, `idEvenement`) VALUES ('auth0|656d3f8e4178aefc03429606', '7');
 INSERT INTO `eventichsBD`.`Utilisateur_événement` (`codeUtilisateur`, `idEvenement`) VALUES ('auth0|656d3f8e4178aefc03429606', '4');
 INSERT INTO `eventichsBD`.`Utilisateur_événement` (`codeUtilisateur`, `idEvenement`) VALUES ('auth0|656d3f8e4178aefc03429606', '5');
 INSERT INTO `eventichsBD`.`Utilisateur_événement` (`codeUtilisateur`, `idEvenement`) VALUES ('auth0|656d3f8e4178aefc03429606', '7');
