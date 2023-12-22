@@ -23,8 +23,7 @@ class CatégorieDAOImplMémoire(val db: JdbcTemplate): CatégorieDAO {
 
     override fun ajouter(element: Catégorie): Catégorie {
         db.update(
-            "insert into Catégorie values (?, ?, ?)",
-            element.id,
+            "insert into Catégorie(nom, description) values ( ?, ?)",
             element.nom,
             element.description)
         return element
@@ -32,9 +31,7 @@ class CatégorieDAOImplMémoire(val db: JdbcTemplate): CatégorieDAO {
 
     override fun modifier(element: Catégorie): Catégorie {
         db.update(
-            "UPDATE Catégorie SET nom = ?, description = ? WHERE id = $element.id",
-            element.nom,
-            element.description)
+            "UPDATE Catégorie SET nom = '$element.nom', description = '$element.description' WHERE id = $element.id")
         return element
     }
 

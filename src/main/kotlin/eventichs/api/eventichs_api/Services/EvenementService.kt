@@ -18,15 +18,15 @@ class EvenementService(val dao : EvenementDAO) {
     }
 
     fun chercherParOrganisation(id: Int, name: String) : List<Événement>{
-        //if (!dao.validerMembreOrganisation(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+        if (!dao.validerMembreOrganisation(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
         return dao.chercherParOrganisation(id)
     }
     fun supprimerParID(id:Int, name : String) : Événement?  {
-        //if (!dao.validerOrganisateur(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+        if (!dao.validerOrganisateur(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
         return dao.supprimerParID(id)
     }
     fun modifierEvenement(id: Int, evenement: Événement, name : String) : Événement? {
-        //if (!dao.validerOrganisateur(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+        if (!dao.validerOrganisateur(id,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
         return dao.modifier(id,evenement)
     }
     fun ajouterEvenement(evenement: Événement, name: String) : Événement? {

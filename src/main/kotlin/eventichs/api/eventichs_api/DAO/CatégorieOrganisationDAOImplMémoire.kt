@@ -30,9 +30,7 @@ class CatégorieOrganisationDAOImplMémoire(val db: JdbcTemplate): CatégorieOrg
 
     override fun modifier(element: Catégorie): Catégorie {
         db.update(
-            "UPDATE Catégorie_Organisation SET nom = ?, description = ? WHERE id = $element.id",
-            element.nom,
-            element.description)
+            "UPDATE Catégorie_Organisation SET nom = '$element.nom', description = '$element.description' WHERE id = $element.id")
         return element
     }
 

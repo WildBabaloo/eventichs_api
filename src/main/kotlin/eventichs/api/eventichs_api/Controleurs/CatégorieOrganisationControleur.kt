@@ -31,7 +31,7 @@ class CatégorieOrganisationControleur(val service: CatégorieOrganisationServic
             ApiResponse(responseCode = "404", description = "La catégorie n'existe pas dans le service")
         ]
     )
-    @PostMapping("/organisations/categories")
+    @GetMapping("/organisations/categories")
     fun obtenirCategories(principal: Principal?): List<Catégorie>{
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
@@ -94,7 +94,7 @@ class CatégorieOrganisationControleur(val service: CatégorieOrganisationServic
             ApiResponse(responseCode = "404", description = "La catégorie n'existe pas")
         ]
     )
-    @PutMapping("/organisations/categories")
+    @PostMapping("/organisations/categories")
     fun ajouterCategorie(@RequestBody catégorie: Catégorie, principal: Principal?): ResponseEntity<Catégorie> {
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
