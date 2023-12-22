@@ -14,16 +14,17 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     override fun chercherParID(id: Int): Organisation? =
         db.queryForObject("select * from Organisation where id = $id", OrganisationMapper())
 
-    override fun ajouter(element: Organisation): Organisation? {
+    override fun ajouter(organisation: Organisation): Organisation? {
+        val sql = "INSERT INTO Organisation (id, codeUtilisateur, nomOrganisation, catégorie_id, estPublic) VALUES (?, ?, ?, ?, ?)"
         db.update(
-            "insert into Organisation values (?, ?, ?, ?, ?)",
-            element.id,
-            element.codeUtilisateur,
-            element.nomOrganisation,
-            element.catégorie_id,
-            element.estPublic
+                sql,
+                organisation.id,
+                organisation.codeUtilisateur,
+                organisation.nomOrganisation,
+                organisation.catégorie_id,
+                organisation.estPublic
         )
-        return element
+        return organisation
     }
 
     override fun modifier(element: Organisation): Organisation? {
