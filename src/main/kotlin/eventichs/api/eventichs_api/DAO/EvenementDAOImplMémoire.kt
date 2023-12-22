@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
 @Repository
-class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
+class EvenementDAOImplMémoire(val db: JdbcTemplate) : EvenementDAO {
     val selectQuery = "SELECT * FROM Événement "
     override fun chercherTous(): List<Événement> =
             db.query(selectQuery, EvenementMapper())
