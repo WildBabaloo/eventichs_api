@@ -77,11 +77,11 @@ class UtilisateurEvenementControleur(val service : UtilisateurEvenementService) 
                 ApiResponse(responseCode = "404", description = "L'événement n'existe pas dans le service")]
     )
     @GetMapping("/evenements/{id}/participants")
-    fun obtenirNombreParticipantsParEvenementId(@PathVariable id: Int, principal: Principal?){
-        if (principal == null) {
+    fun obtenirNombreParticipantsParEvenementId(@PathVariable id: Int, principal: Principal?): nombre {
+        if (principal == null)  {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
-        nombre(service.chercherUtilisateursParEvenement(id,principal.name).size)}
+        return nombre(service.chercherUtilisateursParEvenement(id,principal.name).size)}
 
     @Operation(
             summary = "Quitter un événement selon le code d'utilisateur.",
