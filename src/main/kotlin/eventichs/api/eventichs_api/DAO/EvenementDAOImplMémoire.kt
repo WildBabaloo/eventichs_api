@@ -1,10 +1,12 @@
 package eventichs.api.eventichs_api.DAO
 
 
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Mapper.CatégorieMapper
 import eventichs.api.eventichs_api.Mapper.EvenementMapper
 import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Modèle.Événement
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
@@ -73,7 +75,29 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
 
         return element
     }
+    override fun validerParticipant(idEvent : Int, codeUtil : String): Boolean{
+        val dao = UtilisateurEvenementDAOImplMemoire(db)
+        return  dao.chercherParID(idEvent, codeUtil) != null
+    }
+    override fun validerOrganisateur(idEvent: Int, codeUtil: String): Boolean {
+        try {
+            val organisation = db.queryForObject("SELECT organisation_id FROM Événement WHERE id = ?", OrganisationMapper(), idEvent)
+            val orgdao = OrganisationDAOImplMémoire(db)
+            val organisationMembres = orgdao.chercherParID(organisation!!.id)
 
+            // Check if the organization exists and the organizer's code matches
+            return organisationMembres?.codeUtilisateur == codeUtil
+        } catch (e: EmptyResultDataAccessException) {
+            return false
+        } catch (e: Exception) {
+            throw RessourceInexistanteException("An error occurred while validating the organizer", e)
+        }
+    }
+
+    override fun validerMembreOrganisation(idEvent : Int, codeUtil : String) : Boolean{
+        val membreOrgDao = OrganisationMembersDAOImplMémoire(db)
+        return membreOrgDao.existe(idEvent, codeUtil)
+    }
     override fun modifier(element: Événement): Événement? {
         TODO("Not yet implemented")
     }

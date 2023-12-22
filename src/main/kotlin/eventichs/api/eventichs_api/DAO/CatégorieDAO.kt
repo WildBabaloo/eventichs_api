@@ -9,4 +9,6 @@ interface CatégorieDAO: DAO<Catégorie> {
     override fun modifier(element: Catégorie): Catégorie?
     override fun ajouter(element: Catégorie): Catégorie?
     override fun supprimerParID(id: Int): Catégorie?
+
+    fun validerUtilisateur(code_util : String) : Boolean
 }

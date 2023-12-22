@@ -14,4 +14,8 @@ interface EvenementDAO : DAO<Événement> {
 
     override fun ajouter(element: Événement): Événement?
 
+    fun validerParticipant(idEvent : Int, codeUtil : String): Boolean
+    fun validerMembreOrganisation(idEvent : Int, codeUtil : String): Boolean
+    fun validerOrganisateur(idEvent : Int, codeUtil : String): Boolean
+
 }

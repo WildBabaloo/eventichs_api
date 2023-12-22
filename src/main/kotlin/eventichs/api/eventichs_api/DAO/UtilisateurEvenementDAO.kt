@@ -11,8 +11,7 @@ interface UtilisateurEvenementDAO : DAO<UtilisateurÉvénement> {
     fun chercherParUtilisateurID(id: String): List<Événement>
     fun chercherParEvenementID(id: Int): List<Participant>
 
-    override fun supprimerParID(id : Int) : UtilisateurÉvénement?
-    fun supprimerParUtilisateurID(id : String) : UtilisateurÉvénement?
-    fun supprimerParEvenementID(id : Int) : UtilisateurÉvénement?
+    fun supprimerParID(id : Int, name : String) : UtilisateurÉvénement?
     override fun ajouter(element: UtilisateurÉvénement): UtilisateurÉvénement?
+    fun validerUtilisateur( eventId: Int, codeUtilisateur: String): Boolean
 }
