@@ -11,7 +11,7 @@ interface InvitationÉvénementDAO: DAO<InvitationÉvénement> {
 
     override fun chercherParID(id: Int): InvitationÉvénement?
 
-    override fun modifier(element: InvitationÉvénement): InvitationÉvénement?
+    fun modifier(id: Int, element: InvitationÉvénement): InvitationÉvénement?
 
     override fun supprimerParID(id: Int): InvitationÉvénement?
 

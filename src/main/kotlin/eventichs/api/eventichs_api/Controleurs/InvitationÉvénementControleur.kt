@@ -30,12 +30,12 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "200", description = "Une ou plusieures invitations ont été trouvées"),
             ApiResponse(responseCode = "404", description = "Aucune invitation trouvée")]
     )
-    @GetMapping("/utilisateur/invitations/destinataire/{codeDestinataire}")
-    fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable codeDestinataire: String,  principal: Principal?): List<InvitationÉvénement> {
+    @GetMapping("/utilisateur/invitations/destinataire")
+    fun obtenirInvitationsÉvénementsParIdDestinataire(principal: Principal?): List<InvitationÉvénement> {
         if (principal == null) {
             throw PasConnectéException("l'utilisateur n'est pas connecté.")
         }
-        val invitations = service.chercherInvitationsÉvénementsParIdDestinataire(codeDestinataire, principal.name)
+        val invitations = service.chercherInvitationsÉvénementsParIdDestinataire(principal.name)
 
         if (invitations.isNotEmpty()) {
             return invitations
@@ -51,13 +51,13 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "200", description = "Une ou plusieures invitations ont été trouvées"),
             ApiResponse(responseCode = "404", description = "Aucune invitation trouvée")]
     )
-    @GetMapping("/utilisateur/invitations/expediteur/{idExpediteur}")
-    fun obtenirInvitationsÉvénementsParIdExpediteur(@PathVariable idExpediteur: String, principal: Principal?): List<InvitationÉvénement> {
+    @GetMapping("/utilisateur/invitations/expediteur")
+    fun obtenirInvitationsÉvénementsParIdExpediteur(principal: Principal?): List<InvitationÉvénement> {
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
 
-        val invitations = service.chercherInvitationsÉvénementsParIdExpediteur(idExpediteur, principal.name)
+        val invitations = service.chercherInvitationsÉvénementsParIdExpediteur(principal.name)
 
         if (invitations.isNotEmpty()){
             return invitations
@@ -94,6 +94,7 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "500", description = "Impossible de creer l'invitation, erreur du serveur.")]
 
     )
+
     @PostMapping("/invitation")
     fun créerInvitationÉvénement(@RequestBody invitation: InvitationÉvénement, principal: Principal?): ResponseEntity<InvitationÉvénement> {
         if (principal == null) {
@@ -124,12 +125,12 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
 
     )
     @PutMapping("/invitation/{id}")
-    fun majInvitation(@PathVariable id: Int, @RequestBody invitation: InvitationÉvénement, reponse: String, principal: Principal?) : InvitationÉvénement? {
+    fun majInvitation(@PathVariable id: Int, @RequestBody invitation: InvitationÉvénement, principal: Principal?) : InvitationÉvénement? {
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
 
-        return service.modifierInvitationÉvénement(invitation, principal.name)
+        return service.modifierInvitationÉvénement(id, invitation, principal.name)
     }
 
     //Éffacer une invitation (Participant + Organisation)
