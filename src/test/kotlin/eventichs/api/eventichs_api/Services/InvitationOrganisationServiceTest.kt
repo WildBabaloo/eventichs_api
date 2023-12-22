@@ -13,7 +13,7 @@ class InvitationOrganisationServiceTest {
 
     val mockDAO = mock( InvitationOrganisationDAOImplMémoire::class.java )
     val service = InvitationOrganisationService(mockDAO)
-    
+
     @Test //fun chercherParID(id: Int, code_util: String): InvitationOrganisation?
     fun `S-1 Étant donné l'utilisateur Joe qui gère l'organisaion ayant l'id 1 lorsqu'on tente d'obtenir une invitation à une organisation selon son id, alors son droit d'accès est validé et le l'invitation est obtenu`() {
         // Étant donné

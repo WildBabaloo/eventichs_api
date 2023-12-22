@@ -21,7 +21,7 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
     //Cas d'utilisation: 1.Demander à joindre une organisation (Participant)
     fun demandeJoindreOrganisation(invitation: InvitationOrganisation, code_Util : String) : InvitationOrganisation? {
         if (invitation.Utilisateur?.code != code_Util || invitation.Organisation?.codeUtilisateur == code_Util) {
-            throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
+            throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de créer cette invitation")
         }
         return dao.ajouter(invitation)
     }
