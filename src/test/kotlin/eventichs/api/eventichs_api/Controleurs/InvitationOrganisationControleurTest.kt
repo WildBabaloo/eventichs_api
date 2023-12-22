@@ -42,8 +42,6 @@ class InvitationOrganisationControleurTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-
-
     // -----------------------------------------------------------------------------------------------------------------
     //
     // @GetMapping("/organisations/invitations/{id}")
@@ -87,10 +85,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("envoyé"))
     }
 
-    @WithMockUser("Anonym")
+    @WithMockUser("Anonyme")
     @Test  // obtenirInvitationsParId() 401 UNAUTHORIZED
-    fun `1,1- Étant donné l'invitation dont l'id est 8 et qui un utilisateur non connecté lorsqu'on effectue une requête GET de recherche par id  alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»`() {
-        Mockito.`when`(service.chercherParID(8,"Anonym")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
+    fun `1,1- Étant donné l'invitation dont l'id est 8 et que l'utilisateur n'est pas connecté lorsqu'on effectue une requête GET de recherche par id alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»`() {
+        Mockito.`when`(service.chercherParID(8,"Anonyme")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
 
         mockMvc.perform(get("/organisations/invitations/8")
             .contentType(MediaType.APPLICATION_JSON))
@@ -103,21 +101,21 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser(username = "Sam")
     @Test  // obtenirInvitationsParId() 403 FORBIDDEN
-    fun `1,3- Étant donné l'invitation dont l'id est 8 et qui un utilisateur n'a pas les droits d'accès lorsqu'on effectue une requête GET de recherche par id  alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'as pas le droit de consulter cette invitation»`() {
-        Mockito.`when`(service.chercherParID(8,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation"))
+    fun `1,3- Étant donné l'invitation dont l'id est 8 et qui un utilisateur n'a pas les droits d'accès lorsqu'on effectue une requête GET de recherche par id alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'a pas le droit de consulter cette invitation»`() {
+        Mockito.`when`(service.chercherParID(8,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation"))
 
         mockMvc.perform(get("/organisations/invitations/8").with(csrf())
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isForbidden)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is DroitAccèsInsuffisantException)
-                assertEquals("L'utilisateur n'as pas le droit de consulter cette invitation", résultat.resolvedException?.message)
+                assertEquals("L'utilisateur n'a pas le droit de consulter cette invitation", résultat.resolvedException?.message)
             }
     }
 
     @WithMockUser("Joe")
     @Test  // obtenirInvitationsParId() 404 isNotFound
-    fun `2- Étant donné l'invitation dont l'id est 8 et qui n'est pas inscrite au service lorsqu'on effectue une requête GET de recherche par id  alors on obtient un code de retour 404 et le message d'erreur «L'invitation 8 à une organisation n'est pas inscrit au service»`() {
+    fun `2- Étant donné l'invitation dont l'id est 8 et qui n'est pas inscrite au service lorsqu'on effectue une requête GET de recherche par id alors on obtient un code de retour 404 et le message d'erreur «L'invitation 8 à une organisation n'est pas inscrit au service»`() {
         Mockito.`when`(service.chercherParID(8,"Joe")).thenReturn(null)
 
         mockMvc.perform(get("/organisations/invitations/8").with(csrf())
@@ -138,7 +136,7 @@ class InvitationOrganisationControleurTest {
     // -----------------------------------------------------------------------------------------------------------------
     @WithMockUser("Joe")
     @Test  //demandeJoindreOrganisation() 201 isCreated
-    fun `3- Étant donnée une invitation à une organisation dont l'id de l'organisation est 1 et celui du participant est Joe lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 201 et un JSON qui contient l'invitation créé`(){
+    fun `3- Étant donné une invitation à une organisation dont l'id de l'organisation est 1 et celui du participant est Joe lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 201 et un JSON qui contient l'invitation créé`(){
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
@@ -180,9 +178,9 @@ class InvitationOrganisationControleurTest {
 
     }
 
-    @WithMockUser("Anonym")
+    @WithMockUser("Anonyme")
     @Test  //demandeJoindreOrganisation() 401 UNAUTHORIZED
-    fun `3,1 - Étant donnée une invitation à une organisation dont l'id de l'organisation est 1 et le participant n'est pas connecté lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»`(){
+    fun `3,1 - Étant donné une invitation à une organisation dont l'id de l'organisation est 1 et le participant n'est pas connecté lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»`(){
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
@@ -199,7 +197,7 @@ class InvitationOrganisationControleurTest {
             null,
             "envoyé")
 
-        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"Anonym")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"Anonyme")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
 
         mockMvc.perform(post("/organisations/invitations").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
@@ -213,7 +211,7 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser("Sam")
     @Test  //demandeJoindreOrganisation() 403 FORBIDDEN
-    fun `3,3 - Étant donnée une invitation à une organisation dont l'id de l'organisation est 1 et celui du participant est Sam n'ayant pas les droits d'accès lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'as pas le droit de consulter cette invitation»`(){
+    fun `3,3 - Étant donné une invitation à une organisation dont l'id de l'organisation est 1 et celui du participant est Sam n'ayant pas les droits d'accès lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'a pas le droit de consulter cette invitation»`(){
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
@@ -230,7 +228,7 @@ class InvitationOrganisationControleurTest {
             null,
             "envoyé")
 
-        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation"))
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation"))
 
         mockMvc.perform(post("/organisations/invitations").with(csrf())
             .contentType(MediaType.APPLICATION_JSON)
@@ -238,12 +236,12 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isForbidden)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is DroitAccèsInsuffisantException)
-                assertEquals("L'utilisateur n'as pas le droit de consulter cette invitation", résultat.resolvedException?.message)
+                assertEquals("L'utilisateur n'a pas le droit de consulter cette invitation", résultat.resolvedException?.message)
             }
     }
     @WithMockUser("Joe")
     @Test  //demandeJoindreOrganisation() 404 notFound (organisation inxesitante)
-    fun `4- Étant donnée une invitation à une organisation dont l'id de l'organisation est 18 mais celle-ci n'est pas inscrite au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 404 et le message d'erreur «L'organisation 18 n'existe pas»`(){
+    fun `4- Étant donné une invitation à une organisation dont l'id de l'organisation est 18 mais celle-ci n'est pas inscrite au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 404 et le message d'erreur «L'organisation 18 n'existe pas»`(){
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
@@ -273,11 +271,11 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser("Joe")
     @Test  //demandeJoindreOrganisation() 404 notFound (participant inxesitant)
-    fun `5- Étant donnée une invitation à une organisation dont l'id du participant est 23 mais celui-ci n'est pas inscrit au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 404 et le message d'erreur «Le participant 23 n'existe pas»`(){
+    fun `5- Étant donné une invitation à une organisation dont l'id du participant est Joe mais celui-ci n'est pas inscrit au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 404 et le message d'erreur «Le participant 23 n'existe pas»`(){
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
-                "auth0|656d3ecc4178aefc03429538",
+                "Joe",
                 "email",
                 "nomUtil",
                 "prénom"),
@@ -289,7 +287,7 @@ class InvitationOrganisationControleurTest {
                 true),
             null,
             "envoyé")
-        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"Joe")).thenThrow(RessourceInexistanteException("Le participant 23 n'existe pas"))
+        Mockito.`when`(service.demandeJoindreOrganisation(invitation,"Joe")).thenThrow(RessourceInexistanteException("Le participant Joe n'existe pas"))
 
         mockMvc.perform(post("/organisations/invitations")
             .contentType(MediaType.APPLICATION_JSON)
@@ -297,14 +295,14 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isNotFound)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is RessourceInexistanteException)
-                assertEquals("Le participant 23 n'existe pas", résultat.resolvedException?.message)
+                assertEquals("Le participant Joe n'existe pas", résultat.resolvedException?.message)
             }
     }
 
 
     @WithMockUser("Joe")
     @Test  //demandeJoindreOrganisation() 409 isConflict
-    fun `6- Étant donnée une invitation à une organisation dont l'id de l'organisation est 3 et celui du participant est 1 et qui est déjà inscrite au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 409 et et le message «Il y existe déjà une invitation à l'organisation nomOrg assigné au participant prénom nomUtil inscrit au service»` () {
+    fun `6- Étant donné une invitation à une organisation dont l'id de l'organisation est 3 et celui du participant est 1 et qui est déjà inscrite au service lorsqu'on effectue une requête POST pour l'ajouter alors on obtient un code de retour 409 et et le message «Il y existe déjà une invitation à l'organisation nomOrg assigné au participant prénom nomUtil inscrit au service»` () {
         val invitation = InvitationOrganisation(
             1,
             Utilisateur(
@@ -380,10 +378,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("envoyé"))
     }
 
-    @WithMockUser("Anonym")
+    @WithMockUser("Anonyme")
     @Test //effacerInvitation() 401 UNAUTHORIZED
     fun `8,1- Étant donné une invitation avec l'id 3 à une organisation pas inscrite au service et un utilisateur Anonym pas connecté lorsqu'on effectue une requête DELETE selon l'id 3 alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»` (){
-        Mockito.`when`(service.effacerInvitation(3,"Anonym")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
+        Mockito.`when`(service.effacerInvitation(3,"Anonyme")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
 
         mockMvc.perform(delete("/organisations/invitations/3"))
             .andExpect(status().isUnauthorized)
@@ -395,14 +393,14 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser("Sam")
     @Test //effacerInvitation() 403 FORBIDDEN
-    fun `8,3- Étant donné une invitation avec l'id 3 à une organisation pas inscrite au service et un utilisateur Sam qui n'a pas les droits d'accès lorsqu'on effectue une requête DELETE selon l'id 3 alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'as pas le droit de consulter cette invitation»` (){
-        Mockito.`when`(service.effacerInvitation(3,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation"))
+    fun `8,3- Étant donné une invitation avec l'id 3 à une organisation pas inscrite au service et un utilisateur Sam qui n'a pas les droits d'accès lorsqu'on effectue une requête DELETE selon l'id 3 alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'a pas le droit de consulter cette invitation»` (){
+        Mockito.`when`(service.effacerInvitation(3,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation"))
 
         mockMvc.perform(delete("/organisations/invitations/3"))
             .andExpect(status().isForbidden)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is DroitAccèsInsuffisantException)
-                assertEquals("L'utilisateur n'as pas le droit de consulter cette invitation", résultat.resolvedException?.message)
+                assertEquals("L'utilisateur n'a pas le droit de consulter cette invitation", résultat.resolvedException?.message)
             }
     }
 
@@ -463,10 +461,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$[0].status").value("envoyé"))
     }
 
-    @WithMockUser("Anonym")
+    @WithMockUser("Anonyme")
     @Test // obtenirInvitationParticipant() 401 UNAUTHORIZED
     fun `10,1- Étant donné un participant ayant le code Joe qui n'est pas inscrit au service qui a une invitation et qui n'est pas connecté lorsqu'on effectue une requête GET de recherche par participant selon l'id 1 alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»` (){
-        Mockito.`when`(service.chercherParParticipant("Anonym")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
+        Mockito.`when`(service.chercherParParticipant("Anonyme")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
 
         mockMvc.perform(get("/utilisateurs/invitations/organisations"))
             .andExpect(status().isUnauthorized)
@@ -478,14 +476,14 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser("Sam")
     @Test // obtenirInvitationParticipant() 403 FORBIDDEN
-    fun `10,3- Étant donné un participant ayant le code Sam qui n'est pas inscrite au service qui a une invitation et qui n'a pas les droit d'accès lorsqu'on effectue une requête GET de recherche par participant selon l'id 1 alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'as pas le droit de consulter cette invitation»` (){
-        Mockito.`when`(service.chercherParParticipant("Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation"))
+    fun `10,3- Étant donné un participant ayant le code Sam qui n'est pas inscrite au service qui a une invitation et qui n'a pas les droit d'accès lorsqu'on effectue une requête GET de recherche par participant selon l'id 1 alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'a pas le droit de consulter cette invitation»` (){
+        Mockito.`when`(service.chercherParParticipant("Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation"))
 
         mockMvc.perform(get("/utilisateurs/invitations/organisations"))
             .andExpect(status().isForbidden)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is DroitAccèsInsuffisantException)
-                assertEquals("L'utilisateur n'as pas le droit de consulter cette invitation", résultat.resolvedException?.message)
+                assertEquals("L'utilisateur n'a pas le droit de consulter cette invitation", résultat.resolvedException?.message)
             }
     }
     @WithMockUser("Joe")
@@ -545,10 +543,10 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$[0].status").value("envoyé"))
     }
 
-    @WithMockUser("Anonym")
+    @WithMockUser("Anonyme")
     @Test // obtenirInvitationOrganisation() 401 UNAUTHORIZED
     fun `12,1- Étant donné une organisation ayant l'id 1 et que l'utilisateur n'est pas connecté lorsqu'on effectue une requête GET de recherche par organisation selon l'id 1 alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»` (){
-        Mockito.`when`(service.chercherParOrganisation(1,"Anonym")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
+        Mockito.`when`(service.chercherParOrganisation(1,"Anonyme")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
 
         mockMvc.perform(get("/organisations/1/invitations"))
             .andExpect(status().isUnauthorized)
@@ -560,14 +558,14 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser("Sam")
     @Test // obtenirInvitationOrganisation() 403 FORBIDDEN
-    fun `12,3- Étant donné une organisation ayant l'id 1 et que l'utilisateur n'a pas les droits d'accès lorsqu'on effectue une requête GET de recherche par organisation selon l'id 1 alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'as pas le droit de consulter cette invitation»` (){
-        Mockito.`when`(service.chercherParOrganisation(1,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation"))
+    fun `12,3- Étant donné une organisation ayant l'id 1 et que l'utilisateur n'a pas les droits d'accès lorsqu'on effectue une requête GET de recherche par organisation selon l'id 1 alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'a pas le droit de consulter cette invitation»` (){
+        Mockito.`when`(service.chercherParOrganisation(1,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation"))
 
         mockMvc.perform(get("/organisations/1/invitations"))
             .andExpect(status().isForbidden)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is DroitAccèsInsuffisantException)
-                assertEquals("L'utilisateur n'as pas le droit de consulter cette invitation", résultat.resolvedException?.message)
+                assertEquals("L'utilisateur n'a pas le droit de consulter cette invitation", résultat.resolvedException?.message)
             }
     }
 
@@ -592,7 +590,7 @@ class InvitationOrganisationControleurTest {
     // -----------------------------------------------------------------------------------------------------------------
     @WithMockUser("Joe")
     @Test // changerStatus() 200 ok -> vert
-    fun `13- Étant donnée une invitation à une organisation ayant l'id 8 inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 200 et un JSON qui contient l'invitation modifié`(){
+    fun `13- Étant donné une invitation à une organisation ayant l'id 8 inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 200 et un JSON qui contient l'invitation modifié`(){
         val invitation = InvitationOrganisation(
             8,
             Utilisateur(
@@ -629,9 +627,9 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("accepté"))
     }
 
-    @WithMockUser("Anonym")
+    @WithMockUser("Anonyme")
     @Test // changerStatus() 401 UNAUTHORIZED
-    fun `14,1- Étant donnée une invitation à une organisation ayant l'id 8 et un utilisateur pas connecté lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»`(){
+    fun `14,1- Étant donné une invitation à une organisation ayant l'id 8 et un utilisateur pas connecté lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»`(){
         val invitation = InvitationOrganisation(
             3,
             Utilisateur(
@@ -648,7 +646,7 @@ class InvitationOrganisationControleurTest {
             null,
             "envoyé")
 
-        Mockito.`when`(service.changerStatus(invitation, "accepté","Anonym")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
+        Mockito.`when`(service.changerStatus(invitation, "accepté","Anonyme")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
 
         mockMvc.perform(put("/organisations/invitations/status/accepté")
             .contentType(MediaType.APPLICATION_JSON)
@@ -662,7 +660,7 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser("Sam")
     @Test // changerStatus() 403 FORBIDDEN
-    fun `14,3- Étant donnée une invitation à une organisation ayant l'id 8 et un utilisateur Sam n'ayant pas les droits d'accès lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'as pas le droit de consulter cette invitation»`(){
+    fun `14,3- Étant donné une invitation à une organisation ayant l'id 8 et un utilisateur Sam n'ayant pas les droits d'accès lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'a pas le droit de consulter cette invitation»`(){
         val invitation = InvitationOrganisation(
             3,
             Utilisateur(
@@ -679,7 +677,7 @@ class InvitationOrganisationControleurTest {
             null,
             "envoyé")
 
-        Mockito.`when`(service.changerStatus(invitation, "accepté","Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation"))
+        Mockito.`when`(service.changerStatus(invitation, "accepté","Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation"))
 
         mockMvc.perform(put("/organisations/invitations/status/accepté")
             .contentType(MediaType.APPLICATION_JSON)
@@ -687,13 +685,13 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isForbidden)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is DroitAccèsInsuffisantException)
-                assertEquals("L'utilisateur n'as pas le droit de consulter cette invitation", résultat.resolvedException?.message)
+                assertEquals("L'utilisateur n'a pas le droit de consulter cette invitation", résultat.resolvedException?.message)
             }
     }
 
     @WithMockUser("Joe")
     @Test // changerStatus() 404 notFound
-    fun `14- Étant donnée une invitation à une organisation ayant l'id 8 qui n'est pas inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 404 et le message d'erreur «L'invitation 8 à une organisation n'est pas inscrit au service»`(){
+    fun `14- Étant donné une invitation à une organisation ayant l'id 8 qui n'est pas inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" alors on obtient un code de retour 404 et le message d'erreur «L'invitation 8 à une organisation n'est pas inscrit au service»`(){
         val invitation = InvitationOrganisation(
             3,
             Utilisateur(
@@ -730,7 +728,7 @@ class InvitationOrganisationControleurTest {
     // -----------------------------------------------------------------------------------------------------------------
     @WithMockUser("Joe")
     @Test // saisirJeton() 200 ok
-    fun `15- Étant donnée une invitation à une organisation ayant le jeton 'VF5S6H55' inscrite au service lorsqu'on effectue une requête PUT pour changer le status à "accepté" de l'invitation ayant le jeton 'VF5S6H55' alors on obtient un code de retour 200 et un JSON qui contient l'invitation modifié`(){
+    fun `15- Étant donné une invitation à une organisation ayant le jeton 'VF5S6H55' inscrite au service lorsqu'on effectue une requête PUT pour changer le status à "accepté" de l'invitation ayant le jeton 'VF5S6H55' alors on obtient un code de retour 200 et un JSON qui contient l'invitation modifié`(){
         val invitation = InvitationOrganisation(
             8,
             Utilisateur(
@@ -767,9 +765,9 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("accepté"))
     }
 
-    @WithMockUser("Anonym")
+    @WithMockUser("Anonyme")
     @Test // saisirJeton() 401 UNAUTHORIZED
-    fun `16,1- Étant donnée une invitation à une organisation ayant un jeton 'VF5S6H55' qui n'est pas inscrite au service et un utilisateur non connecté lorsqu'on effectue une requête PUT pour changer son status à "accepté" de l'invitation ayant le jeton 'VF5S6H55' alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»`(){
+    fun `16,1- Étant donné une invitation à une organisation ayant un jeton 'VF5S6H55' qui n'est pas inscrite au service et un utilisateur non connecté lorsqu'on effectue une requête PUT pour changer son status à "accepté" de l'invitation ayant le jeton 'VF5S6H55' alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»`(){
         val invitation = InvitationOrganisation(
             8,
             Utilisateur(
@@ -786,7 +784,7 @@ class InvitationOrganisationControleurTest {
             "VF5S6H55",
             "accepté")
 
-        Mockito.`when`(service.saisirJeton("VF5S6H55","Anonym")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
+        Mockito.`when`(service.saisirJeton("VF5S6H55","Anonyme")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
 
         mockMvc.perform(put("/organisations/jetons/VF5S6H55")
             .contentType(MediaType.APPLICATION_JSON)
@@ -800,7 +798,7 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser("Joe")
     @Test // saisirJeton() 404 notFound
-    fun `16- Étant donnée une invitation à une organisation ayant un jeton 'VF5S6H55' qui n'est pas inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" de l'invitation ayant le jeton 'VF5S6H55' alors on obtient un code de retour 404 et le message d'erreur «Aucune invitation inscrit dans le service contient le jeton VF5S6H55»`(){
+    fun `16- Étant donné une invitation à une organisation ayant un jeton 'VF5S6H55' qui n'est pas inscrite au service lorsqu'on effectue une requête PUT pour changer son status à "accepté" de l'invitation ayant le jeton 'VF5S6H55' alors on obtient un code de retour 404 et le message d'erreur «Aucune invitation inscrit dans le service contient le jeton VF5S6H55»`(){
         val invitation = InvitationOrganisation(
             8,
             Utilisateur(
@@ -868,17 +866,17 @@ class InvitationOrganisationControleurTest {
             .andExpect(jsonPath("$.status").value("généré"))
     }
 
-    @WithMockUser("Anonym")
+    @WithMockUser("Anonyme")
     @Test // créerJeton() 401 UNAUTHORIZED
     fun `18,1- Étant donné une organisation ayant l'id 36 qui n'est pas inscrite au service et un utilisateur qui n'est pas connecté lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 36 alors on obtient un code de retour 401 et le message d'erreur «L'utilisateur n'est pas connecté,»` (){
         val organisation = Organisation(
-            1,
+            36,
             "auth0|656d2dbea19599c9209a4f01",
             "nomOrg",
             1,
             true)
 
-        Mockito.`when`(service.créerJeton(organisation,"Anonym")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
+        Mockito.`when`(service.créerJeton(organisation,"Anonyme")).thenThrow(PasConnectéException("L'utilisateur n'est pas connecté."))
 
         mockMvc.perform(post("/organisations/jetons")
             .contentType(MediaType.APPLICATION_JSON)
@@ -892,15 +890,15 @@ class InvitationOrganisationControleurTest {
 
     @WithMockUser("Sam")
     @Test // créerJeton() 403 FORBIDDEN
-    fun `18,3- Étant donné une organisation ayant l'id 36 qui n'est pas inscrite au service et que l'utilisateur n'a pas le droit d'accès lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 36 alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'as pas le droit de consulter cette invitation»` (){
+    fun `18,3- Étant donné une organisation ayant l'id 36 qui n'est pas inscrite au service et que l'utilisateur n'a pas le droit d'accès lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 36 alors on obtient un code de retour 403 et le message d'erreur «L'utilisateur n'a pas le droit de consulter cette invitation»` (){
         val organisation = Organisation(
-            1,
+            36,
             "auth0|656d2dbea19599c9209a4f01",
             "nomOrg",
             1,
             true)
 
-        Mockito.`when`(service.créerJeton(organisation,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette invitation"))
+        Mockito.`when`(service.créerJeton(organisation,"Sam")).thenThrow(DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation"))
 
         mockMvc.perform(post("/organisations/jetons")
             .contentType(MediaType.APPLICATION_JSON)
@@ -908,7 +906,7 @@ class InvitationOrganisationControleurTest {
             .andExpect(status().isForbidden)
             .andExpect { résultat ->
                 assertTrue(résultat.resolvedException is DroitAccèsInsuffisantException)
-                assertEquals("L'utilisateur n'as pas le droit de consulter cette invitation", résultat.resolvedException?.message)
+                assertEquals("L'utilisateur n'a pas le droit de consulter cette invitation", résultat.resolvedException?.message)
             }
     }
 
@@ -916,7 +914,7 @@ class InvitationOrganisationControleurTest {
     @Test // créerJeton() 404 notFound
     fun `18- Étant donné une organisation ayant l'id 36 qui n'est pas inscrite au service lorsqu'on effectue une requête POST pour créer une invitation assigné à aucun utilisateur et avec un jeton généré pour l'organisation avec l'id 36 alors on obtient un code de retour 404 et le message d'erreur «L'organisation 36 n'existe pas»` (){
         val organisation = Organisation(
-            1,
+            36,
             "auth0|656d2dbea19599c9209a4f01",
             "nomOrg",
             1,

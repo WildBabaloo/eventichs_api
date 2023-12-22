@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
-    fun chercherTous(): List<InvitationOrganisation> = dao.chercherTous()
+
+    //fun chercherTous(): List<InvitationOrganisation> = dao.chercherTous()
     fun chercherParID(id: Int, code_util: String): InvitationOrganisation? {
         if (dao.validerUtilisateur(id, code_util) == false) {
             throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
@@ -40,7 +41,7 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
 
     //Cas d'utilisation: 4.Accepter la demande de joindre l'organisation par le participant (Organisation)
     fun changerStatus(invitation : InvitationOrganisation, status : String, code_Util: String) : InvitationOrganisation? {
-        if (dao.validerOrganisationInvitation(invitation.Organisation.id, code_Util) == false) {
+        if (dao.validerOrganisationInvitation(invitation.id, code_Util) == false) {
             throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter cette invitation")
         }
 
@@ -50,8 +51,6 @@ class InvitationOrganisationService(val dao : InvitationOrganisationDAO){
 
     //Cas d'utilisation: 5.Entrer un jeton d'invitation (Participant)
     fun saisirJeton(jeton : String, code_Util: String) : InvitationOrganisation? {
-
-
         return dao.saisirJeton(jeton, code_Util)
     }
 

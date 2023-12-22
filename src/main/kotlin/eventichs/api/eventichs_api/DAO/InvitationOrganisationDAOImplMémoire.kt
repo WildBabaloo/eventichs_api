@@ -200,8 +200,8 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         throw ConflitAvecUneRessourceExistanteException("Le participant ${code_util} est déjà membre de l'organisation ${invitation.Organisation.id}")
     }
 
-    override fun validerUtilisateur(id: Int, code_util : String) : Boolean {
-        val invitation : InvitationOrganisation? = chercherParID(id)
+    override fun validerUtilisateur(idInvitation: Int, code_util : String) : Boolean {
+        val invitation : InvitationOrganisation? = chercherParID(idInvitation)
         if (invitation?.Utilisateur?.code == code_util) {
             return true
         }
@@ -211,8 +211,8 @@ class InvitationOrganisationDAOImplMémoire(val db: JdbcTemplate): InvitationOrg
         return false
     }
 
-    override fun validerOrganisationInvitation(id: Int, code_util: String): Boolean {
-        val invitation : InvitationOrganisation? = chercherParID(id)
+    override fun validerOrganisationInvitation(idInvitation: Int, code_util: String): Boolean {
+        val invitation : InvitationOrganisation? = chercherParID(idInvitation)
         if (invitation?.Organisation?.codeUtilisateur == code_util) {
             return true
         }
