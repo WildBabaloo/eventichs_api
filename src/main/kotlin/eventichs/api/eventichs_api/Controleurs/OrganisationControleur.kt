@@ -91,7 +91,6 @@ class OrganisationControleur(val service: OrganisationService) {
                 .path("/organisations/{id}")
                 .buildAndExpand(organisationModifiée.id)
                 .toUri()
-
             return ResponseEntity.created(uri).body(organisationModifiée)
         }
 
