@@ -31,7 +31,7 @@ class ServeurRessourcesOAuth2ConfigurationAccès {
                 authorize("/", permitAll)
                 authorize(HttpMethod.GET, "/**", permitAll)
                 authorize(HttpMethod.POST, "/**", permitAll)
-                authorize(HttpMethod.GET,"/organisations/**",authenticated)
+                authorize(HttpMethod.GET,"/organisations/**",permitAll)
                 authorize(HttpMethod.PUT,"/organisations/**",authenticated)
                 authorize(HttpMethod.DELETE,"/organisations/**",authenticated)
                 authorize(HttpMethod.POST, "/organisations/invitations/", permitAll)
