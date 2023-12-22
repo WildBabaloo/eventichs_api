@@ -42,7 +42,6 @@ class OrganisationControleur(val service: OrganisationService) {
     @GetMapping("/organisations/{id}")
     fun obtenirOrganisationParID(@PathVariable id: Int, principal: Principal?): Organisation {
         if (principal == null) { throw PasConnectéException("L'utilisateur n'est pas connecté.") }
-
         return service.chercherParID(id) ?: throw RessourceInexistanteException("L'organisation avec l'id de $id n'est pas inscrit au service")
     }
 
@@ -92,7 +91,6 @@ class OrganisationControleur(val service: OrganisationService) {
                 .path("/organisations/{id}")
                 .buildAndExpand(organisationModifiée.id)
                 .toUri()
-
             return ResponseEntity.created(uri).body(organisationModifiée)
         }
 
