@@ -36,7 +36,8 @@ class OrganisationControleur(val service: OrganisationService) {
         operationId = "obtenirOrganisationsParID",
         responses = [
             ApiResponse(responseCode = "200", description = "L'organisation à été trouvé"),
-            ApiResponse(responseCode = "404", description = "L'organisation avec l'id recherché n'existe pas dans le service")
+            ApiResponse(responseCode = "404", description = "L'organisation avec l'id recherché n'existe pas dans le service"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")
         ]
     )
     @GetMapping("/organisations/{id}")
@@ -51,7 +52,8 @@ class OrganisationControleur(val service: OrganisationService) {
         operationId = "ajouterOrganisation",
         responses = [
             ApiResponse(responseCode = "201", description = "L'organisation à été ajoutée"),
-            ApiResponse(responseCode = "500", description = "L'organisation n'a pas été ajoutée au service")
+            ApiResponse(responseCode = "500", description = "L'organisation n'a pas été ajoutée au service"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")
         ]
     )
     @PostMapping("/organisations")
@@ -77,7 +79,8 @@ class OrganisationControleur(val service: OrganisationService) {
         operationId = "modifierOrganisation",
         responses = [
             ApiResponse(responseCode = "200", description = "l'organisation a été modifié"),
-            ApiResponse(responseCode = "404", description = "l'organisation n'eas pas été modifié")]
+            ApiResponse(responseCode = "404", description = "l'organisation n'eas pas été modifié"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")]
     )
     @PutMapping("/organisations/{id}")
     fun modifierOrganisation(@RequestBody organisation: Organisation, principal: Principal?): ResponseEntity<Organisation> {
@@ -102,7 +105,8 @@ class OrganisationControleur(val service: OrganisationService) {
         operationId = "supprimerOrganisation",
         responses = [
             ApiResponse(responseCode = "200", description = "l'organisation a été supprimé"),
-            ApiResponse(responseCode = "404", description = "l'organisation n'as pas été supprimé")]
+            ApiResponse(responseCode = "404", description = "l'organisation n'as pas été supprimé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")]
     )
     @DeleteMapping("/organisations/{id}")
     fun supprimerOrganisation(@PathVariable id: Int, principal: Principal?) {
@@ -116,7 +120,8 @@ class OrganisationControleur(val service: OrganisationService) {
         operationId = "ChercherOrganisationPublique",
         responses = [
             ApiResponse(responseCode = "200", description = "les organisations publiques ont été trouvé"),
-            ApiResponse(responseCode = "404", description = "Aucune organisation publique n'as pas été trouvé")]
+            ApiResponse(responseCode = "404", description = "Aucune organisation publique n'as pas été trouvé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")]
     )
     @GetMapping("/organisations")
     fun obtenirOrganisationsPubliques(principal: Principal?): List<Organisation> {
@@ -130,7 +135,8 @@ class OrganisationControleur(val service: OrganisationService) {
         operationId = "obtenirOrganisationsParGout",
         responses = [
             ApiResponse(responseCode = "200", description = "les organisations filtrés ont été trouvées"),
-            ApiResponse(responseCode = "404", description = "les organisations filtrés n'ont pas été trouvé")]
+            ApiResponse(responseCode = "404", description = "les organisations filtrés n'ont pas été trouvé"),
+            ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")]
     )
     @GetMapping("/gouts/{idCategorie}/organisations")
     fun obtenirOrganisationsParGout(@PathVariable idCategorie: Int, principal: Principal?): List<Organisation> {
