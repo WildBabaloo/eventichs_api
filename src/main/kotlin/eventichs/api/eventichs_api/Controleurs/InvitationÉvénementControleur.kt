@@ -1,14 +1,17 @@
 package eventichs.api.eventichs_api.Controleurs
 
-import eventichs.api.eventichs_api.Modèle.InvitationOrganisation
+import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteException
+import eventichs.api.eventichs_api.Exceptions.PasConnectéException
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Modèle.InvitationÉvénement
 import eventichs.api.eventichs_api.Services.InvitationÉvénementService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.swagger.v3.oas.annotations.responses.ApiResponse
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.security.Principal
 
 @RestController
 @RequestMapping("\${api.base-path:}")
@@ -27,10 +30,19 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "200", description = "Une ou plusieures invitations ont été trouvées"),
             ApiResponse(responseCode = "404", description = "Aucune invitation trouvée")]
     )
-    @GetMapping("/utilisateur/invitations/destinataire/{id}")
-    fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable id: Int) =
-        service.chercherInvitationsÉvénementsParIdDestinataire(id)
+    @GetMapping("/utilisateur/invitations/destinataire/{codeDestinataire}")
+    fun obtenirInvitationsÉvénementsParIdDestinataire(@PathVariable codeDestinataire: String,  principal: Principal?): List<InvitationÉvénement> {
+        if (principal == null) {
+            throw PasConnectéException("l'utilisateur n'est pas connecté.")
+        }
+        val invitations = service.chercherInvitationsÉvénementsParIdDestinataire(codeDestinataire, principal.name)
 
+        if (invitations.isNotEmpty()) {
+            return invitations
+        } else {
+            throw RessourceInexistanteException("Aucune invitation trouvée")
+        }
+    }
     @Operation(
         summary = "Obtenir la liste des invitations créés par l'id de l'éxpéditeur indiqué",
         description = "Retourne la liste de toutes les invitations dont l'id de l'éxpéditeur est égal à celui entré dans la reqête.",
@@ -39,9 +51,20 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "200", description = "Une ou plusieures invitations ont été trouvées"),
             ApiResponse(responseCode = "404", description = "Aucune invitation trouvée")]
     )
-    @GetMapping("/utilisateur/invitations/expediteur/{id}")
-    fun obtenirInvitationsÉvénementsParIdExpediteur(@PathVariable id: Int) =
-        service.chercherInvitationsÉvénementsParIdExpediteur(id)
+    @GetMapping("/utilisateur/invitations/expediteur/{idExpediteur}")
+    fun obtenirInvitationsÉvénementsParIdExpediteur(@PathVariable idExpediteur: String, principal: Principal?): List<InvitationÉvénement> {
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
+
+        val invitations = service.chercherInvitationsÉvénementsParIdExpediteur(idExpediteur, principal.name)
+
+        if (invitations.isNotEmpty()){
+            return invitations
+        } else {
+            throw RessourceInexistanteException("Aucune invitation trouvée")
+        }
+    }
 
 
     @Operation(
@@ -53,8 +76,11 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "404", description = "Aucune invitation trouvé")]
     )
     @GetMapping("/utilisateur/invitations/{id}")
-    fun obtenirInvitationÉvénementParId(@PathVariable id: Int) =
-        service.chercherInvitationÉvénementParId(id)
+    fun obtenirInvitationÉvénementParId(@PathVariable id: Int, principal: Principal?) : InvitationÉvénement {
+        if (principal == null) {throw PasConnectéException("l'utilisateur n'est pas connecté.")}
+
+        return service.chercherInvitationÉvénementParId(id, principal.name) ?: throw RessourceInexistanteException("l'invitation n'existe pas.")
+    }
 
     //Inviter un autre participant à un événement publique (Participant)
 
@@ -69,8 +95,22 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
 
     )
     @PostMapping("/invitation")
-    fun créerInvitationÉvénement(@RequestBody invitation: InvitationÉvénement) =
-        service.créerInvitationÉvénement(invitation)
+    fun créerInvitationÉvénement(@RequestBody invitation: InvitationÉvénement, principal: Principal?): ResponseEntity<InvitationÉvénement> {
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
+        val nouvelleInvitation : InvitationÉvénement? = service.créerInvitationÉvénement(invitation, principal.name)
+        if (nouvelleInvitation != null) {
+            val uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/organisations/invitations/{id}")
+                .buildAndExpand(nouvelleInvitation.id)
+                .toUri()
+
+            return ResponseEntity.created(uri).body(nouvelleInvitation)
+        }
+        return throw ConflitAvecUneRessourceExistanteException("Il existe déja une invitation par cet utilisateur vers l'évènement sélectionné.")
+    }
 
 
     @Operation(
@@ -84,8 +124,13 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
 
     )
     @PutMapping("/invitation/{id}")
-    fun majInvitation(@PathVariable id: Int, @RequestBody invitation: InvitationÉvénement, reponse: String) =
-        service.modifierInvitationÉvénement(invitation)
+    fun majInvitation(@PathVariable id: Int, @RequestBody invitation: InvitationÉvénement, reponse: String, principal: Principal?) : InvitationÉvénement? {
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
+
+        return service.modifierInvitationÉvénement(invitation, principal.name)
+    }
 
     //Éffacer une invitation (Participant + Organisation)
 
@@ -100,8 +145,12 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
 
     )
     @DeleteMapping("/invitation/{id}")
-    fun supprimerInvitation(@PathVariable id: Int) =
-        service.supprimerInvitationsÉvénementsParId(id)
+    fun supprimerInvitation(@PathVariable id: Int, principal: Principal?): InvitationÉvénement? {
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
+
+        return service.supprimerInvitationsÉvénementsParId(id, principal.name)
+    }
 
 
     @Operation(
@@ -114,10 +163,13 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "500", description = "Impossible de traiter le jeton, erreur du serveur.")]
 
     )
-    @PostMapping("/jetons/{utilisateur_id}")
-    fun saisirJeton(@PathVariable utilisateur_id : Int, @RequestBody jeton : String) =
-        service.entrerJetonEvenement(utilisateur_id, jeton)
-
+    @PostMapping("/jetons/{jeton}")
+    fun saisirJeton(@PathVariable jeton : String, principal: Principal?): InvitationÉvénement? {
+        if (principal == null) {
+            throw PasConnectéException("L'utilisateur n'est pas connecté.")
+        }
+        return service.entrerJetonEvenement(principal.name, jeton)
+    }
     @Operation(
         summary = "Générer des jetons pour un événement.",
         description = "Retourne les invitations créées pour joindre l'événement via jeton.",
@@ -127,7 +179,10 @@ class InvitationÉvénementControleur(val service: InvitationÉvénementService)
             ApiResponse(responseCode = "409", description = "Le jeton est invalide."),
             ApiResponse(responseCode = "500", description = "Impossible de traiter le jeton, erreur du serveur.")]
     )
-    @GetMapping("/invitation/jetons/{id}/{quantité}")
-    fun générerJeton(@PathVariable id : Int,  @PathVariable quantité : Int) =
-        service.genererJetonsEvenement(id)
+    @GetMapping("/invitation/jetons/{idEvenement}/{quantité}")
+    fun générerJeton(@PathVariable idEvenement : Int,  @PathVariable quantité : Int, principal: Principal?): InvitationÉvénement? {
+        if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
+
+        return service.genererJetonsEvenement(idEvenement, principal.name)
+    }
 }
