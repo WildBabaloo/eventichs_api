@@ -124,6 +124,6 @@ class CatégorieOrganisationControleur(val service: CatégorieOrganisationServic
         if (principal == null) {
             throw PasConnectéException("L'utilisateur n'est pas connecté.")
         }
-        return service.supprimerParID(id)
+        return service.supprimerParID(id, principal.name)
     }
 }
