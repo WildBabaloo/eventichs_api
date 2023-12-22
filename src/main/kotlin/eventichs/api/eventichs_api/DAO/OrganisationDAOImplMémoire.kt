@@ -15,17 +15,22 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     override fun chercherParID(id: Int): Organisation? =
         db.queryForObject("select * from Organisation where id = $id", OrganisationMapper())
 
-    override fun ajouter(organisation: Organisation): Organisation? {
+    // Fonction inutile
+    override fun ajouter(element: Organisation): Organisation? {
+        TODO("Not yet implemented")
+    }
+
+    override fun ajouterOrganisation(element: Organisation, codeUtilisateur: String): Organisation? {
         val sql = "INSERT INTO Organisation (id, codeUtilisateur, nomOrganisation, catégorie_id, estPublic) VALUES (?, ?, ?, ?, ?)"
         db.update(
                 sql,
-                organisation.id,
-                organisation.codeUtilisateur,
-                organisation.nomOrganisation,
-                organisation.catégorie_id,
-                organisation.estPublic
+                element.id,
+                element.codeUtilisateur,
+                element.nomOrganisation,
+                element.catégorie_id,
+                element.estPublic
         )
-        return organisation
+        return element
     }
 
     override fun modifier(element: Organisation): Organisation? {
@@ -73,9 +78,17 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
 
        // return false
     }
+
+    override fun validerOrganisationCreation(codeUtilisateur: String): Boolean {
+        val organisations = db.query("select * from Organisation where codeUtilisateur = '$codeUtilisateur'", OrganisationMapper())
+        println(organisations.size)
+        return organisations.size == 0
+    }
+
     override fun validerOrganisateur(code_util: String): Boolean {
         return db.query(
             "select * from Organisation where codeUtilisateur = '$code_util'", OrganisationMapper()
         ).isNotEmpty()
     }
+
 }
