@@ -19,9 +19,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/utilisateurs/2",
+									"raw": "{{serveur}}:8080/utilisateurs/2",
 									"host": [
-										"localhost"
+										"{{serveur}}"
 									],
 									"port": "8080",
 									"path": [
@@ -43,9 +43,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/evenements/invitations/destinataire/1",
+									"raw": "{{serveur}}:8080/evenements/invitations/destinataire/1",
 									"host": [
-										"localhost"
+										"{{serveur}}"
 									],
 									"port": "8080",
 									"path": [
@@ -413,9 +413,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/evenements/1",
+									"raw": "{{serveur}}:8080/evenements/1",
 									"host": [
-										"localhost"
+										"{{serveur}}"
 									],
 									"port": "8080",
 									"path": [
@@ -433,7 +433,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"party\",\r\n    \"description\": \"Trop cool!\",\r\n    \"image\": \"explosion.jpg\",\r\n    \"organisation\": \"Illuminati\"\r\n}",
+									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Party\",\r\n    \"description\": \"Trop cool!\",\r\n    \"image\": \"explosion.jpg\",\r\n    \"organisation\": \"Rosemont\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -441,10 +441,9 @@
 									}
 								},
 								"url": {
-									"raw": "v34l.com:8080/evenements",
+									"raw": "{{serveur}}:8080/evenements",
 									"host": [
-										"v34l",
-										"com"
+										"{{serveur}}"
 									],
 									"port": "8080",
 									"path": [
@@ -461,7 +460,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie_id\": 1,\r\n    \"description\": \"Trop cool!\",\r\n    \"photo\": \"explosion.jpg\",\r\n    \"organisation_id\": 1\r\n}",
+									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion de la lune\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2023-12-12\",\r\n    \"dateFin\": \"2023-12-30\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Funrérailles\",\r\n    \"description\": \"Trop cool!\",\r\n    \"photo\": \"explosion.jpg\",\r\n    \"organisation\": \"FBI\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -469,9 +468,9 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/evenements",
+									"raw": "{{serveur}}:8080/evenements",
 									"host": [
-										"localhost"
+										"{{serveur}}"
 									],
 									"port": "8080",
 									"path": [
@@ -487,9 +486,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/evenements/3",
+									"raw": "{{serveur}}:8080/evenements/3",
 									"host": [
-										"localhost"
+										"{{serveur}}"
 									],
 									"port": "8080",
 									"path": [
@@ -506,9 +505,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/evenements",
+									"raw": "{{serveur}}:8080/evenements",
 									"host": [
-										"localhost"
+										"{{serveur}}"
 									],
 									"port": "8080",
 									"path": [
@@ -548,14 +547,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/organisations/publiques",
+									"raw": "localhost:8080/organisations",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"organisations",
-										"publiques"
+										"organisations"
 									]
 								}
 							},
@@ -656,6 +654,105 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "OrganisationMembres",
+					"item": [
+						{
+							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateurs/1/organisations",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateurs",
+										"1",
+										"organisations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres ajouterParticipant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembers enleverParticipant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/2/participants/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"2",
+										"participants",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Categories",
+					"item": []
 				}
 			],
 			"auth": {
@@ -1083,120 +1180,12 @@
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "Evenements Copy",
-					"item": [
+						},
 						{
-							"name": "localhost:8080/evenements/1",
+							"name": "New Request",
 							"request": {
 								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/evenements/1",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"evenements",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "localhost:8080/evenements",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"party\",\r\n    \"description\": \"Trop cool!\",\r\n    \"image\": \"explosion.jpg\",\r\n    \"organisation\": \"Illuminati\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "v34l.com:8080/evenements",
-									"host": [
-										"v34l",
-										"com"
-									],
-									"port": "8080",
-									"path": [
-										"evenements"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "localhost:8080/evenements Copy",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie_id\": 1,\r\n    \"description\": \"Trop cool!\",\r\n    \"photo\": \"explosion.jpg\",\r\n    \"organisation_id\": 1\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/evenements",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"evenements"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "localhost:8080/evenements/3",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/evenements/3",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"evenements",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "localhost:8080/evenements",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/evenements",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"evenements"
-									]
-								}
+								"header": []
 							},
 							"response": []
 						}
@@ -1211,14 +1200,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/organisations/1",
+									"raw": "localhost:8080/organisations/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -1270,7 +1259,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\" : 2,\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\",\r\n    \"nomOrganisation\" : \"Organisation 2\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
+									"raw": "{\r\n    \"id\" : 5,\r\n    \"codeUtilisateur\" : \"auth0|656d2dbea19599c9209a4f01\", \r\n    \"nomOrganisation\" : \"Organisation 5\",\r\n    \"catégorie_id\" : 1,\r\n    \"estPublic\" : true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1332,6 +1321,215 @@
 									"path": [
 										"organisations",
 										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrganisationMembres Copy",
+					"item": [
+						{
+							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateurs/organisations",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateurs",
+										"organisations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres ajouterParticipant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_organisation\" : 1,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembers enleverParticipant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/2/participants/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"2",
+										"participants",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Evenements Copy",
+					"item": [
+						{
+							"name": "localhost:8080/evenements/1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serveur}}:8080/evenements/1",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "localhost:8080/evenements",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Party\",\r\n    \"description\": \"Trop cool!\",\r\n    \"image\": \"explosion.jpg\",\r\n    \"organisation\": \"Rosemont\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serveur}}:8080/evenements",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "localhost:8080/evenements Copy",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion de la lune\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2023-12-12\",\r\n    \"dateFin\": \"2023-12-30\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Funrérailles\",\r\n    \"description\": \"Trop cool!\",\r\n    \"photo\": \"explosion.jpg\",\r\n    \"organisation\": \"FBI\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serveur}}:8080/evenements",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "localhost:8080/evenements/3",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{serveur}}:8080/evenements/3",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "localhost:8080/evenements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serveur}}:8080/evenements",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements"
 									]
 								}
 							},
@@ -1884,7 +2082,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"party\",\r\n    \"description\": \"Trop cool!\",\r\n    \"image\": \"explosion.jpg\",\r\n    \"organisation\": \"Illuminati\"\r\n}",
+									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Party\",\r\n    \"description\": \"Trop cool!\",\r\n    \"image\": \"explosion.jpg\",\r\n    \"organisation\": \"Illuminati\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1892,10 +2090,9 @@
 									}
 								},
 								"url": {
-									"raw": "v34l.com:8080/evenements",
+									"raw": "localhost:8080/evenements",
 									"host": [
-										"v34l",
-										"com"
+										"localhost"
 									],
 									"port": "8080",
 									"path": [
@@ -2100,6 +2297,100 @@
 									"port": "8080",
 									"path": [
 										"organisations",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrganisationMembres Copy",
+					"item": [
+						{
+							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateurs/organisations",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateurs",
+										"organisations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres ajouterParticipant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembers enleverParticipant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/2/participants/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"2",
+										"participants",
 										"2"
 									]
 								}
@@ -2603,6 +2894,26 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "InvitionOrganisation obtenirInvitationsÉvénementsParIdDestinataire",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateur/invitations/destinataire",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateur",
+										"invitations",
+										"destinataire"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -2858,6 +3169,100 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "OrganisationMembres Copy",
+					"item": [
+						{
+							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateurs/organisations",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateurs",
+										"organisations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres ajouterParticipant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembers enleverParticipant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/2/participants/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"2",
+										"participants",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			],
 			"auth": {
@@ -2959,9 +3364,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/",
+					"raw": "{{serveur}}:8080/",
 					"host": [
-						"localhost"
+						"{{serveur}}"
 					],
 					"port": "8080",
 					"path": [
@@ -2995,7 +3400,7 @@
 	"variable": [
 		{
 			"key": "serveur",
-			"value": "localhost:8080",
+			"value": "localhost",
 			"type": "string"
 		},
 		{
