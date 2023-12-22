@@ -13,7 +13,7 @@ class OrganisationService(val dao: OrganisationDAO) {
         if (!dao.validerOrganisationCreation(codeUtilisateur)){
             return null
         }
-        return dao.ajouter(element, codeUtilisateur)
+        return dao.ajouterOrganisation(element, codeUtilisateur)
     }
     fun supprimerParID(id: Int, codeUtilisateur: String): Organisation? {
         if (!dao.validerUtilisateur(id, codeUtilisateur)) { throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette organisation") }
