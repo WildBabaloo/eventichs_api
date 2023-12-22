@@ -71,5 +71,9 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
 
        // return false
     }
-
+    override fun validerOrganisateur(code_util: String): Boolean {
+        return db.query(
+            "select * from Organisation where codeUtilisateur = '$code_util'", OrganisationMapper()
+        ).isNotEmpty()
+    }
 }
