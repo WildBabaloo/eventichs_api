@@ -43,11 +43,9 @@ class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEven
             val sql = "SELECT organisation_id FROM Événement WHERE id = ?"
             val idOrg =  db.queryForObject(sql, Long::class.java, eventId)
             val organisation = db.queryForObject("SELECT * FROM Organisation WHERE id = $idOrg", OrganisationMapper())
-
-            if (organisation?.codeUtilisateur == codeUtilisateur) {
-                return true
-            }
-            return false
+            print(codeUtilisateur)
+            print(organisation?.codeUtilisateur)
+            return organisation?.codeUtilisateur == codeUtilisateur
         } catch (e: Exception) {
             return false
         }
