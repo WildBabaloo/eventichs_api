@@ -22,5 +22,5 @@ class UtilisateurEvenementService(val dao : UtilisateurEvenementDAO) {
 
     fun ajouter(ÉvénementId: Int, name : String): UtilisateurÉvénement? = dao.ajouter(UtilisateurÉvénement(name, ÉvénementId))
 
-    fun supprimerParUtilisateur(name : String) : UtilisateurÉvénement? = dao.supprimerParUtilisateurID(name)
+    fun supprimerParUtilisateur(ÉvénementId: Int, name : String) : UtilisateurÉvénement? = dao.supprimerParID( ÉvénementId,name)
 }
