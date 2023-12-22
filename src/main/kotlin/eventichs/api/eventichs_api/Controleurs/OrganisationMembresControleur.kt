@@ -74,11 +74,11 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
             ApiResponse(responseCode = "404", description = "Le participant n'existe pas"),
             ApiResponse(responseCode = "409", description = "Le participant est déja dans l'organisation")]
     )
-    @PostMapping(value = ["/organisations/{codeOrganisation}/participants"])
-    fun ajouterParticipant(@PathVariable codeOrganisation: Int, @RequestBody codeUtilisateur: String, principal: Principal?): ResponseEntity<OrganisationMembres> {
+    @PostMapping(value = ["/organisations/participants"])
+    fun ajouterParticipant(@RequestBody uneOrganisationMembres: OrganisationMembres, principal: Principal?): ResponseEntity<OrganisationMembres> {
         if (principal == null) { throw PasConnectéException("L'utilisateur n'est pas connecté.") }
 
-        val organisationMembres = service.ajouterParticipant(codeOrganisation, codeUtilisateur, principal.name)
+        val organisationMembres = service.ajouterParticipant(uneOrganisationMembres, principal.name)
         if (organisationMembres != null) {
             println(organisationMembres)
             val uri = ServletUriComponentsBuilder
@@ -89,7 +89,7 @@ class OrganisationMembresControleur(val service: OrganisationMembresService) {
 
             return ResponseEntity.created(uri).body(organisationMembres)
         }
-        return throw ConflitAvecUneRessourceExistanteException("Cet utilisateur dont l'id est $codeUtilisateur est déjà membre de cette organisation dont l'id est $codeOrganisation")
+        return throw ConflitAvecUneRessourceExistanteException("Cet utilisateur dont l'id est ${uneOrganisationMembres.code_utilisateur} est déjà membre de cette organisation dont l'id est ${uneOrganisationMembres.id_organisation}")
     }
 
 

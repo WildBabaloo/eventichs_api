@@ -1,6 +1,7 @@
 package eventichs.api.eventichs_api.DAO
 
 
+import eventichs.api.eventichs_api.Exceptions.ConflitAvecUneRessourceExistanteException
 import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Mapper.OrganisationMembresMapper
@@ -10,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
+import java.lang.Exception
 
 @Repository
 class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMembersDAO {
@@ -39,12 +41,18 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
     }
 
 override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
-    val sql = "INSERT INTO Organisations_membres (id_organisation, code_utilisateur) VALUES (?, ?)"
-    db.update(sql, codeOrganisation, codeUtilisateur)
 
-    val selectSql = "SELECT * FROM Organisations_membres WHERE id_organisation = ? AND code_utilisateur = ?"
+    try {
+        val sql =
+            "INSERT INTO organisations_membres (id_organisation, code_utilisateur) VALUES (${codeOrganisation}, '${codeUtilisateur}')"
+        db.update(sql)
+    }
+    catch(e : Exception) {
+        throw ConflitAvecUneRessourceExistanteException("L'utilisateur est déjà membre de cette organisation.")
+    }
+    val selectSql = "SELECT * FROM Organisations_membres WHERE id_organisation = ${codeOrganisation} AND code_utilisateur = '${codeUtilisateur}'"
 
-    return db.queryForObject(selectSql, OrganisationMembresMapper(), codeOrganisation, codeUtilisateur)
+    return db.queryForObject(selectSql, OrganisationMembresMapper())
 }
 
     override fun enleverParticipant(codeOrganisation: Int, codeUtilisateur: String) {

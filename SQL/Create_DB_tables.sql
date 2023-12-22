@@ -62,7 +62,7 @@ CREATE TABLE Organisations_membres (
     code_utilisateur VARCHAR(255) NOT NULL,
     PRIMARY KEY (id_organisation,code_utilisateur),
     FOREIGN KEY (id_organisation) REFERENCES Organisation(id),
-    FOREIGN KEY (code_utilisateur) REFERENCES Utilisateur(code)
+    FOREIGN KEY (code_utilisateur) REFERENCES Utilisateur(code)  ON DELETE CASCADE
 );
 -- -----------------------------------------------------------------------------------------------
 -- TABLE INVITATION_ORGANISATION
