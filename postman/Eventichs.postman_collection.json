@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "35ccc8f8-2879-4518-be44-eb3ddca65e5e",
+		"_postman_id": "3f537d91-5c72-4ced-8610-5b03873df1fe",
 		"name": "Eventichs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30691372",
-		"_collection_link": "https://grey-comet-547937.postman.co/workspace/Eventichs~a0ab6362-b950-47cf-8071-cfae093f57a6/collection/30691372-35ccc8f8-2879-4518-be44-eb3ddca65e5e?action=share&source=collection_link&creator=30691372"
+		"_exporter_id": "30691372"
 	},
 	"item": [
 		{
@@ -660,7 +659,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"raw": "{\r\n    \"codeUtilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1552,7 +1551,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id_organisation\" : 1,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"raw": "{\r\n    \"id_organisation\": 1,\r\n    \"code_utilisateur\": \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1560,14 +1559,13 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
+									"raw": "localhost:8080/organisations/participants",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"1",
 										"participants"
 									]
 								}
@@ -2411,15 +2409,6 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "localhost:8080/organisations/1/participants",
 									"host": [
@@ -3275,15 +3264,6 @@
 							"request": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "localhost:8080/organisations/1/participants",
 									"host": [
