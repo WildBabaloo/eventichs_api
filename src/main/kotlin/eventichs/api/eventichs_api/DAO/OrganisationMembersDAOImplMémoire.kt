@@ -38,15 +38,14 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
 
     }
 
-    override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
-        db.update(
-            "insert into Organisations_membres values (?, ?)",
-            codeOrganisation, codeUtilisateur
-        )
+override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
+    val sql = "INSERT INTO Organisations_membres (id_organisation, code_utilisateur) VALUES (?, ?)"
+    db.update(sql, codeOrganisation, codeUtilisateur)
 
-        return db.queryForObject("select * from Organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur", OrganisationMembresMapper())
+    val selectSql = "SELECT * FROM Organisations_membres WHERE id_organisation = ? AND code_utilisateur = ?"
 
-    }
+    return db.queryForObject(selectSql, OrganisationMembresMapper(), codeOrganisation, codeUtilisateur)
+}
 
     override fun enleverParticipant(codeOrganisation: Int, codeUtilisateur: String) {
         db.update(
