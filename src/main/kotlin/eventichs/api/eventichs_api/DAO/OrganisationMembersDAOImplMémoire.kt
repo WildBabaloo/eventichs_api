@@ -1,33 +1,56 @@
 package eventichs.api.eventichs_api.DAO
 
 
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
+import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Mapper.OrganisationMembresMapper
+import eventichs.api.eventichs_api.Modèle.Organisation
 import eventichs.api.eventichs_api.Modèle.OrganisationMembres
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
 
 @Repository
 class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMembersDAO {
     override fun chercherTous(): List<OrganisationMembres> =
         db.query("select * from Organisations_membres", OrganisationMembresMapper())
-    override fun chercherParUtilisateurID(id: Int): List<OrganisationMembres> =
-        db.query("select * from Organisations_membres where id_utilisateur = $id", OrganisationMembresMapper())
+    override fun chercherParUtilisateurID(codeUtilisateur: String): List<OrganisationMembres> =
+        db.query("select * from Organisations_membres where code_utilisateur = '$codeUtilisateur'", OrganisationMembresMapper())
 
     override fun chercherParOrganisationID(id: Int): List<OrganisationMembres> =
          db.query("select * from Organisations_membres where id_organisation = $id", OrganisationMembresMapper())
 
-    override fun ajouterParticipant(codeOrganisation: Int, IdParticipant: Int){
-        db.update(
-            "Update Organisations_membres set id_utilisateur=$IdParticipant where id_organisation=$codeOrganisation"
-            , OrganisationMembresMapper()
-        )
+    override fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean {
+        val organisation: Organisation?
+        println("Principal Name $codeUtilisateur")
+        try {
+            organisation = db.queryForObject("select * from organisation where codeUtilisateur = '$codeUtilisateur'", OrganisationMapper())
+        } catch (e: EmptyResultDataAccessException) {
+            throw RessourceInexistanteException("L'organisation associé à le code utilisateur $codeUtilisateur n'existe pas!")
+        }
+
+        if (organisation?.codeUtilisateur == codeUtilisateur) {
+            return true
+        }
+
+        return false
 
     }
 
-    override fun enleverParticipant(codeOrganisation: Int, idParticipant: Int) {
+    override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
         db.update(
-            "Update Organisations_membres set id_utilisateur= null where id_organisation= $codeOrganisation and id_utilisateur = $idParticipant"
-            , OrganisationMembresMapper()
+            "insert into organisations_membres values (?, ?)",
+            codeOrganisation, codeUtilisateur
+        )
+
+        return db.queryForObject("select * from Organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur", OrganisationMembresMapper())
+
+    }
+
+    override fun enleverParticipant(codeOrganisation: Int, codeUtilisateur: String) {
+        db.update(
+            "delete from organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur"
         )
     }
 

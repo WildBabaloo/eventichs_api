@@ -35,4 +35,5 @@ INSERT INTO `eventichsBD`.`Invitation_organisation` (`idOrganisation`, `jeton`, 
 
 -- Insertion Organisations_membres
 INSERT INTO `eventichsBD`.`Organisations_membres` (`id_organisation`, `code_utilisateur`) VALUES ('1', 'auth0|656d3f1aa19599c9209a6371');
+INSERT INTO `eventichsBD`.`Organisations_membres` (`id_organisation`, `code_utilisateur`) VALUES ('2', 'auth0|656d3d344178aefc03429343');
 

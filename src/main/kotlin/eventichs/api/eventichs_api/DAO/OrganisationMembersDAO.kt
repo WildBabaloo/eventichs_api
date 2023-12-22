@@ -6,12 +6,14 @@ interface OrganisationMembersDAO: DAO<OrganisationMembres> {
 
     override fun chercherTous(): List<OrganisationMembres>
 
-    fun ajouterParticipant(codeOrganisation: Int, IdParticipant: Int)
+    fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres?
 
-    fun enleverParticipant(codeOrganisation: Int, idParticipant: Int)
+    fun enleverParticipant(codeOrganisation: Int, codeUtilisateur: String)
 
-    fun chercherParUtilisateurID(id: Int): List<OrganisationMembres>
+    fun chercherParUtilisateurID(codeUtilisateur: String): List<OrganisationMembres>
 
     fun chercherParOrganisationID(id: Int): List<OrganisationMembres>
+
+    fun validerUtilisateur(id: Int, codeUtilisateur: String): Boolean
 
 }
