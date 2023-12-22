@@ -30,7 +30,8 @@ class EvenementService(val dao : EvenementDAO) {
         return dao.modifier(id,evenement)
     }
     fun ajouterEvenement(evenement: Événement, name: String) : Événement? {
-        if (!evenement.id?.let { dao.validerOrganisateur(it,name) }!!){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+        if (!dao.validerOrganisateur(evenement.organisation,name)){throw DroitAccèsInsuffisantException("Droits d'accès insuffisants")}
+
         return dao.ajouter(evenement)
     }
 }

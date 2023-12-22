@@ -12,66 +12,53 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
-    val selectQuery = "select Événement.id, Événement.nom, Événement.adresse, Événement.dateDebut, Événement.dateFin, Événement.type, Catégorie.nom as categorie, Événement.description, Événement.image, Organisation.nomOrganisation as organisation from Événement join Catégorie on Événement.categorie_id = Catégorie.id join Organisation on Événement.organisation_id = Organisation.id"
+    val selectQuery = "SELECT * FROM Événement "
     override fun chercherTous(): List<Événement> =
             db.query(selectQuery, EvenementMapper())
 
     override fun chercherParID(id: Int): Événement? =
-            db.queryForObject("$selectQuery where Événement.id = $id", EvenementMapper())
+            db.queryForObject("$selectQuery where id = $id", EvenementMapper())
     override fun chercherEvenementPublic(): List<Événement> =
-        db.query("$selectQuery where Événement.type = 'public'", EvenementMapper())
+        db.query("$selectQuery where type = 'public'", EvenementMapper())
 
     override fun chercherParOrganisation(organisation: Int): List<Événement> {
 
-        return db.query("$selectQuery where Événement.organisation_id = $organisation", EvenementMapper())
+        return db.query("$selectQuery where organisation_id = $organisation", EvenementMapper())
     }
 
-    override fun chercherParCategorie(categorie: String): List<Événement> {
-        val org =
-            db.queryForObject("select * from Catégorie where nomOrganisation = $categorie", OrganisationMapper())
-        val id = org?.nomOrganisation
-        return db.query("$selectQuery where Événement.organisation_id = $id", EvenementMapper())
-    }
+
 
     override fun supprimerParID(id: Int): Événement? {
-        val element = db.queryForObject("$selectQuery where Événement.id = $id", EvenementMapper())
+        val element = db.queryForObject("$selectQuery where id = $id", EvenementMapper())
         db.update("DELETE from Événement where id = $id")
         return element
     }
 
     override fun ajouter(element: Événement): Événement? {
-        val categorie = element.categorie
-        val categorieID = db.queryForObject("select * from Catégorie where Catégorie.nom = '$categorie'", CatégorieMapper())
-        val organisation = element.organisation
-        val org = db.queryForObject("select * from Organisation where Organisation.nomOrganisation = '$organisation'", OrganisationMapper())
-            db.update(
-                    "insert into Événement values ( ?, ?, ? , ?, ?, ?, ?, ?, ?)",
-                    element.nom,
-                    element.adresse,
-                    element.dateDebut,
-                    element.dateFin,
-                    element.type,
-                    categorieID?.id,
-                    element.description,
-                    element.image,
-                    org?.id)
-            return element
+        db.update(
+                "insert into Événement(nom, adresse, dateDebut, dateFin, type, categorie_id, description,image,organisation_id) values ( ?, ?, ? , ?, ?, ?, ?, ?, ?)",
+                element.nom,
+                element.adresse,
+                element.dateDebut,
+                element.dateFin,
+                element.type,
+                element.categorie,
+                element.description,
+                element.image,
+                element.organisation)
+        return element
     }
 
     override fun modifier(id : Int, element: Événement): Événement{
-        val categorie = element.categorie
-        val categorieID = db.queryForObject("select * from Catégorie where Catégorie.nom = '$categorie'", CatégorieMapper())
-        val organisation = element.organisation
-        val org = db.queryForObject("select * from Organisation where Organisation.nomOrganisation = '$organisation'", OrganisationMapper())
         db.update("UPDATE Événement SET nom = ? WHERE id =$id", element.nom)
         db.update("UPDATE Événement SET adresse = ? WHERE id =$id", element.adresse)
         db.update("UPDATE Événement SET dateDebut = ? WHERE id =$id", element.dateDebut)
         db.update("UPDATE Événement SET dateFin = ? WHERE id =$id",element.dateFin)
         db.update("UPDATE Événement SET type = ? WHERE id =$id",element.type)
-        db.update("UPDATE Événement SET categorie_id = ? WHERE id =$id",categorieID?.id)
+        db.update("UPDATE Événement SET categorie_id = ? WHERE id =$id", element.categorie)
         db.update("UPDATE Événement SET description = ? WHERE id =$id",element.description)
         db.update("UPDATE Événement SET image = ? WHERE id =$id", element.image)
-        db.update("UPDATE Événement SET organisation_id = ? WHERE id =$id", org?.id)
+        db.update("UPDATE Événement SET organisation_id = ? WHERE id =$id", element.organisation)
 
         return element
     }
@@ -79,15 +66,15 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
         val dao = UtilisateurEvenementDAOImplMemoire(db)
         return  dao.chercherParID(idEvent, codeUtil) != null
     }
-    override fun validerOrganisateur(idEvent: Int, codeUtil: String): Boolean {
+    override fun validerOrganisateur(idOrganisation: Int, codeUtil: String): Boolean {
         try {
-            val organisation = db.queryForObject("SELECT organisation_id FROM Événement WHERE id = ?", OrganisationMapper(), idEvent)
             val orgdao = OrganisationDAOImplMémoire(db)
-            val organisationMembres = orgdao.chercherParID(organisation!!.id)
+            val organisationMembres = orgdao.chercherParID(idOrganisation)
 
             // Check if the organization exists and the organizer's code matches
             return organisationMembres?.codeUtilisateur == codeUtil
         } catch (e: EmptyResultDataAccessException) {
+
             return false
         } catch (e: Exception) {
             throw RessourceInexistanteException("An error occurred while validating the organizer", e)
@@ -100,6 +87,9 @@ class EvenementDAOImplMemoire(val db: JdbcTemplate) : EvenementDAO {
     }
     override fun modifier(element: Événement): Événement? {
         TODO("Not yet implemented")
+    }
+    override fun chercherParCategorie(categorie: String): List<Événement> {
+        TODO("Not Used")
     }
 }
 

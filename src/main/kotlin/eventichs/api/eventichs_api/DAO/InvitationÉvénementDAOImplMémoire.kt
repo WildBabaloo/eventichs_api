@@ -1,9 +1,7 @@
 package eventichs.api.eventichs_api.DAO
 
-import eventichs.api.eventichs_api.Mapper.EvenementMapper
 import eventichs.api.eventichs_api.Mapper.InvitationÉvénementMapper
 import eventichs.api.eventichs_api.Modèle.InvitationÉvénement
-import eventichs.api.eventichs_api.Modèle.Événement
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
@@ -24,8 +22,8 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
 
     override fun modifier(id: Int, element: InvitationÉvénement): InvitationÉvénement? {
         db.update("UPDATE Invitation_événement SET " +
-                "idExpediteur = ?," +
-                "idDestinataire = ?," +
+                "codeExpediteur = ?," +
+                "codeDestinataire = ?," +
                 "idÉvénement = ?," +
                 "jeton = ?," +
                 "status = ?" +

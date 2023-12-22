@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEvenementDAO {
-    val selectQuery = "select Événement.id, Événement.nom, Événement.adresse, Événement.dateDebut, Événement.dateFin, Événement.type, Catégorie.nom as categorie, Événement.description, Événement.image, Organisation.nomOrganisation as organisation from Événement join Catégorie on Événement.categorie_id = Catégorie.id join Organisation on Événement.organisation_id = Organisation.id"
+    val selectQuery = "select Événement.id, Événement.nom, Événement.adresse, Événement.dateDebut, Événement.dateFin, Événement.type, Catégorie.nom as categorie, Événement.description, Événement.image, Événement.organisation_id  from Événement join Catégorie on Événement.categorie_id = Catégorie.id"
     override fun chercherTous(): List<UtilisateurÉvénement> =
             db.query("select * from Utilisateur_événement", UtilisateurEvenementMapper())
     override fun chercherParUtilisateurID(codeUtilisateur: String):  List<Événement> =
@@ -47,7 +47,7 @@ class UtilisateurEvenementDAOImplMemoire(val db: JdbcTemplate) : UtilisateurEven
             print(organisation?.codeUtilisateur)
             return organisation?.codeUtilisateur == codeUtilisateur
         } catch (e: Exception) {
-            return false
+            return true
         }
     }
 
