@@ -3,37 +3,13 @@
 		"_postman_id": "35ccc8f8-2879-4518-be44-eb3ddca65e5e",
 		"name": "Eventichs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30534401",
-		"_collection_link": "https://grey-comet-547937.postman.co/workspace/Eventichs~a0ab6362-b950-47cf-8071-cfae093f57a6/collection/30691372-35ccc8f8-2879-4518-be44-eb3ddca65e5e?action=share&source=collection_link&creator=30534401"
+		"_exporter_id": "30691372",
+		"_collection_link": "https://grey-comet-547937.postman.co/workspace/Eventichs~a0ab6362-b950-47cf-8071-cfae093f57a6/collection/30691372-35ccc8f8-2879-4518-be44-eb3ddca65e5e?action=share&source=collection_link&creator=30691372"
 	},
 	"item": [
 		{
 			"name": "Sans Auth - Pas connecté",
 			"item": [
-				{
-					"name": "Utilisateur",
-					"item": [
-						{
-							"name": "chercherUtilisateurParId()",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{serveur}}:8080/utilisateurs/2",
-									"host": [
-										"{{serveur}}"
-									],
-									"port": "8080",
-									"path": [
-										"utilisateurs",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
 				{
 					"name": "InvitationÉvénement",
 					"item": [
@@ -224,11 +200,24 @@
 					"item": [
 						{
 							"name": "InvitationOrganisation chercherParID()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/organisations/invitations/1",
+									"raw": "localhost:8080/organisations/invitations/2",
 									"host": [
 										"localhost"
 									],
@@ -236,7 +225,7 @@
 									"path": [
 										"organisations",
 										"invitations",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -244,12 +233,25 @@
 						},
 						{
 							"name": "InvitationOrganisation demandeJoindreOrganisation()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": 0,\r\n    \"jeton\": null,\r\n    \"status\": \"envoyé\",\r\n    \"organisation\": {\r\n        \"id\": 1,\r\n        \"idUtilisateur\": 1,\r\n        \"nomOrganisation\": \"Illuminati\",\r\n        \"catégorie_id\": 1,\r\n        \"estPublic\": false\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\": 3,\r\n        \"nom\": \"sam\",\r\n        \"prénom\": \"drolet\",\r\n        \"mot_de_passe\": \"samgmail@gmail.com\",\r\n        \"email\": \"password123\"\r\n    }\r\n}",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"utilisateur\": {\r\n        \"code\": \"auth0|656d2dbea19599c9209a4f01\",\r\n        \"email\": \"samdrolet@gmail.com\",\r\n        \"nom\": \"Drolet\",\r\n        \"prénom\": \"Sam\"\r\n    },\r\n    \"organisation\": {\r\n        \"id\": 1,\r\n        \"codeUtilisateur\": \"auth0|656d2dbea19599c9209a4f01\",\r\n        \"nomOrganisation\": \"Rosemont\",\r\n        \"catégorie_id\": 1,\r\n        \"estPublic\": false\r\n    },\r\n    \"jeton\": null,\r\n    \"status\": \"envoyé\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -257,15 +259,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/invitations/",
+									"raw": "localhost:8080/organisations/invitations",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"invitations",
-										""
+										"invitations"
 									]
 								}
 							},
@@ -273,6 +274,19 @@
 						},
 						{
 							"name": "InvitationOrganisation chercherParOrganisation()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -293,6 +307,19 @@
 						},
 						{
 							"name": "InvitationOrganisation obtenirInvitationParticipant()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -313,6 +340,19 @@
 						},
 						{
 							"name": "InvitationOrganisation changerStatus",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [],
@@ -334,19 +374,40 @@
 							"response": []
 						},
 						{
-							"name": "InvitationOrganisation crééJeton()",
+							"name": "InvitationOrganisation crééJeton() Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"nomOrganisation\": \"Rosemont\",\r\n    \"codeUtilisateur\": \"auth0|656d2dbea19599c9209a4f01\",\r\n    \"catégorie_id\": 1,\r\n    \"estPublic\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "localhost:8080/organisations/2/jetons",
+									"raw": "localhost:8080/organisations/jetons",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"2",
 										"jetons"
 									]
 								}
@@ -355,6 +416,19 @@
 						},
 						{
 							"name": "InvitationOrganisation saisirJeton()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [],
@@ -384,6 +458,19 @@
 						},
 						{
 							"name": "InvitationOrganisation effacerInvitation()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "DELETE",
 								"header": [],
@@ -403,6 +490,10 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Categories",
+					"item": []
 				},
 				{
 					"name": "Evenements",
@@ -512,6 +603,101 @@
 									"port": "8080",
 									"path": [
 										"evenements"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrganisationMembres",
+					"item": [
+						{
+							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateurs/1/organisations",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateurs",
+										"1",
+										"organisations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres ajouterParticipant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembers enleverParticipant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/2/participants/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"2",
+										"participants",
+										"2"
 									]
 								}
 							},
@@ -656,92 +842,21 @@
 					]
 				},
 				{
-					"name": "OrganisationMembres",
+					"name": "Utilisateur",
 					"item": [
 						{
-							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"name": "chercherUtilisateurParId()",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/utilisateurs/1/organisations",
+									"raw": "{{serveur}}:8080/utilisateurs/2",
 									"host": [
-										"localhost"
+										"{{serveur}}"
 									],
 									"port": "8080",
 									"path": [
 										"utilisateurs",
-										"1",
-										"organisations"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"1",
-										"participants"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembres ajouterParticipant",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"1",
-										"participants"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembers enleverParticipant",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/organisations/2/participants/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"2",
-										"participants",
 										"2"
 									]
 								}
@@ -749,10 +864,6 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "Categories",
-					"item": []
 				}
 			],
 			"auth": {
@@ -782,30 +893,6 @@
 		{
 			"name": "Joe - Connecté",
 			"item": [
-				{
-					"name": "Utilisateur Copy",
-					"item": [
-						{
-							"name": "chercherUtilisateurParId()",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/utilisateurs/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"utilisateurs",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
 				{
 					"name": "InvitationÉvénement Copy",
 					"item": [
@@ -996,6 +1083,30 @@
 					"item": [
 						{
 							"name": "InvitationOrganisation chercherParID()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Code de retour\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status\", function () {\r",
+											"    pm.response.to.be.ok;\r",
+											" });\r",
+											"pm.test(\"Contient un body json\", function () {   \r",
+											"    pm.response.to.be.withBody;\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"const invitationOrganisation = JSON.parse(pm.collectionVariables.get(\"invitationOrganisation1\"));\r",
+											"pm.test(\"Contenu du body\", function () {\r",
+											"    pm.response.to.have.jsonBody(invitationOrganisation);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -1016,6 +1127,19 @@
 						},
 						{
 							"name": "InvitationOrganisation demandeJoindreOrganisation()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -1029,15 +1153,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/invitations/",
+									"raw": "localhost:8080/organisations/invitations",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"invitations",
-										""
+										"invitations"
 									]
 								}
 							},
@@ -1045,6 +1168,30 @@
 						},
 						{
 							"name": "InvitationOrganisation chercherParOrganisation()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Code de retour\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status\", function () {\r",
+											"    pm.response.to.be.ok;\r",
+											" });\r",
+											"pm.test(\"Contient un body json\", function () {   \r",
+											"    pm.response.to.be.withBody;\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"const invitationOrganisation = JSON.parse(pm.collectionVariables.get(\"invitationOrganisation1Liste\"));\r",
+											"pm.test(\"Contenu du body\", function () {\r",
+											"    pm.response.to.have.jsonBody(invitationOrganisation);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -1065,6 +1212,22 @@
 						},
 						{
 							"name": "InvitationOrganisation obtenirInvitationParticipant()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Code de retour\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status\", function () {\r",
+											"    pm.response.to.be.ok;\r",
+											" });"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -1085,12 +1248,28 @@
 						},
 						{
 							"name": "InvitationOrganisation changerStatus",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Code de retour\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status\", function () {\r",
+											"    pm.response.to.be.ok;\r",
+											" });"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": 1,\r\n    \"utilisateur\": {\r\n        \"code\": \"auth0|656d3f8e4178aefc03429606\",\r\n        \"email\": \"kierangreene@gmail.com\",\r\n        \"nom\": \"Greene\",\r\n        \"prénom\": \"Kieran\"\r\n    },\r\n    \"organisation\": {\r\n        \"id\": 1,\r\n        \"codeUtilisateur\": \"auth0|656d2dbea19599c9209a4f01\",\r\n        \"nomOrganisation\": \"Rosemont\",\r\n        \"catégorie_id\": 1,\r\n        \"estPublic\": false\r\n    },\r\n    \"jeton\": null,\r\n    \"status\": \"envoyé\"\r\n}",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"utilisateur\": {\r\n        \"code\": \"auth0|656d3f8e4178aefc03429606\",\r\n        \"email\": \"kierangreene@gmail.com\",\r\n        \"nom\": \"Greene\",\r\n        \"prénom\": \"Kieran\"\r\n    },\r\n    \"organisation\": {\r\n        \"id\": 1,\r\n        \"codeUtilisateur\": \"auth0|656d2dbea19599c9209a4f01\",\r\n        \"nomOrganisation\": \"Rosemont\",\r\n        \"catégorie_id\": 1,\r\n        \"estPublic\": false\r\n    },\r\n    \"jeton\": null,\r\n    \"status\": \"accepté\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1115,12 +1294,25 @@
 						},
 						{
 							"name": "InvitationOrganisation crééJeton()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Code de retour\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"organisation\": {\r\n        \"id\": 2,\r\n        \"nomOrganisation\": \"Rosemont\",\r\n        \"codeUtilisateur\": \"auth0|656d2dbea19599c9209a4f01\",\r\n        \"catégorie_id\": 1,\r\n        \"estPublic\": false\r\n    }\r\n}",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"nomOrganisation\": \"Rosemont\",\r\n    \"codeUtilisateur\": \"auth0|656d2dbea19599c9209a4f01\",\r\n    \"catégorie_id\": 1,\r\n    \"estPublic\": false\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1143,6 +1335,19 @@
 						},
 						{
 							"name": "InvitationOrganisation effacerInvitation()",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Code de retour\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "DELETE",
 								"header": [],
@@ -1180,12 +1385,213 @@
 								}
 							},
 							"response": []
-						},
+						}
+					]
+				},
+				{
+					"name": "Evenements Copy",
+					"item": [
 						{
-							"name": "New Request",
+							"name": "localhost:8080/evenements/1",
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": {
+									"raw": "{{serveur}}:8080/evenements/1",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "localhost:8080/evenements",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 9,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Party\",\r\n    \"description\": \"Trop cool!\",\r\n    \"image\": \"explosion.jpg\",\r\n    \"organisation\": \"Rosemont\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serveur}}:8080/evenements",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "localhost:8080/evenements Copy",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion de la lune\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2023-12-12\",\r\n    \"dateFin\": \"2023-12-30\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Funrérailles\",\r\n    \"description\": \"Trop cool!\",\r\n    \"photo\": \"explosion.jpg\",\r\n    \"organisation\": \"FBI\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{serveur}}:8080/evenements",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "localhost:8080/evenements/3",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{serveur}}:8080/evenements/3",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "localhost:8080/evenements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{serveur}}:8080/evenements",
+									"host": [
+										"{{serveur}}"
+									],
+									"port": "8080",
+									"path": [
+										"evenements"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrganisationMembres Copy",
+					"item": [
+						{
+							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateurs/organisations",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateurs",
+										"organisations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres ajouterParticipant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_organisation\" : 1,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembers enleverParticipant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/2/participants/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"2",
+										"participants",
+										"2"
+									]
+								}
 							},
 							"response": []
 						}
@@ -1329,207 +1735,22 @@
 					]
 				},
 				{
-					"name": "OrganisationMembres Copy",
+					"name": "Utilisateur Copy",
 					"item": [
 						{
-							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"name": "chercherUtilisateurParId()",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/utilisateurs/organisations",
+									"raw": "localhost:8080/utilisateurs/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"utilisateurs",
-										"organisations"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"1",
-										"participants"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembres ajouterParticipant",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id_organisation\" : 1,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"1",
-										"participants"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembers enleverParticipant",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/organisations/2/participants/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"2",
-										"participants",
 										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Evenements Copy",
-					"item": [
-						{
-							"name": "localhost:8080/evenements/1",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{serveur}}:8080/evenements/1",
-									"host": [
-										"{{serveur}}"
-									],
-									"port": "8080",
-									"path": [
-										"evenements",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "localhost:8080/evenements",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion du soleil\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2012-12-12\",\r\n    \"dateFin\": \"2013-01-01\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Party\",\r\n    \"description\": \"Trop cool!\",\r\n    \"image\": \"explosion.jpg\",\r\n    \"organisation\": \"Rosemont\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{serveur}}:8080/evenements",
-									"host": [
-										"{{serveur}}"
-									],
-									"port": "8080",
-									"path": [
-										"evenements"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "localhost:8080/evenements Copy",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id\": 4,\r\n    \"nom\": \"Explosion de la lune\",\r\n    \"adresse\": \"1 rue de la rue\",\r\n    \"dateDebut\": \"2023-12-12\",\r\n    \"dateFin\": \"2023-12-30\",\r\n    \"type\": \"public\",\r\n    \"categorie\": \"Funrérailles\",\r\n    \"description\": \"Trop cool!\",\r\n    \"photo\": \"explosion.jpg\",\r\n    \"organisation\": \"FBI\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{serveur}}:8080/evenements",
-									"host": [
-										"{{serveur}}"
-									],
-									"port": "8080",
-									"path": [
-										"evenements"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "localhost:8080/evenements/3",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{serveur}}:8080/evenements/3",
-									"host": [
-										"{{serveur}}"
-									],
-									"port": "8080",
-									"path": [
-										"evenements",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "localhost:8080/evenements",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{serveur}}:8080/evenements",
-									"host": [
-										"{{serveur}}"
-									],
-									"port": "8080",
-									"path": [
-										"evenements"
 									]
 								}
 							},
@@ -1652,30 +1873,6 @@
 		{
 			"name": "Sam - Connecté",
 			"item": [
-				{
-					"name": "Utilisateur Copy",
-					"item": [
-						{
-							"name": "chercherUtilisateurParId()",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/utilisateurs/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"utilisateurs",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
 				{
 					"name": "InvitationÉvénement Copy",
 					"item": [
@@ -1899,15 +2096,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/invitations/",
+									"raw": "localhost:8080/organisations/invitations",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"invitations",
-										""
+										"invitations"
 									]
 								}
 							},
@@ -1990,7 +2186,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"organisation\": {\r\n        \"id\": 1,\r\n        \"codeUtilisateur\": \"auth0|656d2dbea19599c9209a4f01\",\r\n        \"nomOrganisation\": \"Rosemont\",\r\n        \"catégorie_id\": 1,\r\n        \"estPublic\": false\r\n    }\r\n}",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"nomOrganisation\": \"Rosemont\",\r\n    \"codeUtilisateur\": \"auth0|656d2dbea19599c9209a4f01\",\r\n    \"catégorie_id\": 1,\r\n    \"estPublic\": false\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2169,6 +2365,100 @@
 					]
 				},
 				{
+					"name": "OrganisationMembres Copy",
+					"item": [
+						{
+							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateurs/organisations",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateurs",
+										"organisations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres ajouterParticipant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembers enleverParticipant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/2/participants/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"2",
+										"participants",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Organisation Copy",
 					"item": [
 						{
@@ -2306,91 +2596,21 @@
 					]
 				},
 				{
-					"name": "OrganisationMembres Copy",
+					"name": "Utilisateur Copy",
 					"item": [
 						{
-							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"name": "chercherUtilisateurParId()",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/utilisateurs/organisations",
+									"raw": "localhost:8080/utilisateurs/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"utilisateurs",
-										"organisations"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"1",
-										"participants"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembres ajouterParticipant",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"1",
-										"participants"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembers enleverParticipant",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/organisations/2/participants/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"2",
-										"participants",
 										"2"
 									]
 								}
@@ -2496,30 +2716,6 @@
 		{
 			"name": "Kieran - Connecté",
 			"item": [
-				{
-					"name": "Utilisateur Copy",
-					"item": [
-						{
-							"name": "chercherUtilisateurParId()",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/utilisateurs/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"utilisateurs",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
 				{
 					"name": "InvitationÉvénement Copy",
 					"item": [
@@ -2743,15 +2939,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/organisations/invitations/",
+									"raw": "localhost:8080/organisations/invitations",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"organisations",
-										"invitations",
-										""
+										"invitations"
 									]
 								}
 							},
@@ -3034,6 +3229,100 @@
 					]
 				},
 				{
+					"name": "OrganisationMembres Copy",
+					"item": [
+						{
+							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/utilisateurs/organisations",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"utilisateurs",
+										"organisations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembres ajouterParticipant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/organisations/1/participants",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"1",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "OrganisationMembers enleverParticipant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/organisations/2/participants/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"organisations",
+										"2",
+										"participants",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Organisation Copy",
 					"item": [
 						{
@@ -3171,91 +3460,21 @@
 					]
 				},
 				{
-					"name": "OrganisationMembres Copy",
+					"name": "Utilisateur Copy",
 					"item": [
 						{
-							"name": "OrganisationMembres obtenirOrganisationsParticipantParID",
+							"name": "chercherUtilisateurParId()",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/utilisateurs/organisations",
+									"raw": "localhost:8080/utilisateurs/2",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"utilisateurs",
-										"organisations"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembres obtenirParticipantDansOrganisationParID",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"1",
-										"participants"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembres ajouterParticipant",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"id_organisation\" : 2,\r\n    \"code_utilisateur\" : \"auth0|656d3cb6a19599c9209a6099\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/organisations/1/participants",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"1",
-										"participants"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "OrganisationMembers enleverParticipant",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/organisations/2/participants/2",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"organisations",
-										"2",
-										"participants",
 										"2"
 									]
 								}
@@ -3476,6 +3695,16 @@
 		{
 			"key": "kieranMDP",
 			"value": "kieran_greene123",
+			"type": "string"
+		},
+		{
+			"key": "invitationOrganisation1",
+			"value": "{\"id\":2,\"utilisateur\":{\"code\":\"auth0|656d2dbea19599c9209a4f01\",\"email\":\"joegmail@gmail.com\",\"nom\":\"Tremblay\",\"prénom\":\"Joe\"},\"organisation\":{\"id\":1,\"codeUtilisateur\":\"auth0|656d2dbea19599c9209a4f01\",\"nomOrganisation\":\"Rosemont\",\"catégorie_id\":2,\"estPublic\":true},\"jeton\":\"9EIUYTBB\",\"status\":\"accepté\"}",
+			"type": "string"
+		},
+		{
+			"key": "invitationOrganisation1Liste",
+			"value": "[{\"id\":1,\"utilisateur\":{\"code\":\"auth0|656d3f8e4178aefc03429606\",\"email\":\"kierangreene@gmail.com\",\"nom\":\"Greene\",\"prénom\":\"Kieran\"},\"organisation\":{\"id\":1,\"codeUtilisateur\":\"auth0|656d2dbea19599c9209a4f01\",\"nomOrganisation\":\"Rosemont\",\"catégorie_id\":2,\"estPublic\":true},\"jeton\":null,\"status\":\"envoyé\"},{\"id\":2,\"utilisateur\":null,\"organisation\":{\"id\":1,\"codeUtilisateur\":\"auth0|656d2dbea19599c9209a4f01\",\"nomOrganisation\":\"Rosemont\",\"catégorie_id\":2,\"estPublic\":true},\"jeton\":\"9EIUYTBB\",\"status\":\"accepté\"}]",
 			"type": "string"
 		}
 	]

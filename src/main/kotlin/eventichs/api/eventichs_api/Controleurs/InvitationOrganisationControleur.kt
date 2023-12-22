@@ -72,7 +72,7 @@ class InvitationOrganisationControleur(val service: InvitationOrganisationServic
         value = ["/organisations/invitations"],
         consumes = ["application/json"],
         produces = ["application/json"])
-    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal) : ResponseEntity<InvitationOrganisation>{
+    fun demandeJoindreOrganisation(@RequestBody invitation: InvitationOrganisation, principal: Principal?) : ResponseEntity<InvitationOrganisation>{
         if (principal == null) {throw PasConnectéException("L'utilisateur n'est pas connecté.")}
 
         val nouvelleInvitation : InvitationOrganisation? = service.demandeJoindreOrganisation(invitation, principal.name)
