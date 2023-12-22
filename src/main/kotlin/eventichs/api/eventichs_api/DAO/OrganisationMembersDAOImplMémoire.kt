@@ -25,7 +25,7 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
         val organisation: Organisation?
         println("Principal Name $codeUtilisateur")
         try {
-            organisation = db.queryForObject("select * from organisation where codeUtilisateur = '$codeUtilisateur'", OrganisationMapper())
+            organisation = db.queryForObject("select * from Organisation where codeUtilisateur = '$codeUtilisateur' LIMIT 1", OrganisationMapper())
         } catch (e: EmptyResultDataAccessException) {
             throw RessourceInexistanteException("L'organisation associé à le code utilisateur $codeUtilisateur n'existe pas!")
         }
@@ -38,15 +38,14 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
 
     }
 
-    override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
-        db.update(
-            "insert into Organisations_membres values (?, ?)",
-            codeOrganisation, codeUtilisateur
-        )
+override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
+    val sql = "INSERT INTO Organisations_membres (id_organisation, code_utilisateur) VALUES (?, ?)"
+    db.update(sql, codeOrganisation, codeUtilisateur)
 
-        return db.queryForObject("select * from Organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur", OrganisationMembresMapper())
+    val selectSql = "SELECT * FROM Organisations_membres WHERE id_organisation = ? AND code_utilisateur = ?"
 
-    }
+    return db.queryForObject(selectSql, OrganisationMembresMapper(), codeOrganisation, codeUtilisateur)
+}
 
     override fun enleverParticipant(codeOrganisation: Int, codeUtilisateur: String) {
         db.update(
@@ -54,7 +53,7 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
         )
     }
     fun existe(id: Int, codeUtil: String): Boolean {
-        val sql = "SELECT COUNT(*) FROM Organisations_membres WHERE id_organisation = ? AND id_utilisateur = ?"
+        val sql = "SELECT COUNT(*) FROM Organisations_membres WHERE id_organisation = ? AND code_utilisateur = ?"
         val count = db.queryForObject(sql, Long::class.java, id, codeUtil)
         return count > 0
     }
