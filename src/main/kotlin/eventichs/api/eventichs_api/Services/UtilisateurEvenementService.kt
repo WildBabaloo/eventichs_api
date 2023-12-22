@@ -16,7 +16,7 @@ class UtilisateurEvenementService(val dao : UtilisateurEvenementDAO) {
         return dao.chercherParUtilisateurID(name)
     }
     fun chercherUtilisateursParEvenement(id: Int, name : String) : List<Participant> {
-        if (!dao.validerUtilisateur(id, name)) { throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette organisation") }
+        //if (!dao.validerUtilisateur(id, name)) { throw DroitAccèsInsuffisantException("L'utilisateur n'as pas le droit de consulter cette organisation") }
         return dao.chercherParEvenementID(id)
     }
 
