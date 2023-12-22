@@ -37,6 +37,7 @@ class OrganisationControleur(val service: OrganisationService) {
         responses = [
             ApiResponse(responseCode = "200", description = "L'organisation à été trouvé"),
             ApiResponse(responseCode = "404", description = "L'organisation avec l'id recherché n'existe pas dans le service"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de modifier cet événement"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")
         ]
     )
@@ -53,6 +54,7 @@ class OrganisationControleur(val service: OrganisationService) {
         responses = [
             ApiResponse(responseCode = "201", description = "L'organisation à été ajoutée"),
             ApiResponse(responseCode = "500", description = "L'organisation n'a pas été ajoutée au service"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de modifier cet événement"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")
         ]
     )
@@ -80,6 +82,7 @@ class OrganisationControleur(val service: OrganisationService) {
         responses = [
             ApiResponse(responseCode = "200", description = "l'organisation a été modifié"),
             ApiResponse(responseCode = "404", description = "l'organisation n'eas pas été modifié"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de modifier cet événement"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")]
     )
     @PutMapping("/organisations/{id}")
@@ -106,6 +109,7 @@ class OrganisationControleur(val service: OrganisationService) {
         responses = [
             ApiResponse(responseCode = "200", description = "l'organisation a été supprimé"),
             ApiResponse(responseCode = "404", description = "l'organisation n'as pas été supprimé"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de modifier cet événement"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")]
     )
     @DeleteMapping("/organisations/{id}")
@@ -121,6 +125,7 @@ class OrganisationControleur(val service: OrganisationService) {
         responses = [
             ApiResponse(responseCode = "200", description = "les organisations publiques ont été trouvé"),
             ApiResponse(responseCode = "404", description = "Aucune organisation publique n'as pas été trouvé"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de modifier cet événement"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")]
     )
     @GetMapping("/organisations")
@@ -136,6 +141,7 @@ class OrganisationControleur(val service: OrganisationService) {
         responses = [
             ApiResponse(responseCode = "200", description = "les organisations filtrés ont été trouvées"),
             ApiResponse(responseCode = "404", description = "les organisations filtrés n'ont pas été trouvé"),
+            ApiResponse(responseCode = "403", description = "L'utilisateur n'a pas le droit de modifier cet événement"),
             ApiResponse(responseCode = "401", description = "L'utilisateur n'est pas authentifié")]
     )
     @GetMapping("/gouts/{idCategorie}/organisations")

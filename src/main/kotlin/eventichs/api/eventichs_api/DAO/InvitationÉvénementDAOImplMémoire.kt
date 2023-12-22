@@ -22,7 +22,7 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
         return invitationÀSupprimer
     }
 
-    override fun modifier(element: InvitationÉvénement): InvitationÉvénement? {
+    override fun modifier(id: Int, element: InvitationÉvénement): InvitationÉvénement? {
         db.update("UPDATE Invitation_événement SET " +
                 "idExpediteur = ?," +
                 "idDestinataire = ?," +
@@ -35,9 +35,13 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
             element.idÉvénement,
             element.jeton,
             element.status,
-            element.id)
+            id)
 
         return element
+    }
+
+    override fun modifier(element: InvitationÉvénement): InvitationÉvénement? {
+        TODO("Not yet implemented")
     }
 
     override fun ajouter(element: InvitationÉvénement): InvitationÉvénement? {
@@ -61,11 +65,11 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
     }
 
     override fun chercherParIdDestinataire(id: String): List<InvitationÉvénement> {
-        return db.query("SELECT * FROM Invitation_événement WHERE codeDestinataire = $id", InvitationÉvénementMapper())
+        return db.query("SELECT * FROM Invitation_événement WHERE codeDestinataire = '$id'", InvitationÉvénementMapper())
     }
 
     override fun chercherParIdExpediteur(id: String): List<InvitationÉvénement> {
-        return db.query("SELECT * FROM Invitation_événement WHERE codeExpediteur = $id", InvitationÉvénementMapper())
+        return db.query("SELECT * FROM Invitation_événement WHERE codeExpediteur = '$id'", InvitationÉvénementMapper())
     }
 
     override fun entrerJetonEvenement(idInvité: String, jeton: String): InvitationÉvénement? {
