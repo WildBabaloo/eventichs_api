@@ -24,8 +24,8 @@ class InvitationÉvénementDAOImplMémoire(val db: JdbcTemplate): InvitationÉv�
 
     override fun modifier(id: Int, element: InvitationÉvénement): InvitationÉvénement? {
         db.update("UPDATE Invitation_événement SET " +
-                "idExpediteur = ?," +
-                "idDestinataire = ?," +
+                "codeExpediteur = ?," +
+                "codeDestinataire = ?," +
                 "idÉvénement = ?," +
                 "jeton = ?," +
                 "status = ?" +

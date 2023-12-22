@@ -36,12 +36,11 @@ class InvitationÉvénementService(val dao: InvitationÉvénementDAO) {
         return dao.ajouter(invitation)
     }
     fun modifierInvitationÉvénement(id: Int, invitation: InvitationÉvénement, code_util: String): InvitationÉvénement? {
-        val invitation = dao.chercherParID(id)?: return null
-        println(code_util)
-        println(invitation.idDestinataire + invitation.idExpéditeur)
-        if (code_util != invitation.idDestinataire || code_util != invitation.idExpéditeur) {
+        val invitationRecherche = dao.chercherParID(id)?: return null
+        if (code_util != invitation.idDestinataire && code_util != invitation.idExpéditeur) {
             throw DroitAccèsInsuffisantException("L'utilisateur n'a pas le droit de consulter un évènement dont il n'est ni l'expéditeur ou le destinataire.")
         }
+
         return dao.modifier(id, invitation)
     }
 
