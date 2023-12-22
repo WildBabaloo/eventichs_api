@@ -47,9 +47,8 @@ INSERT INTO `eventichsBD`.`Invitation_organisation` (`codeDestinataire`, `idOrga
 INSERT INTO `eventichsBD`.`Invitation_organisation` (`idOrganisation`, `jeton`, `status`) VALUES ('1', '9EIUYTBB', 'généré');
 
 -- Insertion Organisations_membres
-INSERT INTO `eventichsBD`.`Organisations_membres` (`id_organisation`, `code_utilisateur`) VALUES ('1', 'auth0|656d3f1aa19599c9209a6371');
 INSERT INTO `eventichsBD`.`Organisations_membres` (`id_organisation`, `code_utilisateur`) VALUES ('2', 'auth0|656d3f1aa19599c9209a6371');
 INSERT INTO `eventichsBD`.`Organisations_membres` (`id_organisation`, `code_utilisateur`) VALUES ('3', 'auth0|656d3f1aa19599c9209a6371');
 INSERT INTO `eventichsBD`.`Organisations_membres` (`id_organisation`, `code_utilisateur`) VALUES ('2', 'auth0|656d3cb6a19599c9209a6099');
-INSERT INTO `eventichsBD`.`Organisations_membres` (`id_organisation`, `code_utilisateur`) VALUES ('3', 'auth0|656d3cb6a19599c9209a6099');
+
 
