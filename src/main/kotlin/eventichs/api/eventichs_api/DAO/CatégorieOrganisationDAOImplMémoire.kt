@@ -35,4 +35,9 @@ class CatégorieOrganisationDAOImplMémoire(val db: JdbcTemplate): CatégorieOrg
             element.description)
         return element
     }
+
+    override fun validerUtilisateur(code_util: String): Boolean {
+        var organisation: OrganisationDAO = OrganisationDAOImplMémoire(db)
+        return organisation.validerOrganisateur(code_util)
+    }
 }

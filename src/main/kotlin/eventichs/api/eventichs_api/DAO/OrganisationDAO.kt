@@ -11,6 +11,8 @@ interface OrganisationDAO: DAO<Organisation> {
     fun consulterOrganisationPubliques(): List<Organisation>
     fun filtrerOrganisationParGouts(idCategorie: Int): List<Organisation>
     fun validerUtilisateur(id: Int, codeUtilisateur: String) : Boolean
+    fun validerOrganisateur(code_Util: String): Boolean
+
 
     // TO DO CHECK IF ORGANISATION IS PUBLIC OR NOT
 

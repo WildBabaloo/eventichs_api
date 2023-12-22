@@ -2,6 +2,7 @@ package eventichs.api.eventichs_api.DAO
 
 import eventichs.api.eventichs_api.Mapper.CatégorieMapper
 import eventichs.api.eventichs_api.Modèle.Catégorie
+import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
@@ -35,6 +36,11 @@ class CatégorieDAOImplMémoire(val db: JdbcTemplate): CatégorieDAO {
             element.nom,
             element.description)
         return element
+    }
+
+    override fun validerUtilisateur(code_util: String): Boolean {
+        var organisation: OrganisationDAO = OrganisationDAOImplMémoire(db)
+        return organisation.validerOrganisateur(code_util)
     }
 
 }

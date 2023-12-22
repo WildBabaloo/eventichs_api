@@ -40,7 +40,7 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
 
     override fun ajouterParticipant(codeOrganisation: Int, codeUtilisateur: String): OrganisationMembres? {
         db.update(
-            "insert into organisations_membres values (?, ?)",
+            "insert into Organisations_membres values (?, ?)",
             codeOrganisation, codeUtilisateur
         )
 
@@ -52,6 +52,11 @@ class OrganisationMembersDAOImplMémoire(val db: JdbcTemplate): OrganisationMemb
         db.update(
             "delete from organisations_membres where id_organisation = $codeOrganisation and code_utilisateur = $codeUtilisateur"
         )
+    }
+    fun existe(id: Int, codeUtil: String): Boolean {
+        val sql = "SELECT COUNT(*) FROM Organisations_membres WHERE id_organisation = ? AND id_utilisateur = ?"
+        val count = db.queryForObject(sql, Long::class.java, id, codeUtil)
+        return count > 0
     }
 
     // Fonction Inutiles
