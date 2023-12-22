@@ -1,5 +1,6 @@
 package eventichs.api.eventichs_api.DAO
 
+import eventichs.api.eventichs_api.Exceptions.RessourceInexistanteException
 import eventichs.api.eventichs_api.Mapper.OrganisationMapper
 import eventichs.api.eventichs_api.Modèle.Organisation
 import org.springframework.dao.DataAccessException
@@ -12,8 +13,16 @@ class OrganisationDAOImplMémoire(val db: JdbcTemplate): OrganisationDAO {
     override fun chercherTous(): List<Organisation> =
         db.query("select * from Organisation", OrganisationMapper())
 
-    override fun chercherParID(id: Int): Organisation? =
-        db.queryForObject("select * from Organisation where id = $id", OrganisationMapper())
+    override fun chercherParID(id: Int): Organisation? {
+        var org: Organisation? = null
+        try {
+             org= db.queryForObject("select * from Organisation where id = $id", OrganisationMapper())
+        } catch(e:RessourceInexistanteException){
+            throw RessourceInexistanteException("L'organisation avec l'id de $id n'est pas inscrit au service")
+        }
+        return org
+    }
+
 
     // Fonction inutile
     override fun ajouter(element: Organisation): Organisation? {
