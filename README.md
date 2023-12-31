@@ -17,16 +17,18 @@ Ce projet concerne le développement d'un service de gestion d'événements en S
 2- Une entreprise qui veut organiser un événement privé entre les membres de l'organisation.
 3- Un utilisateur qui veut organiser un événement privé entre amis(es) pour organiser un pique-nique, anniversiare, etc.
 
-## Auteurs
-Mohamed Fatene- Microservice événements
-Andrew Tremblay- Microservice événements
+## Auteur
+Microservice de gestion événement:
+Mahfuzur Ali
+Baudouin Vegas Alexandre
 
-Julien Giguère - Microservice des utilisateurs
-Alexandros Gascon Grillis- Microservice des utilisateurs
+Microservice de gestion organisation:
+Mohamed Fatene
+Andrew Tremblay
 
-Mahfuzur Ali- Microservice de gestion organisation
-Baudouin Vegas Alexandre- Microservice de gestion organisation
-...
+Microservice de gestion invitation:
+Julien Giguère
+Alexandros Gascon Grillis
 
 ## Licence
 Copyright 2023 Eventichs Holdings
