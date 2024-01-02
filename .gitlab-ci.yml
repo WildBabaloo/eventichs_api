@@ -1,0 +1,46 @@
+image: gradle:alpine
+before_script:
+  - GRADLE_USER_HOME="$(pwd)/.gradle"
+  - export GRADLE_USER_HOME
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  SERVER_SSH_PRIVATE_KEY: "$SERVER_SSH_PRIVATE_KEY"
+
+# Make Project
+build:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew build -x test
+  
+# Run all tests, if any fails, interrupt the pipeline(fail it)
+test:
+  interruptible: true
+  stage: test
+  script:
+    - apk update && apk add openssh-client
+    - echo "$SERVER_SSH_PRIVATE_KEY" > deploy_key  # Save the SSH key to a file
+    - chmod 600 deploy_key  # Set correct permissions
+    - eval "$(ssh-agent -s)"  # Start the SSH agent
+    - ssh-add deploy_key  # Add the SSH key to the agent
+    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/eventichs_api; git checkout api; git pull; ./gradlew test'
+  only:
+    - api
+
+deploy_to_server:
+  needs: [build]
+  stage: deploy
+  script:
+    - apk update && apk add openssh-client
+    - echo "$SERVER_SSH_PRIVATE_KEY" > deploy_key  # Save the SSH key to a file
+    - chmod 600 deploy_key  # Set correct permissions
+    - eval "$(ssh-agent -s)"  # Start the SSH agent
+    - ssh-add deploy_key  # Add the SSH key to the agent
+    - ssh -o StrictHostKeyChecking=no -i deploy_key serv@v34l.com 'cd ~/Dev/eventichs_api; git checkout server-deploy; git pull; ./gradlew build -x test; fuser -k 8080/tcp; nohup ./gradlew bootRun &'
+  only:
+    - server-deploy

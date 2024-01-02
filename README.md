@@ -26,7 +26,7 @@ Microservice de gestion organisation:
 Mohamed Fatene
 Andrew Tremblay
 
-Microservice de gestion invitation et utilisateur:
+Microservice de gestion invitation:
 Julien Giguère
 Alexandros Gascon Grillis
 
